@@ -1,0 +1,30 @@
+# MATLAB temporary files
+
+*.asv
+*.m~
+*.mex*
+slprj/
+codegen/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Editor files
+
+.vscode/
+.idea/
+
+# Large archive files
+
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Logs and temporary files
+
+*.log
+*.tmp

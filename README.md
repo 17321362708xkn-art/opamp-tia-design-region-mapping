@@ -1,0 +1,138 @@
+# Op-Amp / TIA Design Region Mapping
+
+## Project Overview
+
+This repository is a MATLAB-only behavioural modelling project for studying finite gain-bandwidth product effects in a first-order inverting op-amp active low-pass filter.
+
+The project uses frequency-domain modelling, metric extraction, parameter sweeps, and design-region classification to build a safe / marginal / risky design-region map. The current model is focused on an active low-pass filter, but the workflow is intended to be extendable toward photodiode transimpedance amplifier (TIA) modelling and design exploration.
+
+## Engineering Motivation
+
+In practical op-amp circuit design, finite DC open-loop gain and finite unity-gain frequency can cause closed-loop gain error, cutoff frequency shift, and additional phase lag.
+
+This project builds a behavioural model that relates a gain-bandwidth margin index to these errors. The aim is to make the effect of finite op-amp gain-bandwidth visible across different feedback gains and cutoff-frequency targets, then classify design regions according to extracted performance metrics.
+
+## Model Summary
+
+The core response model is implemented in `functions/active_lpf_response.m`.
+
+Key parameters:
+
+* `Rin` = input resistance
+* `Rf` = feedback resistance
+* `Cf` = feedback capacitance
+* `K = Rf / Rin`
+* `fc = 1 / (2*pi*Rf*Cf)`
+* `A0` = DC open-loop gain
+* `ft_Hz` = unity-gain frequency / GBW-equivalent frequency
+* `M_index = ft_Hz / ((1 + K) * fc)`
+
+`M_index` is used here as a GBW margin index. It is not a formal stability margin, phase margin, or loop-stability guarantee.
+
+The project uses an inversion-removed response, `G = -H`, for extracting magnitude and phase metrics. This makes the magnitude and phase comparisons easier to interpret for the inverting filter response.
+
+## Repository Structure
+
+The current repository structure is:
+
+* `functions/` : reusable MATLAB functions
+* `scripts/` : step-by-step experiment scripts
+* `figures/` : exported figures
+* `scripts/figures/` : early-stage script-generated figures
+* `scripts/results/` : CSV, MAT and Markdown result summaries
+
+This README describes the current structure as-is.
+
+## Main Functions
+
+* `active_lpf_response.m` : computes the ideal and finite-op-amp behavioural frequency responses for the active low-pass filter model.
+* `extract_frequency_metrics.m` : extracts gain, cutoff-frequency, and phase-related metrics from frequency-response data.
+* `compare_frequency_responses.m` : compares frequency responses and returns error metrics.
+* `add_measurement_noise.m` : adds synthetic measurement noise for robustness checks.
+* `classify_design_region.m` : classifies designs into safe, marginal, and risky regions using extracted metric thresholds.
+* `find_margin_thresholds.m` : derives margin thresholds from classified sweep results.
+
+## Running the Project
+
+Run scripts from the `scripts/` directory in the staged order below.
+
+### Stage 1: Basic model verification
+
+* `run_01_ideal_model_verification.m`
+* `run_02_nonideal_model_check.m`
+
+### Stage 2: Finite-GBW and finite-A0 behaviour checks
+
+* `run_03_day9_M_sweep_nonideal_response.m`
+* `run_04_day10_high_ft_limit_check.m`
+* `run_05_day11_ideal_limit_consistency_check.m`
+* `run_06_day12_A0_DC_gain_sensitivity_table.m`
+
+### Stage 3: Metric extraction and noise robustness
+
+* `run_07_day15_clean_ideal_extraction_verification.m`
+* `run_08_day16_clean_nonideal_extraction_test.m`
+* `run_09_day17_virtual_measurement_noise_check.m`
+* `run_10_day18_noisy_extraction_smoothing_test.m`
+* `run_11_day19_monte_carlo_noise_test.m`
+
+### Stage 4: Parameter sweep and design-region classification
+
+* `run_12_day22_parameter_sweep_metrics.m`
+* `run_13_day23_classify_design_regions.m`
+* `run_14_day24_find_margin_thresholds.m`
+
+### Stage 5: Final design plots
+
+* `run_15_day25_error_vs_M_plots.m`
+* `run_16_day26_safe_marginal_risky_design_map.m`
+* `run_17_day27_required_ft_plot.m`
+
+Dependencies:
+
+* `run_13` depends on outputs from `run_12`
+* `run_14` depends on outputs from `run_13`
+* `run_17` depends on outputs from `run_14`
+
+Example MATLAB workflow:
+
+```matlab
+cd scripts
+run_12_day22_parameter_sweep_metrics
+run_13_day23_classify_design_regions
+run_14_day24_find_margin_thresholds
+run_15_day25_error_vs_M_plots
+run_16_day26_safe_marginal_risky_design_map
+run_17_day27_required_ft_plot
+```
+
+## Key Outputs
+
+Main outputs include:
+
+* gain error vs M
+* cutoff frequency error vs M
+* phase deviation vs M
+* Monte Carlo noisy extraction results
+* safe / marginal / risky design map
+* required ft vs K plot
+
+These outputs are exported as figures and result summaries under `figures/`, `scripts/figures/`, and `scripts/results/`.
+
+## Current Limitations
+
+* This is a MATLAB behavioural model, not a SPICE simulation.
+* No hardware measurement is included.
+* No formal loop-stability analysis is included.
+* `M_index` is a GBW margin index, not a phase margin or stability margin.
+* The required ft plot is a design aid under this model, not a universal op-amp selection rule.
+
+## Future Work
+
+Possible next steps:
+
+* improve repository structure;
+* add more detailed documentation;
+* add datasheet-based op-amp case studies;
+* extend the model toward photodiode TIA design;
+* compare behavioural results with SPICE simulation in the future.
