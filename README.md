@@ -143,6 +143,26 @@ Main outputs include:
 
 These outputs are exported as figures and result summaries under `figures/`, `scripts/figures/`, and `scripts/results/`.
 
+## Representative Results
+
+### Safe / Marginal / Risky Design Map
+
+![Safe marginal risky design map](figures/day26_safe_marginal_risky_design_map.png)
+
+This figure summarises the design-region classification obtained from the parameter sweep. Each region is classified using gain error, cutoff-frequency error and phase-deviation thresholds. The map is intended as a behavioural design aid under the assumptions of this model.
+
+### Required ft versus Closed-Loop Gain
+
+![Required ft versus closed-loop gain](figures/day27_required_ft_vs_K.png)
+
+This figure converts the extracted GBW margin thresholds into required unity-gain frequency values for different closed-loop gain settings. It should be interpreted as a model-based design guide rather than a universal op-amp selection rule.
+
+### Error Trend versus GBW Margin Index
+
+![Phase deviation versus GBW margin index](figures/day25_abs_phase_deviation_vs_M.png)
+
+This figure shows how the extracted error metric decreases as the GBW margin index increases. It supports the use of `M_index` as a practical behavioural margin indicator in this project.
+
 ## Current Limitations
 
 * This is a MATLAB behavioural model, not a SPICE simulation.
