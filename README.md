@@ -1,4 +1,6 @@
-# Op-Amp / TIA Design Region Mapping
+# Finite-GBW Design-Region Mapping for an Op-Amp Active Low-Pass Filter
+
+A MATLAB-based behavioural modelling portfolio project, with a planned extension toward photodiode TIA modelling.
 
 ## Project Overview
 
@@ -12,9 +14,9 @@ It also uses metric extraction, parameter sweeps, and design-region classificati
 
 The goal is to build a safe / marginal / risky design-region map under the assumptions of the behavioural model.
 
-The current model is focused on an active low-pass filter.
+Current stage: first-order inverting op-amp active low-pass filter.
 
-The workflow is intended to be extendable toward photodiode transimpedance amplifier modelling.
+Planned extension: photodiode TIA behavioural modelling.
 
 It is not yet a complete photodiode TIA project.
 
