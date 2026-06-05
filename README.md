@@ -11,6 +11,9 @@ current model is focused on an active low-pass filter, but the workflow is inten
 extendable toward photodiode transimpedance amplifier (TIA) modelling and design
 exploration.
 
+For a more detailed explanation of the modelling assumptions, metric extraction method
+and design-region workflow, see [docs/technical_note.md](docs/technical_note.md).
+
 ## Engineering Motivation
 
 In practical op-amp circuit design, finite DC open-loop gain and finite unity-gain
