@@ -20,6 +20,30 @@ It is not yet a complete photodiode TIA project.
 
 For a more detailed explanation of the modelling assumptions, metric extraction method, and design-region workflow, see [docs/technical_note.md](docs/technical_note.md).
 
+## What This Project Demonstrates
+
+- MATLAB-based behavioural modelling of op-amp finite-GBW effects
+- frequency-response extraction and validation
+- gain error, cutoff-frequency error and phase-deviation analysis
+- parameter sweep over closed-loop gain and GBW margin index
+- safe / marginal / risky design-region classification
+- generation of model-based design-aid plots
+- a documented workflow that can later be extended toward photodiode TIA modelling
+
+## Workflow Summary
+
+This is an active low-pass filter modelling workflow with a planned extension path toward TIA modelling.
+
+```mermaid
+flowchart TD
+    A[Ideal active low-pass model] --> B[Finite A0 and finite GBW behavioural model]
+    B --> C[Frequency-response extraction]
+    C --> D[Noise and Monte Carlo robustness checks]
+    D --> E[Parameter sweep over K and M_index]
+    E --> F[Safe / marginal / risky classification]
+    F --> G[Required ft design-aid plots]
+```
+
 ## Engineering Motivation
 
 In practical op-amp circuit design, finite DC open-loop gain can affect closed-loop accuracy.
@@ -183,6 +207,17 @@ Dependencies:
 - `run_15` depends on outputs from `run_12` and `run_14`
 - `run_16` depends on outputs from `run_13` and `run_14`
 - `run_17` depends on outputs from `run_14`
+
+Stage 4 and Stage 5 scripts can also be read as this concise workflow:
+
+| Script                                          | Purpose                                  | Main dependency                               |
+| ----------------------------------------------- | ---------------------------------------- | --------------------------------------------- |
+| `run_12_day22_parameter_sweep_metrics.m`        | Parameter sweep over K and M_index       | Core response and metric extraction functions |
+| `run_13_day23_classify_design_regions.m`        | Classify safe / marginal / risky regions | Outputs from run_12                           |
+| `run_14_day24_find_margin_thresholds.m`         | Extract margin thresholds by K           | Outputs from run_13                           |
+| `run_15_day25_error_vs_M_plots.m`               | Plot error metrics versus M_index        | Outputs from run_12 and run_14                |
+| `run_16_day26_safe_marginal_risky_design_map.m` | Generate design-region map               | Outputs from run_13 and run_14                |
+| `run_17_day27_required_ft_plot.m`               | Generate required ft versus K plots      | Outputs from run_14                           |
 
 Example MATLAB workflow:
 
