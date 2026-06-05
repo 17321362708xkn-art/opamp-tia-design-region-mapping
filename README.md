@@ -100,6 +100,9 @@ from `run_12`, `run_14` uses outputs from `run_13`, and `run_17` uses outputs fr
 ## Running the Project
 
 Run scripts from the `scripts/` directory in the staged order below.
+Recommended usage is to start MATLAB from the repository root, then run `cd scripts`.
+No manual `addpath` is required for the main workflow because the scripts resolve project
+paths internally.
 
 ### Stage 1: Basic model verification
 
@@ -137,6 +140,8 @@ Dependencies:
 
 - `run_13` depends on outputs from `run_12`
 - `run_14` depends on outputs from `run_13`
+- `run_15` depends on outputs from `run_12` and `run_14`
+- `run_16` depends on outputs from `run_13` and `run_14`
 - `run_17` depends on outputs from `run_14`
 
 Example MATLAB workflow:
