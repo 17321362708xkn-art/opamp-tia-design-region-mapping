@@ -1,0 +1,2 @@
+K,A0,fc_target,M,ft_Hz,magNoise_dB,phaseNoise_deg,seed_main,zero_noise_max_abs_diff,same_seed_max_abs_diff,different_seed_max_abs_diff,mag_noise_mean,mag_noise_std,phase_noise_mean,phase_noise_std,overall_pass
+10,100000,10000,20,2200000,0.05,0.5,17,5.49308015822668e-15,0,0.406631571051093,-0.0010321769743343,0.0493570190314836,-0.0025922187042974,0.502076921471808,1
