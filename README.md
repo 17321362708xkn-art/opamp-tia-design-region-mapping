@@ -34,7 +34,7 @@ For a more detailed explanation of the modelling assumptions, metric extraction 
 
 ## Workflow Summary
 
-This is an active low-pass filter modelling workflow with a planned extension path toward TIA modelling.
+This is an active low-pass filter modelling workflow with a planned extension path toward photodiode TIA modelling.
 
 ```mermaid
 flowchart TD
