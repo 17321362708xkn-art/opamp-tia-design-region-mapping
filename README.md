@@ -2,21 +2,41 @@
 
 ## Project Overview
 
-This repository is a MATLAB-only behavioural modelling project for studying finite gain-bandwidth product effects in a first-order inverting op-amp active low-pass filter.
+This repository is a MATLAB-only behavioural modelling project.
 
-The project uses frequency-domain modelling, metric extraction, parameter sweeps, and design-region classification to build a safe / marginal / risky design-region map.
+It studies finite gain-bandwidth product effects in a first-order inverting op-amp active low-pass filter.
 
-The current model is focused on an active low-pass filter, but the workflow is intended to be extendable toward photodiode transimpedance amplifier (TIA) modelling and design exploration.
+The project uses frequency-domain modelling.
 
-For a more detailed explanation of the modelling assumptions, metric extraction method and design-region workflow, see [docs/technical_note.md](docs/technical_note.md).
+It also uses metric extraction, parameter sweeps, and design-region classification.
+
+The goal is to build a safe / marginal / risky design-region map under the assumptions of the behavioural model.
+
+The current model is focused on an active low-pass filter.
+
+The workflow is intended to be extendable toward photodiode transimpedance amplifier modelling.
+
+It is not yet a complete photodiode TIA project.
+
+For a more detailed explanation of the modelling assumptions, metric extraction method, and design-region workflow, see [docs/technical_note.md](docs/technical_note.md).
 
 ## Engineering Motivation
 
-In practical op-amp circuit design, finite DC open-loop gain and finite unity-gain frequency can cause closed-loop gain error, cutoff frequency shift, and additional phase lag.
+In practical op-amp circuit design, finite DC open-loop gain can affect closed-loop accuracy.
 
-This project builds a behavioural model that relates a gain-bandwidth margin index to these errors.
+Finite unity-gain frequency can also affect bandwidth and phase response.
 
-The aim is to make the effect of finite op-amp gain-bandwidth visible across different feedback gains and cutoff-frequency targets, then classify design regions according to extracted performance metrics.
+These non-idealities can produce closed-loop gain error.
+
+They can also produce cutoff frequency shift.
+
+They can introduce additional phase lag.
+
+This project builds a behavioural model that relates a gain-bandwidth margin index to those errors.
+
+The aim is to make finite op-amp gain-bandwidth effects visible across different feedback gains and cutoff-frequency targets.
+
+The extracted metrics are then used to classify design regions.
 
 ## Model Summary
 
@@ -35,11 +55,21 @@ Key parameters:
 
 `M_index` is used here as a GBW margin index.
 
-It is not a formal stability margin, phase margin, or loop-stability guarantee.
+It is not a formal stability margin.
 
-The project uses an inversion-removed response, `G = -H`, for extracting magnitude and phase metrics.
+It is not a phase margin.
 
-This makes the magnitude and phase comparisons easier to interpret for the inverting filter response.
+It is not a loop-stability guarantee.
+
+The project uses an inversion-removed response for metric extraction.
+
+The response is written as:
+
+```text
+G = -H
+```
+
+This makes magnitude and phase comparisons easier to interpret for the inverting filter response.
 
 ## Repository Structure
 
@@ -66,10 +96,15 @@ This README describes the current structure as-is.
 ## Requirements
 
 - MATLAB
-- Standard MATLAB plotting and table I/O support
-- No Python, SPICE simulator, or external measurement hardware is required for the current workflow
+- Standard MATLAB plotting support
+- Standard MATLAB table I/O support
+- No Python is required for the current MATLAB workflow
+- No SPICE simulator is required for the current workflow
+- No external measurement hardware is required for the current workflow
 
-The scripts are intended to be run from the repository root or from the `scripts/` directory, depending on the script path setup used in each file.
+The scripts are intended to be run from the repository root or from the `scripts/` directory.
+
+The recommended workflow is listed below.
 
 ## Suggested Quick-Start
 
@@ -97,9 +132,17 @@ This quick-start assumes the staged dependency chain is followed.
 
 Run scripts from the `scripts/` directory in the staged order below.
 
-Recommended usage is to start MATLAB from the repository root, then run `cd scripts`.
+Recommended usage is to start MATLAB from the repository root.
 
-No manual `addpath` is required for the main workflow because the scripts resolve project paths internally.
+Then run:
+
+```matlab
+cd scripts
+```
+
+No manual `addpath` is required for the main workflow.
+
+The scripts resolve project paths internally.
 
 ### Stage 1: Basic model verification
 
@@ -164,7 +207,13 @@ Main outputs include:
 - safe / marginal / risky design map
 - required ft vs K plot
 
-These outputs are exported as figures and result summaries under `figures/`, `scripts/figures/`, and `scripts/results/`.
+These outputs are exported as figures and result summaries.
+
+The main output locations are:
+
+- `figures/`
+- `scripts/figures/`
+- `scripts/results/`
 
 ## Representative Results
 
@@ -174,7 +223,7 @@ These outputs are exported as figures and result summaries under `figures/`, `sc
 
 This figure summarises the design-region classification obtained from the parameter sweep.
 
-Each region is classified using gain error, cutoff-frequency error and phase-deviation thresholds.
+Each region is classified using gain error, cutoff-frequency error, and phase-deviation thresholds.
 
 The map is intended as a behavioural design aid under the assumptions of this model.
 
@@ -184,7 +233,9 @@ The map is intended as a behavioural design aid under the assumptions of this mo
 
 This figure converts the extracted GBW margin thresholds into required unity-gain frequency values for different closed-loop gain settings.
 
-It should be interpreted as a model-based design guide rather than a universal op-amp selection rule.
+It should be interpreted as a model-based design guide.
+
+It should not be interpreted as a universal op-amp selection rule.
 
 ### Error Trend versus GBW Margin Index
 
