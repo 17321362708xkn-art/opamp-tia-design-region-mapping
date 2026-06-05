@@ -28,14 +28,14 @@ The core response model is implemented in `functions/active_lpf_response.m`.
 
 Key parameters:
 
-* `Rin` = input resistance
-* `Rf` = feedback resistance
-* `Cf` = feedback capacitance
-* `K = Rf / Rin`
-* `fc = 1 / (2*pi*Rf*Cf)`
-* `A0` = DC open-loop gain
-* `ft_Hz` = unity-gain frequency / GBW-equivalent frequency
-* `M_index = ft_Hz / ((1 + K) * fc)`
+- `Rin` = input resistance
+- `Rf` = feedback resistance
+- `Cf` = feedback capacitance
+- `K = Rf / Rin`
+- `fc = 1 / (2*pi*Rf*Cf)`
+- `A0` = DC open-loop gain
+- `ft_Hz` = unity-gain frequency / GBW-equivalent frequency
+- `M_index = ft_Hz / ((1 + K) * fc)`
 
 `M_index` is used here as a GBW margin index. It is not a formal stability margin, phase
 margin, or loop-stability guarantee.
@@ -48,31 +48,31 @@ inverting filter response.
 
 The current repository structure is:
 
-* `functions/` : reusable MATLAB functions
-* `scripts/` : step-by-step experiment scripts
-* `figures/` : exported figures
-* `scripts/figures/` : early-stage script-generated figures
-* `scripts/results/` : CSV, MAT and Markdown result summaries
+- `functions/` : reusable MATLAB functions
+- `scripts/` : step-by-step experiment scripts
+- `figures/` : exported figures
+- `scripts/figures/` : early-stage script-generated figures
+- `scripts/results/` : CSV, MAT and Markdown result summaries
 
 This README describes the current structure as-is.
 
 ## Main Functions
 
-* `active_lpf_response.m` : computes the ideal and finite-op-amp behavioural frequency
+- `active_lpf_response.m` : computes the ideal and finite-op-amp behavioural frequency
   responses for the active low-pass filter model.
-* `extract_frequency_metrics.m` : extracts gain, cutoff-frequency, and phase-related
+- `extract_frequency_metrics.m` : extracts gain, cutoff-frequency, and phase-related
   metrics from frequency-response data.
-* `compare_frequency_responses.m` : compares frequency responses and returns error metrics.
-* `add_measurement_noise.m` : adds synthetic measurement noise for robustness checks.
-* `classify_design_region.m` : classifies designs into safe, marginal, and risky regions
+- `compare_frequency_responses.m` : compares frequency responses and returns error metrics.
+- `add_measurement_noise.m` : adds synthetic measurement noise for robustness checks.
+- `classify_design_region.m` : classifies designs into safe, marginal, and risky regions
   using extracted metric thresholds.
-* `find_margin_thresholds.m` : derives margin thresholds from classified sweep results.
+- `find_margin_thresholds.m` : derives margin thresholds from classified sweep results.
 
 ## Requirements
 
-* MATLAB
-* Standard MATLAB plotting and table I/O support
-* No Python, SPICE simulator, or external measurement hardware is required for the current
+- MATLAB
+- Standard MATLAB plotting and table I/O support
+- No Python, SPICE simulator, or external measurement hardware is required for the current
   workflow
 
 The scripts are intended to be run from the repository root or from the `scripts/`
@@ -103,41 +103,41 @@ Run scripts from the `scripts/` directory in the staged order below.
 
 ### Stage 1: Basic model verification
 
-* `run_01_ideal_model_verification.m`
-* `run_02_nonideal_model_check.m`
+- `run_01_ideal_model_verification.m`
+- `run_02_nonideal_model_check.m`
 
 ### Stage 2: Finite-GBW and finite-A0 behaviour checks
 
-* `run_03_day9_M_sweep_nonideal_response.m`
-* `run_04_day10_high_ft_limit_check.m`
-* `run_05_day11_ideal_limit_consistency_check.m`
-* `run_06_day12_A0_DC_gain_sensitivity_table.m`
+- `run_03_day9_M_sweep_nonideal_response.m`
+- `run_04_day10_high_ft_limit_check.m`
+- `run_05_day11_ideal_limit_consistency_check.m`
+- `run_06_day12_A0_DC_gain_sensitivity_table.m`
 
 ### Stage 3: Metric extraction and noise robustness
 
-* `run_07_day15_clean_ideal_extraction_verification.m`
-* `run_08_day16_clean_nonideal_extraction_test.m`
-* `run_09_day17_virtual_measurement_noise_check.m`
-* `run_10_day18_noisy_extraction_smoothing_test.m`
-* `run_11_day19_monte_carlo_noise_test.m`
+- `run_07_day15_clean_ideal_extraction_verification.m`
+- `run_08_day16_clean_nonideal_extraction_test.m`
+- `run_09_day17_virtual_measurement_noise_check.m`
+- `run_10_day18_noisy_extraction_smoothing_test.m`
+- `run_11_day19_monte_carlo_noise_test.m`
 
 ### Stage 4: Parameter sweep and design-region classification
 
-* `run_12_day22_parameter_sweep_metrics.m`
-* `run_13_day23_classify_design_regions.m`
-* `run_14_day24_find_margin_thresholds.m`
+- `run_12_day22_parameter_sweep_metrics.m`
+- `run_13_day23_classify_design_regions.m`
+- `run_14_day24_find_margin_thresholds.m`
 
 ### Stage 5: Final design plots
 
-* `run_15_day25_error_vs_M_plots.m`
-* `run_16_day26_safe_marginal_risky_design_map.m`
-* `run_17_day27_required_ft_plot.m`
+- `run_15_day25_error_vs_M_plots.m`
+- `run_16_day26_safe_marginal_risky_design_map.m`
+- `run_17_day27_required_ft_plot.m`
 
 Dependencies:
 
-* `run_13` depends on outputs from `run_12`
-* `run_14` depends on outputs from `run_13`
-* `run_17` depends on outputs from `run_14`
+- `run_13` depends on outputs from `run_12`
+- `run_14` depends on outputs from `run_13`
+- `run_17` depends on outputs from `run_14`
 
 Example MATLAB workflow:
 
@@ -155,12 +155,12 @@ run_17_day27_required_ft_plot
 
 Main outputs include:
 
-* gain error vs M
-* cutoff frequency error vs M
-* phase deviation vs M
-* Monte Carlo noisy extraction results
-* safe / marginal / risky design map
-* required ft vs K plot
+- gain error vs M
+- cutoff frequency error vs M
+- phase deviation vs M
+- Monte Carlo noisy extraction results
+- safe / marginal / risky design map
+- required ft vs K plot
 
 These outputs are exported as figures and result summaries under `figures/`, `scripts/figures/`, and `scripts/results/`.
 
@@ -193,18 +193,18 @@ indicator in this project.
 
 ## Current Limitations
 
-* This is a MATLAB behavioural model, not a SPICE simulation.
-* No hardware measurement is included.
-* No formal loop-stability analysis is included.
-* `M_index` is a GBW margin index, not a phase margin or stability margin.
-* The required ft plot is a design aid under this model, not a universal op-amp selection rule.
+- This is a MATLAB behavioural model, not a SPICE simulation.
+- No hardware measurement is included.
+- No formal loop-stability analysis is included.
+- `M_index` is a GBW margin index, not a phase margin or stability margin.
+- The required ft plot is a design aid under this model, not a universal op-amp selection rule.
 
 ## Future Work
 
 Possible next steps:
 
-* improve repository structure;
-* add more detailed documentation;
-* add datasheet-based op-amp case studies;
-* extend the model toward photodiode TIA design;
-* compare behavioural results with SPICE simulation in the future.
+- improve repository structure;
+- add more detailed documentation;
+- add datasheet-based op-amp case studies;
+- extend the model toward photodiode TIA design;
+- compare behavioural results with SPICE simulation in the future.
