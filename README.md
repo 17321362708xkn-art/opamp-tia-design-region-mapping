@@ -2,28 +2,21 @@
 
 ## Project Overview
 
-This repository is a MATLAB-only behavioural modelling project for studying finite
-gain-bandwidth product effects in a first-order inverting op-amp active low-pass filter.
+This repository is a MATLAB-only behavioural modelling project for studying finite gain-bandwidth product effects in a first-order inverting op-amp active low-pass filter.
 
-The project uses frequency-domain modelling, metric extraction, parameter sweeps, and
-design-region classification to build a safe / marginal / risky design-region map. The
-current model is focused on an active low-pass filter, but the workflow is intended to be
-extendable toward photodiode transimpedance amplifier (TIA) modelling and design
-exploration.
+The project uses frequency-domain modelling, metric extraction, parameter sweeps, and design-region classification to build a safe / marginal / risky design-region map.
 
-For a more detailed explanation of the modelling assumptions, metric extraction method
-and design-region workflow, see [docs/technical_note.md](docs/technical_note.md).
+The current model is focused on an active low-pass filter, but the workflow is intended to be extendable toward photodiode transimpedance amplifier (TIA) modelling and design exploration.
+
+For a more detailed explanation of the modelling assumptions, metric extraction method and design-region workflow, see [docs/technical_note.md](docs/technical_note.md).
 
 ## Engineering Motivation
 
-In practical op-amp circuit design, finite DC open-loop gain and finite unity-gain
-frequency can cause closed-loop gain error, cutoff frequency shift, and additional phase
-lag.
+In practical op-amp circuit design, finite DC open-loop gain and finite unity-gain frequency can cause closed-loop gain error, cutoff frequency shift, and additional phase lag.
 
-This project builds a behavioural model that relates a gain-bandwidth margin index to
-these errors. The aim is to make the effect of finite op-amp gain-bandwidth visible across
-different feedback gains and cutoff-frequency targets, then classify design regions
-according to extracted performance metrics.
+This project builds a behavioural model that relates a gain-bandwidth margin index to these errors.
+
+The aim is to make the effect of finite op-amp gain-bandwidth visible across different feedback gains and cutoff-frequency targets, then classify design regions according to extracted performance metrics.
 
 ## Model Summary
 
@@ -40,12 +33,13 @@ Key parameters:
 - `ft_Hz` = unity-gain frequency / GBW-equivalent frequency
 - `M_index = ft_Hz / ((1 + K) * fc)`
 
-`M_index` is used here as a GBW margin index. It is not a formal stability margin, phase
-margin, or loop-stability guarantee.
+`M_index` is used here as a GBW margin index.
 
-The project uses an inversion-removed response, `G = -H`, for extracting magnitude and
-phase metrics. This makes the magnitude and phase comparisons easier to interpret for the
-inverting filter response.
+It is not a formal stability margin, phase margin, or loop-stability guarantee.
+
+The project uses an inversion-removed response, `G = -H`, for extracting magnitude and phase metrics.
+
+This makes the magnitude and phase comparisons easier to interpret for the inverting filter response.
 
 ## Repository Structure
 
@@ -56,6 +50,7 @@ The current repository structure is:
 - `figures/` : exported figures
 - `scripts/figures/` : early-stage script-generated figures
 - `scripts/results/` : CSV, MAT and Markdown result summaries
+- `docs/` : supporting technical documentation
 
 This README describes the current structure as-is.
 
@@ -74,13 +69,11 @@ This README describes the current structure as-is.
 - Standard MATLAB plotting and table I/O support
 - No Python, SPICE simulator, or external measurement hardware is required for the current workflow
 
-The scripts are intended to be run from the repository root or from the `scripts/`
-directory, depending on the script path setup used in each file.
+The scripts are intended to be run from the repository root or from the `scripts/` directory, depending on the script path setup used in each file.
 
 ## Suggested Quick-Start
 
-For a quick project-level regeneration of the main sweep, classification, and final design
-plots, run:
+For a quick project-level regeneration of the main sweep, classification, and final design plots, run:
 
 ```matlab
 cd scripts
@@ -92,16 +85,21 @@ run_16_day26_safe_marginal_risky_design_map
 run_17_day27_required_ft_plot
 ```
 
-This quick-start assumes the staged dependency chain is followed: `run_13` uses outputs
-from `run_12`, `run_14` uses outputs from `run_13`, and `run_17` uses outputs from
-`run_14`.
+This quick-start assumes the staged dependency chain is followed.
+
+`run_13` uses outputs from `run_12`.
+
+`run_14` uses outputs from `run_13`.
+
+`run_17` uses outputs from `run_14`.
 
 ## Running the Project
 
 Run scripts from the `scripts/` directory in the staged order below.
+
 Recommended usage is to start MATLAB from the repository root, then run `cd scripts`.
-No manual `addpath` is required for the main workflow because the scripts resolve project
-paths internally.
+
+No manual `addpath` is required for the main workflow because the scripts resolve project paths internally.
 
 ### Stage 1: Basic model verification
 
@@ -175,25 +173,26 @@ These outputs are exported as figures and result summaries under `figures/`, `sc
 ![Safe marginal risky design map](figures/day26_safe_marginal_risky_design_map.png)
 
 This figure summarises the design-region classification obtained from the parameter sweep.
-Each region is classified using gain error, cutoff-frequency error and phase-deviation
-thresholds. The map is intended as a behavioural design aid under the assumptions of this
-model.
+
+Each region is classified using gain error, cutoff-frequency error and phase-deviation thresholds.
+
+The map is intended as a behavioural design aid under the assumptions of this model.
 
 ### Required ft versus Closed-Loop Gain
 
 ![Required ft versus closed-loop gain](figures/day27_required_ft_vs_K.png)
 
-This figure converts the extracted GBW margin thresholds into required unity-gain
-frequency values for different closed-loop gain settings. It should be interpreted as a
-model-based design guide rather than a universal op-amp selection rule.
+This figure converts the extracted GBW margin thresholds into required unity-gain frequency values for different closed-loop gain settings.
+
+It should be interpreted as a model-based design guide rather than a universal op-amp selection rule.
 
 ### Error Trend versus GBW Margin Index
 
 ![Phase deviation versus GBW margin index](figures/day25_abs_phase_deviation_vs_M.png)
 
-This figure shows how the extracted phase-deviation metric decreases as the GBW margin
-index increases. It supports the use of `M_index` as a practical behavioural margin
-indicator in this project.
+This figure shows how the extracted phase-deviation metric decreases as the GBW margin index increases.
+
+It supports the use of M_index as a practical behavioural margin indicator in this project.
 
 ## Current Limitations
 

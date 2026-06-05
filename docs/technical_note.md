@@ -2,21 +2,19 @@
 
 ## 1. Background
 
-This project studies how finite open-loop gain and finite gain-bandwidth product,
-represented by unity-gain frequency, affect the closed-loop behaviour of an op-amp active
-low-pass filter.
+This project studies how finite open-loop gain and finite gain-bandwidth product, represented by unity-gain frequency, affect the closed-loop behaviour of an op-amp active low-pass filter.
 
-The work is a MATLAB-only behavioural modelling project. It is not a SPICE simulation,
-and it does not include hardware measurement.
+The work is a MATLAB-only behavioural modelling project.
+
+It is not a SPICE simulation, and it does not include hardware measurement.
 
 ## 2. Circuit and Modelling Scope
 
-The current model represents a first-order inverting op-amp active low-pass filter. It is
-not yet a complete photodiode transimpedance amplifier model.
+The current model represents a first-order inverting op-amp active low-pass filter.
 
-The modelling workflow can provide a foundation for later photodiode TIA modelling, where
-photodiode capacitance, transimpedance gain, and additional noise mechanisms would need to
-be included explicitly.
+It is not yet a complete photodiode transimpedance amplifier model.
+
+The modelling workflow can provide a foundation for later photodiode TIA modelling, where photodiode capacitance, transimpedance gain, and additional noise mechanisms would need to be included explicitly.
 
 ## 3. Ideal Transfer Function
 
@@ -28,20 +26,19 @@ The ideal model uses the following component and design quantities:
 - `K = Rf / Rin`: closed-loop gain magnitude parameter
 - `fc = 1 / (2*pi*Rf*Cf)`: ideal first-order cutoff frequency
 
-The inverting transfer response is represented by `H`. For magnitude and phase metric
-extraction, the project uses an inversion-removed response:
+The inverting transfer response is represented by `H`.
+
+For magnitude and phase metric extraction, the project uses an inversion-removed response:
 
 ```text
 G = -H
 ```
 
-This makes the extracted magnitude and phase behaviour easier to compare against the
-expected low-pass response.
+This makes the extracted magnitude and phase behaviour easier to compare against the expected low-pass response.
 
 ## 4. Non-Ideal Op-Amp Model
 
-The non-ideal model uses a behavioural single-pole open-loop gain model with finite DC
-open-loop gain `A0` and finite unity-gain frequency `ft_Hz`.
+The non-ideal model uses a behavioural single-pole open-loop gain model with finite DC open-loop gain `A0` and finite unity-gain frequency `ft_Hz`.
 
 The project uses the following gain-bandwidth margin index:
 
@@ -49,8 +46,9 @@ The project uses the following gain-bandwidth margin index:
 M_index = ft_Hz / ((1 + K) * fc)
 ```
 
-M_index is a GBW margin index, not a formal stability margin. It should not be interpreted
-as phase margin or as a complete loop-stability criterion.
+M_index is a GBW margin index, not a formal stability margin.
+
+It should not be interpreted as phase margin or as a complete loop-stability criterion.
 
 ## 5. Metric Extraction
 
@@ -62,22 +60,23 @@ The project extracts several response-level metrics from the inversion-removed r
 - cutoff frequency error
 - phase deviation at `fc`
 
-The phase-deviation metric is defined to express additional phase lag relative to the
-ideal response at the cutoff frequency. Positive phase-deviation values indicate
-additional phase lag under the project's sign convention.
+The phase-deviation metric is defined to express additional phase lag relative to the ideal response at the cutoff frequency.
+
+Positive phase-deviation values indicate additional phase lag under the project's sign convention.
 
 ## 6. Noise and Monte Carlo Robustness
 
 The project includes virtual measurement noise, optional smoothing, and Monte Carlo tests.
-These checks are used to evaluate whether the metric-extraction workflow remains stable
-when the response contains synthetic noisy perturbations.
 
-These are simulated robustness checks. They are not hardware measurements.
+These checks are used to evaluate whether the metric-extraction workflow remains stable when the response contains synthetic noisy perturbations.
+
+These are simulated robustness checks.
+
+They are not hardware measurements.
 
 ## 7. Parameter Sweep and Design-Region Classification
 
-The project sweeps combinations of closed-loop gain parameter `K` and GBW margin index
-`M_index`.
+The project sweeps combinations of closed-loop gain parameter `K` and GBW margin index `M_index`.
 
 Each case is classified into one of three design regions:
 
@@ -85,8 +84,7 @@ Each case is classified into one of three design regions:
 - Marginal
 - Risky
 
-The classification is based on thresholds for gain error, cutoff-frequency error, and
-phase deviation.
+The classification is based on thresholds for gain error, cutoff-frequency error, and phase deviation.
 
 ## 8. Key Results
 
