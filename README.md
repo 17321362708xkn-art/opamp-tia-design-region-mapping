@@ -52,6 +52,30 @@ This README describes the current structure as-is.
 * `classify_design_region.m` : classifies designs into safe, marginal, and risky regions using extracted metric thresholds.
 * `find_margin_thresholds.m` : derives margin thresholds from classified sweep results.
 
+## Requirements
+
+* MATLAB
+* Standard MATLAB plotting and table I/O support
+* No Python, SPICE simulator, or external measurement hardware is required for the current workflow
+
+The scripts are intended to be run from the repository root or from the `scripts/` directory, depending on the script path setup used in each file.
+
+## Suggested Quick-Start
+
+For a quick project-level regeneration of the main sweep, classification, and final design plots, run:
+
+```matlab
+cd scripts
+run_12_day22_parameter_sweep_metrics
+run_13_day23_classify_design_regions
+run_14_day24_find_margin_thresholds
+run_15_day25_error_vs_M_plots
+run_16_day26_safe_marginal_risky_design_map
+run_17_day27_required_ft_plot
+```
+
+This quick-start assumes the staged dependency chain is followed: `run_13` uses outputs from `run_12`, `run_14` uses outputs from `run_13`, and `run_17` uses outputs from `run_14`.
+
 ## Running the Project
 
 Run scripts from the `scripts/` directory in the staged order below.
