@@ -161,7 +161,7 @@ This figure converts the extracted GBW margin thresholds into required unity-gai
 
 ![Phase deviation versus GBW margin index](figures/day25_abs_phase_deviation_vs_M.png)
 
-This figure shows how the extracted error metric decreases as the GBW margin index increases. It supports the use of `M_index` as a practical behavioural margin indicator in this project.
+This figure shows how the extracted phase-deviation metric decreases as the GBW margin index increases. It supports the use of M_index as a practical behavioural margin indicator in this project.
 
 ## Current Limitations
 
