@@ -93,10 +93,8 @@ phase deviation.
 The current results support three project-level observations:
 
 1. Error metrics generally decrease as `M_index` increases.
-2. The safe / marginal / risky design-region map summarises usable regions under the
-   assumptions of this behavioural model.
-3. The required `ft` versus `K` plot converts extracted margin thresholds into design-aid
-   values.
+2. The safe / marginal / risky design-region map summarises usable regions under the assumptions of this behavioural model.
+3. The required `ft` versus `K` plot converts extracted margin thresholds into design-aid values.
 
 The main design-region map is:
 

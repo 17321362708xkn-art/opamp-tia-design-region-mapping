@@ -61,22 +61,18 @@ This README describes the current structure as-is.
 
 ## Main Functions
 
-- `active_lpf_response.m` : computes the ideal and finite-op-amp behavioural frequency
-  responses for the active low-pass filter model.
-- `extract_frequency_metrics.m` : extracts gain, cutoff-frequency, and phase-related
-  metrics from frequency-response data.
+- `active_lpf_response.m` : computes the ideal and finite-op-amp behavioural frequency responses for the active low-pass filter model.
+- `extract_frequency_metrics.m` : extracts gain, cutoff-frequency, and phase-related metrics from frequency-response data.
 - `compare_frequency_responses.m` : compares frequency responses and returns error metrics.
 - `add_measurement_noise.m` : adds synthetic measurement noise for robustness checks.
-- `classify_design_region.m` : classifies designs into safe, marginal, and risky regions
-  using extracted metric thresholds.
+- `classify_design_region.m` : classifies designs into safe, marginal, and risky regions using extracted metric thresholds.
 - `find_margin_thresholds.m` : derives margin thresholds from classified sweep results.
 
 ## Requirements
 
 - MATLAB
 - Standard MATLAB plotting and table I/O support
-- No Python, SPICE simulator, or external measurement hardware is required for the current
-  workflow
+- No Python, SPICE simulator, or external measurement hardware is required for the current workflow
 
 The scripts are intended to be run from the repository root or from the `scripts/`
 directory, depending on the script path setup used in each file.
