@@ -1,13 +1,16 @@
 # SPICE Validation Status
 
-Last Round 4 workflow run: `20260615_192609Z`
+Last Round 4.5 workflow run: `20260615_232840Z`
 
-Status: **PENDING REAL EXPORTED SPICE DATA**
+- Real SPICE data used: **YES**
+- Vendor op-amp macromodels compared: **1**
+- Op-amp model: **OP27**
+- Number of cases: **3 feedback capacitor values**
+- Status: **single-model real SPICE smoke test completed**
+- Q3 SPICE requirement: **still pending**
+- Reason: Q3 prototype requires additional vendor op-amp macromodels, ideally at least 2-3 total models.
+- Hardware measurement performed: **NO**
 
-No real vendor op-amp SPICE macromodel AC export was found in `tia_extension/spice_interface/imported_ac_data/`.
+This is a SPICE macromodel comparison, not hardware validation.
 
-The Q3 SPICE comparison requirement is therefore **pending**, not satisfied.
-
-No SPICE validation claim is made.
-
-No hardware measurement claim is made.
+Correct status: Single-model real SPICE smoke test completed; Q3 SPICE requirement still pending additional vendor macromodels.

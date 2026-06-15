@@ -30,6 +30,9 @@ Use one of the following response formats.
 - `mag_Zt_dBohm`
 - `phase_Zt_deg`
 
+The importer also accepts equivalent compact OP27 LTspice smoke-test
+column names such as `f_Hz`, `mag_Zt_dBohm`, and `phase_Zt_deg`.
+
 ### Complex Transimpedance
 
 - `real_Zt`
@@ -64,3 +67,7 @@ tia_extension/spice_interface/imported_ac_data/
 ```
 
 The folder is intentionally not populated with fake data.
+
+For the Round 4.5 OP27 smoke test, the raw imported LTspice CSV files are
+kept unchanged. No normalised derivative files are required because the
+provided OP27 headers are already supported by the importer.

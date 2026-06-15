@@ -1,12 +1,9 @@
-%RUN_06_COMPARE_WITH_SPICE_EXAMPLE Prepare or run SPICE comparison workflow.
+%RUN_06_COMPARE_WITH_SPICE_EXAMPLE Run OP27 LTspice smoke-test comparison.
 %
-% If real exported SPICE AC CSV files are present in
-% tia_extension/spice_interface/imported_ac_data, this script imports and
-% compares them against matching MATLAB behavioural TIA cases.
-%
-% If no real SPICE data is present, it does not create fake data or fake
-% comparison figures. It writes a pending status and generates only an
-% auxiliary MATLAB behavioural safe-window fraction map.
+% This Round 4.5 script imports real LTspice OP27 macromodel AC data and
+% compares it against the MATLAB behavioural TIA model on the SPICE
+% frequency grid. It does not create or infer SPICE data, and it does not
+% claim hardware validation or full Q3 SPICE validation.
 
 scriptDir = fileparts(mfilename('fullpath'));
 tiaRoot = fileparts(scriptDir);
@@ -18,144 +15,216 @@ figuresDir = fullfile(tiaRoot, 'figures');
 
 addpath(functionsDir);
 addpath(spiceDir);
-ensureDir(spiceDataDir);
 ensureDir(resultsDir);
 ensureDir(figuresDir);
 
 runId = char(datetime('now', 'TimeZone', 'UTC', ...
     'Format', 'yyyyMMdd_HHmmss''Z'''));
 
-candidateCsv = fullfile(resultsDir, 'spice_candidate_cases.csv');
-if ~exist(candidateCsv, 'file')
-    error('run_06_compare_with_spice_example:MissingCandidates', ...
-        'Missing %s. Run Round 3 sweep workflow first.', candidateCsv);
+op27Files = [ ...
+    "OP27_Cf3p455_Risky.csv"; ...
+    "OP27_Cf10p_SafeCandidate.csv"; ...
+    "OP27_Cf22p_Safe.csv"];
+
+for iFile = 1:numel(op27Files)
+    filePath = fullfile(spiceDataDir, char(op27Files(iFile)));
+    if ~exist(filePath, 'file')
+        error('run_06_compare_with_spice_example:MissingOP27Data', ...
+            'Missing required OP27 LTspice CSV file: %s', filePath);
+    end
 end
 
-candidates = readtable(candidateCsv, ...
+metadataPath = fullfile(spiceDir, 'op27_smoke_test_metadata.csv');
+if ~exist(metadataPath, 'file')
+    error('run_06_compare_with_spice_example:MissingMetadata', ...
+        'Missing OP27 smoke-test metadata file: %s', metadataPath);
+end
+
+metadata = readtable(metadataPath, ...
     'TextType', 'string', 'VariableNamingRule', 'preserve');
 
-spiceFiles = dir(fullfile(spiceDataDir, '*.csv'));
-usedRealSpiceData = ~isempty(spiceFiles);
+summaryAll = runOp27SmokeTestComparison( ...
+    op27Files, metadata, spiceDataDir, resultsDir, figuresDir, runId);
 
-if usedRealSpiceData
-    runRealSpiceComparison( ...
-        spiceFiles, candidates, spiceDataDir, resultsDir, figuresDir, runId);
-    updateValidationStatus(spiceDir, true, numel(spiceFiles), runId);
-else
-    updateValidationStatus(spiceDir, false, 0, runId);
-    fprintf('No real exported SPICE CSV files found in %s\n', spiceDataDir);
-    fprintf('SPICE comparison status remains pending.\n');
-end
-
+writetable(summaryAll, fullfile(resultsDir, 'spice_comparison_summary.csv'));
+updateValidationStatus(spiceDir, runId);
 createSafeWindowFractionMap(resultsDir, figuresDir, runId);
 
-fprintf('Round 4 SPICE workflow script complete.\n');
+fprintf('Round 4.5 OP27 LTspice smoke-test comparison complete.\n');
+fprintf('Compared %d real OP27 macromodel AC cases.\n', height(summaryAll));
+fprintf('Q3 SPICE requirement remains pending additional vendor macromodels.\n');
 
-function runRealSpiceComparison(spiceFiles, candidates, spiceDataDir, ...
-        resultsDir, figuresDir, runId)
+function summaryAll = runOp27SmokeTestComparison(op27Files, metadata, ...
+        spiceDataDir, resultsDir, figuresDir, runId)
 summaryAll = table();
+combined = struct('case_id', {}, ...
+    'f_Hz', {}, 'matlab_mag_dBohm', {}, 'spice_mag_dBohm', {});
 
-for iFile = 1:numel(spiceFiles)
-    filePath = fullfile(spiceDataDir, spiceFiles(iFile).name);
+for iFile = 1:numel(op27Files)
+    fileName = char(op27Files(iFile));
+    filePath = fullfile(spiceDataDir, fileName);
     spice = import_spice_ac_data(filePath);
-    caseRow = matchCandidateCase(spice, candidates);
+    caseId = erase(string(fileName), ".csv");
+    metadataRow = metadata(metadata.case_id == caseId, :);
 
-    comparison = compare_tia_matlab_vs_spice(spice, caseRow);
+    if height(metadataRow) ~= 1
+        error('run_06_compare_with_spice_example:MetadataMatch', ...
+            'Expected exactly one metadata row for %s.', caseId);
+    end
 
-    safeName = matlab.lang.makeValidName( ...
-        erase(spiceFiles(iFile).name, ".csv"));
+    matlabCase = makeMatlabCase(spice, metadataRow);
+    comparison = compare_tia_matlab_vs_spice(spice, matlabCase);
+    comparison.summary_table.spice_source_file = ...
+        "tia_extension/spice_interface/imported_ac_data/" + string(fileName);
+
     responseCsv = fullfile(resultsDir, ...
-        ['spice_comparison_response_' safeName '.csv']);
+        ['spice_comparison_response_' char(caseId) '.csv']);
     writetable(comparison.response_table, responseCsv);
 
+    comparison.summary_table.expected_region_from_filename = ...
+        metadataRow.expected_region_from_filename;
+    comparison.summary_table.spice_tool = metadataRow.spice_tool;
+    comparison.summary_table.source_type = metadataRow.source_type;
+    comparison.summary_table.interpolation_direction = ...
+        "MATLAB behavioural response evaluated directly on LTspice frequency points; no SPICE smoothing or resampling.";
     summaryAll = [summaryAll; comparison.summary_table]; %#ok<AGROW>
 
-    magFig = figure('Color', 'w', 'Name', ['SPICE magnitude ' safeName]);
-    semilogx(comparison.response_table.f_Hz, ...
-        comparison.response_table.matlab_mag_dBohm, ...
-        'LineWidth', 1.5, 'DisplayName', 'MATLAB behavioural');
-    hold on;
-    semilogx(comparison.response_table.f_Hz, ...
-        comparison.response_table.spice_mag_dBohm, ...
-        'LineWidth', 1.5, 'DisplayName', 'SPICE macromodel');
-    grid on;
-    box on;
-    xlabel('Frequency (Hz)');
-    ylabel('Transimpedance magnitude (dB ohm)');
-    title('MATLAB behavioural vs SPICE macromodel magnitude');
-    legend('Location', 'southwest');
-    styleAxes(gca);
-    magBase = fullfile(figuresDir, ['spice_compare_' safeName '_magnitude']);
-    magFormats = exportFigureSet(magFig, magBase);
-    close(magFig);
-
-    phaseFig = figure('Color', 'w', 'Name', ['SPICE phase ' safeName]);
-    semilogx(comparison.response_table.f_Hz, ...
-        comparison.response_table.matlab_phase_deg, ...
-        'LineWidth', 1.5, 'DisplayName', 'MATLAB behavioural');
-    hold on;
-    semilogx(comparison.response_table.f_Hz, ...
-        comparison.response_table.spice_phase_deg, ...
-        'LineWidth', 1.5, 'DisplayName', 'SPICE macromodel');
-    grid on;
-    box on;
-    xlabel('Frequency (Hz)');
-    ylabel('Inversion-removed phase (deg)');
-    title('MATLAB behavioural vs SPICE macromodel phase');
-    legend('Location', 'southwest');
-    styleAxes(gca);
-    phaseBase = fullfile(figuresDir, ['spice_compare_' safeName '_phase']);
-    phaseFormats = exportFigureSet(phaseFig, phaseBase);
-    close(phaseFig);
+    magFormats = createMagnitudeFigure( ...
+        comparison.response_table, caseId, figuresDir);
+    phaseFormats = createPhaseFigure( ...
+        comparison.response_table, caseId, figuresDir);
 
     keyParameters = sprintf( ...
-        'Rf=%.3g ohm; Cf=%.3g F; Cpd=%.3g F; A0=%.3g; ft=%.3g Hz; source=%s', ...
-        caseRow.Rf_ohm(1), caseRow.Cf_F(1), caseRow.Cpd_F(1), ...
-        caseRow.A0(1), caseRow.ft_Hz(1), spiceFiles(iFile).name);
+        'op amp=OP27; Rf=%.3g ohm; Cf=%.4g F; Cpd=%.3g F; supply=+15/-15 V; AC current=1 A; A0=%.3g; ft=%.6g Hz', ...
+        matlabCase.Rf_ohm(1), matlabCase.Cf_F(1), matlabCase.Cpd_F(1), ...
+        matlabCase.A0(1), matlabCase.ft_Hz(1));
 
     appendFigureManifest( ...
         fullfile(figuresDir, 'figure_manifest_tia.csv'), ...
-        string(['spice_compare_' safeName '_magnitude.png']), ...
+        string(['spice_compare_' char(caseId) '_magnitude.png']), ...
         "tia_extension/scripts/run_06_compare_with_spice_example.m", ...
-        string(['tia_extension/results/spice_comparison_response_' safeName '.csv']), ...
+        string(['tia_extension/results/spice_comparison_response_' char(caseId) '.csv']), ...
         string(keyParameters), ...
-        "MATLAB behavioural TIA magnitude response compared with real exported SPICE macromodel AC data.", ...
-        "SPICE macromodel comparison", ...
+        "Magnitude comparison between MATLAB behavioural TIA response and real LTspice OP27 macromodel AC smoke-test data.", ...
+        "real LTspice OP27 macromodel smoke-test comparison", ...
         string(strjoin(magFormats, ';')), ...
         string(runId));
 
     appendFigureManifest( ...
         fullfile(figuresDir, 'figure_manifest_tia.csv'), ...
-        string(['spice_compare_' safeName '_phase.png']), ...
+        string(['spice_compare_' char(caseId) '_phase.png']), ...
         "tia_extension/scripts/run_06_compare_with_spice_example.m", ...
-        string(['tia_extension/results/spice_comparison_response_' safeName '.csv']), ...
+        string(['tia_extension/results/spice_comparison_response_' char(caseId) '.csv']), ...
         string(keyParameters), ...
-        "MATLAB behavioural TIA phase response compared with real exported SPICE macromodel AC data.", ...
-        "SPICE macromodel comparison", ...
+        "Phase comparison between MATLAB behavioural TIA response and real LTspice OP27 macromodel AC smoke-test data.", ...
+        "real LTspice OP27 macromodel smoke-test comparison", ...
         string(strjoin(phaseFormats, ';')), ...
         string(runId));
+
+    combined(end+1).case_id = caseId; %#ok<AGROW>
+    combined(end).f_Hz = comparison.response_table.f_Hz;
+    combined(end).matlab_mag_dBohm = ...
+        comparison.response_table.matlab_mag_dBohm;
+    combined(end).spice_mag_dBohm = ...
+        comparison.response_table.spice_mag_dBohm;
 end
 
-writetable(summaryAll, fullfile(resultsDir, 'spice_comparison_summary.csv'));
+combinedFormats = createCombinedMagnitudeFigure(combined, figuresDir);
+appendFigureManifest( ...
+    fullfile(figuresDir, 'figure_manifest_tia.csv'), ...
+    "spice_compare_OP27_Cf_sweep_magnitude.png", ...
+    "tia_extension/scripts/run_06_compare_with_spice_example.m", ...
+    "tia_extension/results/spice_comparison_summary.csv", ...
+    "OP27 LTspice smoke test; Rf=10k ohm; Cpd=10pF; Cf=[3.455,10,22] pF; supply=+15/-15 V; AC current=1 A", ...
+    "Combined magnitude comparison showing that increasing Cf reduces OP27 LTspice peaking and bandwidth.", ...
+    "real LTspice OP27 macromodel smoke-test comparison", ...
+    string(strjoin(combinedFormats, ';')), ...
+    string(runId));
 end
 
-function caseRow = matchCandidateCase(spice, candidates)
-if ~isfield(spice.metadata, 'source_has_case_parameters') || ...
-        ~spice.metadata.source_has_case_parameters
-    error('run_06_compare_with_spice_example:MissingCaseMetadata', ...
-        ['SPICE export must include Rf_ohm, Cf_F, Cpd_F, and ft_Hz ' ...
-         'metadata columns to match a MATLAB behavioural candidate.']);
+function matlabCase = makeMatlabCase(spice, metadataRow)
+if ~isfield(spice.metadata, 'A0') || ~isfield(spice.metadata, 'ft_Hz')
+    error('run_06_compare_with_spice_example:MissingOpAmpMetadata', ...
+        'OP27 CSV must include A0 and ft_Hz columns for behavioural comparison.');
 end
 
-score = abs(log(candidates.Rf_ohm / spice.metadata.Rf_ohm)) + ...
-    abs(log(candidates.Cf_F / spice.metadata.Cf_F)) + ...
-    abs(log(candidates.Cpd_F / spice.metadata.Cpd_F)) + ...
-    abs(log(candidates.ft_Hz / spice.metadata.ft_Hz));
-[~, idx] = min(score);
-caseRow = candidates(idx, :);
+matlabCase = table( ...
+    metadataRow.Rf_ohm(1), metadataRow.Cf_F(1), metadataRow.Cpd_F(1), ...
+    spice.metadata.A0, spice.metadata.ft_Hz, ...
+    'VariableNames', {'Rf_ohm', 'Cf_F', 'Cpd_F', 'A0', 'ft_Hz'});
+end
+
+function formats = createMagnitudeFigure(responseTable, caseId, figuresDir)
+fig = figure('Color', 'w', 'Name', ['OP27 magnitude ' char(caseId)]);
+semilogx(responseTable.f_Hz, responseTable.matlab_mag_dBohm, ...
+    'LineWidth', 1.5, 'DisplayName', 'MATLAB behavioural');
+hold on;
+semilogx(responseTable.f_Hz, responseTable.spice_mag_dBohm, ...
+    'LineWidth', 1.5, 'DisplayName', 'LTspice OP27 macromodel');
+grid on;
+box on;
+xlabel('Frequency (Hz)');
+ylabel('Transimpedance magnitude (dB ohm)');
+title(['OP27 SPICE macromodel smoke test: ' char(caseId)], ...
+    'Interpreter', 'none');
+legend('Location', 'southwest');
+styleAxes(gca);
+formats = exportFigureSet( ...
+    fig, fullfile(figuresDir, ['spice_compare_' char(caseId) '_magnitude']));
+close(fig);
+end
+
+function formats = createPhaseFigure(responseTable, caseId, figuresDir)
+fig = figure('Color', 'w', 'Name', ['OP27 phase ' char(caseId)]);
+semilogx(responseTable.f_Hz, responseTable.matlab_phase_deg, ...
+    'LineWidth', 1.5, 'DisplayName', 'MATLAB behavioural');
+hold on;
+semilogx(responseTable.f_Hz, responseTable.spice_phase_deg, ...
+    'LineWidth', 1.5, 'DisplayName', 'LTspice OP27 macromodel');
+grid on;
+box on;
+xlabel('Frequency (Hz)');
+ylabel('Inversion-removed phase (deg)');
+title(['OP27 SPICE macromodel smoke test: ' char(caseId)], ...
+    'Interpreter', 'none');
+legend('Location', 'southwest');
+styleAxes(gca);
+formats = exportFigureSet( ...
+    fig, fullfile(figuresDir, ['spice_compare_' char(caseId) '_phase']));
+close(fig);
+end
+
+function formats = createCombinedMagnitudeFigure(combined, figuresDir)
+fig = figure('Color', 'w', 'Name', 'OP27 Cf sweep magnitude');
+for iCase = 1:numel(combined)
+    semilogx(combined(iCase).f_Hz, combined(iCase).spice_mag_dBohm, ...
+        'LineWidth', 1.5, ...
+        'DisplayName', [char(combined(iCase).case_id) ' LTspice']);
+    hold on;
+end
+grid on;
+box on;
+xlabel('Frequency (Hz)');
+ylabel('Transimpedance magnitude (dB ohm)');
+title('OP27 LTspice smoke test Cf sweep');
+legend('Location', 'southwest', 'Interpreter', 'none');
+styleAxes(gca);
+formats = exportFigureSet( ...
+    fig, fullfile(figuresDir, 'spice_compare_OP27_Cf_sweep_magnitude'));
+close(fig);
 end
 
 function createSafeWindowFractionMap(resultsDir, figuresDir, runId)
+sourceCsv = fullfile(resultsDir, 'tia_safe_window_fraction_map.csv');
+pngPath = fullfile(figuresDir, 'tia_safe_window_fraction_map_Cpd_ft.png');
+pdfPath = fullfile(figuresDir, 'tia_safe_window_fraction_map_Cpd_ft.pdf');
+svgPath = fullfile(figuresDir, 'tia_safe_window_fraction_map_Cpd_ft.svg');
+if exist(sourceCsv, 'file') && exist(pngPath, 'file') && ...
+        exist(pdfPath, 'file') && exist(svgPath, 'file')
+    fprintf('Leaving existing safe-window fraction map unchanged.\n');
+    return;
+end
+
 sweepCsv = fullfile(resultsDir, 'tia_sweep_summary.csv');
 if ~exist(sweepCsv, 'file')
     fprintf('Skipping safe-window fraction map; missing %s\n', sweepCsv);
@@ -196,11 +265,11 @@ for iRf = 1:numel(Rf_values)
     end
 end
 
-sourceCsv = fullfile(resultsDir, 'tia_safe_window_fraction_map.csv');
 writetable(fractionMap, sourceCsv);
 
 fig = figure('Color', 'w', 'Name', 'TIA safe-window fraction map');
-tiledlayout(1, numel(Rf_values), 'Padding', 'compact', 'TileSpacing', 'compact');
+tiledlayout(1, numel(Rf_values), 'Padding', 'compact', ...
+    'TileSpacing', 'compact');
 
 for iRf = 1:numel(Rf_values)
     nexttile;
@@ -249,25 +318,23 @@ appendFigureManifest( ...
     string(runId));
 end
 
-function updateValidationStatus(spiceDir, usedRealData, modelCount, runId)
+function updateValidationStatus(spiceDir, runId)
 statusPath = fullfile(spiceDir, 'spice_validation_status.md');
 fid = fopen(statusPath, 'w');
 cleanup = onCleanup(@() fclose(fid));
 
 fprintf(fid, '# SPICE Validation Status\n\n');
-fprintf(fid, 'Last Round 4 workflow run: `%s`\n\n', runId);
-
-if usedRealData
-    fprintf(fid, 'Status: **SPICE MACROMODEL DATA IMPORTED**\n\n');
-    fprintf(fid, 'Imported SPICE CSV files: `%d`\n\n', modelCount);
-    fprintf(fid, 'This is model-level SPICE macromodel comparison, not hardware validation.\n');
-else
-    fprintf(fid, 'Status: **PENDING REAL EXPORTED SPICE DATA**\n\n');
-    fprintf(fid, 'No real vendor op-amp SPICE macromodel AC export was found in `tia_extension/spice_interface/imported_ac_data/`.\n\n');
-    fprintf(fid, 'The Q3 SPICE comparison requirement is therefore **pending**, not satisfied.\n\n');
-    fprintf(fid, 'No SPICE validation claim is made.\n\n');
-    fprintf(fid, 'No hardware measurement claim is made.\n');
-end
+fprintf(fid, 'Last Round 4.5 workflow run: `%s`\n\n', runId);
+fprintf(fid, '- Real SPICE data used: **YES**\n');
+fprintf(fid, '- Vendor op-amp macromodels compared: **1**\n');
+fprintf(fid, '- Op-amp model: **OP27**\n');
+fprintf(fid, '- Number of cases: **3 feedback capacitor values**\n');
+fprintf(fid, '- Status: **single-model real SPICE smoke test completed**\n');
+fprintf(fid, '- Q3 SPICE requirement: **still pending**\n');
+fprintf(fid, '- Reason: Q3 prototype requires additional vendor op-amp macromodels, ideally at least 2-3 total models.\n');
+fprintf(fid, '- Hardware measurement performed: **NO**\n\n');
+fprintf(fid, 'This is a SPICE macromodel comparison, not hardware validation.\n\n');
+fprintf(fid, 'Correct status: Single-model real SPICE smoke test completed; Q3 SPICE requirement still pending additional vendor macromodels.\n');
 end
 
 function ensureDir(pathName)

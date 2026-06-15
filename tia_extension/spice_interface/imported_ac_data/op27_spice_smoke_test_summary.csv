@@ -1,0 +1,4 @@
+case_label,vendor_model,Rf_ohm,Cpd_F,Cf_F,low_freq_gain_dBohm,low_freq_gain_ohm,peak_mag_dBohm,peak_freq_Hz,peaking_dB,bandwidth_3dB_Hz,phase_at_bandwidth_deg_raw,classification_project_threshold,note
+OP27_Cf3p455_Risky,OP27,10000,1e-11,3.455e-12,79.99999627994936,9999.995717134341,91.8631388886627,2187761.62394971,11.863142608713346,3123080.4990984392,-9.200051310152162,Risky,LTspice OP27 macromodel smoke-test; raw phase includes inversion convention.
+OP27_Cf10p_SafeCandidate,OP27,10000,1e-11,1e-11,79.99999627845699,9999.995715416188,80.4802825428404,1840772.00146908,0.48028626438340893,2677545.171196353,33.669600078703894,Safe,LTspice OP27 macromodel smoke-test; raw phase includes inversion convention.
+OP27_Cf22p_Safe,OP27,10000,1e-11,2.2e-11,79.99999627194865,9999.995707923186,79.9999962781123,10.0,6.16365980476985e-09,838829.8847802974,122.44497733576733,Safe,LTspice OP27 macromodel smoke-test; raw phase includes inversion convention.
