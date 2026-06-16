@@ -1,0 +1,2 @@
+Rf_ohm,Cf_F,Cpd_F,A0,ft_Hz,fp_Hz,fc_ideal_Hz,capacitive_noise_gain,gbw_margin_index,Rf_eff_ohm,gain_error_pct,bandwidth_Hz,bandwidth_ratio,peaking_dB,peaking_frequency_Hz,phase_at_bandwidth_deg,classification,classification_code
+100000,1e-12,2e-12,100000,100000000,1000,1591549.43091895,3,20.943951023932,99999.0000074678,-0.000999992532189935,1642366.31572658,1.03192919039799,5.93485696013527e-11,10,-47.8435585338747,Safe,1

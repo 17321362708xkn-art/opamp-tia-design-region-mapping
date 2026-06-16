@@ -1,0 +1,4 @@
+case_id,op_amp_model,spice_tool,source_type,Rf_ohm,Cpd_F,Cf_F,supply_positive_V,supply_negative_V,ac_current_A,expected_region_from_filename,raw_imported_csv,notes
+OP27_Cf3p455_Risky,OP27,LTspice,built-in LTspice OP27 macromodel,10000,1e-11,3.455e-12,15,-15,1,Risky,tia_extension/spice_interface/imported_ac_data/OP27_Cf3p455_Risky.csv,Real LTspice OP27 macromodel AC smoke-test export; raw file unchanged.
+OP27_Cf10p_SafeCandidate,OP27,LTspice,built-in LTspice OP27 macromodel,10000,1e-11,1e-11,15,-15,1,SafeCandidate,tia_extension/spice_interface/imported_ac_data/OP27_Cf10p_SafeCandidate.csv,Real LTspice OP27 macromodel AC smoke-test export; raw file unchanged.
+OP27_Cf22p_Safe,OP27,LTspice,built-in LTspice OP27 macromodel,10000,1e-11,2.2e-11,15,-15,1,Safe,tia_extension/spice_interface/imported_ac_data/OP27_Cf22p_Safe.csv,Real LTspice OP27 macromodel AC smoke-test export; raw file unchanged.
