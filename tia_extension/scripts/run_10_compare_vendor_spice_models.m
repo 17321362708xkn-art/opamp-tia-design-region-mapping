@@ -1,9 +1,9 @@
-%RUN_10_COMPARE_VENDOR_SPICE_MODELS Compare future Round 8 vendor SPICE data.
+%RUN_10_COMPARE_VENDOR_SPICE_MODELS Compare vendor SPICE processed data.
 %
-% This Round 8A script prepares the comparison entry point for real OPA818
-% and ADA4817-1 LTspice macromodel exports. It does not create, infer, or
-% smooth SPICE data. If no real Round 8 vendor export CSV files are present,
-% it exits cleanly with a status message.
+% This script is the guarded comparison entry point for real OPA818 and
+% ADA4817-1 LTspice macromodel exports. It does not create, infer, or smooth
+% SPICE data. If no real vendor export CSV files are present, it exits
+% cleanly with a status message.
 
 scriptDir = fileparts(mfilename('fullpath'));
 tiaRoot = fileparts(scriptDir);
@@ -21,7 +21,7 @@ addpath(spiceDir);
 targetPrefixes = ["OPA818", "ADA4817"];
 
 if ~exist(spiceDataDir, 'dir')
-    fprintf(['No Round 8 real vendor SPICE export data found yet. ' ...
+    fprintf(['No real vendor SPICE export data found yet. ' ...
         'Run LTspice manually and add exported data before comparison.\n']);
     return;
 end
@@ -30,14 +30,14 @@ allFiles = dir(fullfile(spiceDataDir, '**', '*.csv'));
 fileNames = string({allFiles.name})';
 caseIds = erase(fileNames, ".csv");
 metadataCaseIds = erase(caseIds, "_processed");
-isRound8VendorCase = startsWith(metadataCaseIds, targetPrefixes(1)) | ...
+isVendorCase = startsWith(metadataCaseIds, targetPrefixes(1)) | ...
     startsWith(metadataCaseIds, targetPrefixes(2));
-round8Files = allFiles(isRound8VendorCase);
-round8CaseIds = caseIds(isRound8VendorCase);
-round8MetadataCaseIds = metadataCaseIds(isRound8VendorCase);
+vendorFiles = allFiles(isVendorCase);
+vendorCaseIds = caseIds(isVendorCase);
+vendorMetadataCaseIds = metadataCaseIds(isVendorCase);
 
-if isempty(round8Files)
-    fprintf(['No Round 8 real vendor SPICE export data found yet. ' ...
+if isempty(vendorFiles)
+    fprintf(['No real vendor SPICE export data found yet. ' ...
         'Run LTspice manually and add exported data before comparison.\n']);
     return;
 end
@@ -59,11 +59,11 @@ summaryAll = table();
 successfulComparisons = 0;
 processedOnlyCases = 0;
 
-for iFile = 1:numel(round8Files)
-    fileName = string(round8Files(iFile).name);
-    caseId = round8CaseIds(iFile);
-    metadataCaseId = round8MetadataCaseIds(iFile);
-    filePath = fullfile(round8Files(iFile).folder, char(fileName));
+for iFile = 1:numel(vendorFiles)
+    fileName = string(vendorFiles(iFile).name);
+    caseId = vendorCaseIds(iFile);
+    metadataCaseId = vendorMetadataCaseIds(iFile);
+    filePath = fullfile(vendorFiles(iFile).folder, char(fileName));
 
     metadataRow = metadata(metadata.case_id == metadataCaseId, :);
     if height(metadataRow) ~= 1
@@ -147,16 +147,18 @@ end
 
 if successfulComparisons == 0
     if processedOnlyCases > 0
-        fprintf(['Round 8 vendor processed CSV files were detected, but ' ...
+        fprintf(['Vendor processed CSV files were detected, but ' ...
             'no behavioural overlays were generated because A0 / ft_Hz ' ...
             'metadata were unavailable for those processed vendor-only exports.\n']);
-        fprintf(['This is expected for the Round 8B OPA818 vendor ' ...
-            'LTspice import; run_11_import_opa818_spice_round8b.m ' ...
-            'creates the OPA818 vendor summary and Cf sweep figures.\n']);
-        fprintf('Q3 SPICE requirement remains pending additional vendor macromodel comparison.\n');
+        fprintf(['This is expected for the Round 8B OPA818 and Round 9 ' ...
+            'ADA4817 vendor LTspice imports; the dedicated import scripts ' ...
+            'create their vendor summaries and Cf sweep figures.\n']);
+        fprintf(['Three real vendor macromodel sets are now available when ' ...
+            'OP27, OPA818, and ADA4817 summaries are present; final Q3 ' ...
+            'readiness still depends on manuscript polish and review.\n']);
         return;
     end
-    fprintf(['Round 8 vendor SPICE CSV files were found, but none had ' ...
+    fprintf(['Vendor SPICE CSV files were found, but none had ' ...
         'enough real import and comparison metadata to run.\n']);
     fprintf(['Processed CSV files must include importable response data ' ...
         'and A0 / ft_Hz metadata for behavioural comparison.\n']);
@@ -167,10 +169,10 @@ summaryPath = fullfile(resultsDir, ...
     'spice_comparison_summary_vendor_round8.csv');
 writetable(summaryAll, summaryPath);
 
-fprintf('Round 8 vendor SPICE comparison complete for %d real exported cases.\n', ...
+fprintf('Vendor SPICE comparison complete for %d real exported cases.\n', ...
     successfulComparisons);
 fprintf('Wrote %s\n', summaryPath);
-fprintf('Q3 SPICE requirement remains pending until the added real vendor comparison set is reviewed.\n');
+fprintf('Review the generated overlays before using them for manuscript claims.\n');
 
 function relPath = makeImportedDataRelative(filePath, spiceDataDir)
 spicePrefix = [char(spiceDataDir) filesep];

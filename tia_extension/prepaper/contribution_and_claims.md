@@ -2,11 +2,11 @@
 
 ## Conservative Contribution Statement
 
-This work provides a reproducible MATLAB behavioural workflow for exploring photodiode TIA bandwidth, peaking, design-region classification, OP27 and OPA818 LTspice macromodel comparison evidence, and first-pass behavioural noise trade-offs. The current package is a research prototype and requires at least one additional vendor SPICE macromodel comparison before journal submission.
+This work provides a reproducible MATLAB behavioural workflow for exploring photodiode TIA bandwidth, peaking, design-region classification, OP27, OPA818, and ADA4817 LTspice macromodel comparison evidence, and first-pass behavioural noise trade-offs. The current package is a research prototype and still requires manuscript writing, final figure/caption review, related-work positioning, and supervisor or domain review before journal submission.
 
 ## Stronger But Still Defensible Contribution Statement
 
-This work demonstrates a pre-paper workflow for simulation-assisted photodiode TIA design exploration: finite-gain MATLAB modelling, design-region mapping, OP27 LTspice smoke-test comparison, OPA818 vendor macromodel import, and first-pass noise-bandwidth trade-off figures, all tied to reproducible scripts, CSV source data, and a figure manifest.
+This work demonstrates a pre-paper workflow for simulation-assisted photodiode TIA design exploration: finite-gain MATLAB modelling, design-region mapping, OP27 LTspice smoke-test comparison, OPA818 and ADA4817 vendor macromodel imports, and first-pass noise-bandwidth trade-off figures, all tied to reproducible scripts, CSV source data, and a figure manifest.
 
 ## Claims Allowed
 
@@ -15,7 +15,8 @@ This work demonstrates a pre-paper workflow for simulation-assisted photodiode T
 - Increasing feedback capacitance in the existing sweeps reduces peaking and bandwidth.
 - The Round 4.5 comparison uses real LTspice OP27 macromodel AC smoke-test data.
 - The Round 8B import uses real LTspice OPA818 AC data generated from the official TI OPA818 PSpice macromodel.
-- Vendor macromodel comparison evidence currently covers OP27 and OPA818; at least one more vendor model is still recommended before submission.
+- The Round 9 import uses real LTspice ADA4817 AC data generated from the official ADI ADA4817 SPICE macromodel.
+- Vendor macromodel comparison evidence currently covers OP27, OPA818, and ADA4817.
 - Round 5 noise results are first-pass MATLAB behavioural estimates based on stated assumptions.
 - Current status is **research prototype / Q3 pre-paper prototype, not yet fully Q3 submission-ready**.
 
@@ -26,7 +27,7 @@ This work demonstrates a pre-paper workflow for simulation-assisted photodiode T
 - Do not claim full SPICE coverage.
 - Do not claim detector-level experimental results.
 - Do not claim universal photodiode TIA design laws.
-- Do not claim final journal submission readiness before at least one additional vendor SPICE macromodel comparison and final review are added.
+- Do not claim final journal submission readiness before manuscript polish, final figure/caption review, related-work positioning, and supervisor or domain review are completed.
 - Do not imply OP27 is an optimized or preferred photodiode TIA choice from the current evidence alone.
 
 ## Safe/Marginal/Risky Classification Wording
@@ -37,7 +38,7 @@ Avoid wording that implies the categories are formal industry standards or guara
 
 ## MATLAB/SPICE Agreement And Mismatch Wording
 
-Use: "The OP27 LTspice smoke-test comparison and OPA818 vendor macromodel import check whether selected MATLAB behavioural trends are directionally consistent with real macromodel data. Agreement and mismatch should be interpreted as limited macromodel comparison evidence, not broad SPICE coverage or hardware validation."
+Use: "The OP27 LTspice smoke-test comparison and the OPA818 and ADA4817 vendor macromodel imports check whether selected MATLAB behavioural trends are directionally consistent with real macromodel data. Agreement and mismatch should be interpreted as limited macromodel comparison evidence, not broad SPICE coverage or hardware validation."
 
 Use when discussing mismatch: "Observed differences are expected because the MATLAB model uses a simplified single-pole op-amp representation, while the LTspice OP27 macromodel includes more detailed frequency-response behaviour."
 
