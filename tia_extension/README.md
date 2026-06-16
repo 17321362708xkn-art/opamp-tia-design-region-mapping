@@ -54,6 +54,14 @@ The Round 5 noise scripts write:
 - `tia_extension/results/noise_tradeoff_summary.csv`
 - first-pass noise contribution and noise-bandwidth trade-off figures in PDF, SVG, and 600 dpi PNG where supported by MATLAB.
 
+## Current Research Status
+
+- Round 5 first-pass behavioural noise analysis is completed.
+- OP27 real LTspice smoke-test frequency-response comparison is completed for the current single-model evidence set.
+- First-pass noise contribution and noise-bandwidth trade-off figures are completed.
+- Q3 SPICE requirement is still pending additional real vendor macromodel comparisons.
+- Current status: Q3 pre-paper prototype, not final submission package.
+
 ## Current Limitations
 
 - MATLAB behavioural model only.
