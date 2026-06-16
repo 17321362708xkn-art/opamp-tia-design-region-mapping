@@ -12,6 +12,8 @@ Round 8B imports the real OPA818 LTspice text exports generated from the officia
 
 Round 9 imports the real ADA4817 LTspice text exports generated from the official ADI ADA4817 SPICE macromodel for four `Cf` cases. The earlier one-more-vendor SPICE evidence gap is now substantially addressed.
 
+Round 10 creates a pre-paper manuscript skeleton, results storyline, figure/table plan, contribution drafts, abstract options, and a claims-vs-evidence matrix. This round adds organization and claim discipline only; it does not add new simulation data.
+
 Current status: **research prototype / Q3 pre-paper prototype, not yet fully Q3 submission-ready**.
 
 Required status wording for this round: **Q3 pre-paper prototype formed with three real vendor SPICE macromodel comparison sets; final Q3 submission readiness still requires manuscript polish, figure/caption review, related-work positioning, and supervisor or domain review.**
@@ -32,6 +34,13 @@ No hardware measurement was performed. The first-pass noise estimates are calcul
 - Datasheet-derived vendor op-amp candidate table from `tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m`.
 - Round 8A vendor SPICE preparation documents, metadata template, and guarded comparison entry point for future vendor exports.
 - OPA818 summary table, ADA4817 summary table, and combined OP27/OPA818/ADA4817 vendor-model summary.
+- Round 10 manuscript-planning files:
+  - `tia_extension/prepaper/manuscript_skeleton.md`
+  - `tia_extension/prepaper/results_storyline.md`
+  - `tia_extension/prepaper/figure_table_plan.md`
+  - `tia_extension/prepaper/claims_vs_evidence_matrix.md`
+  - `tia_extension/prepaper/contribution_statement_round10.md`
+  - `tia_extension/prepaper/abstract_draft_options.md`
 
 ## Evidence Still Missing
 
@@ -45,7 +54,7 @@ No hardware measurement was performed. The first-pass noise estimates are calcul
 ## Portfolio / Research Prototype / Submission Status
 
 - Portfolio evidence: strong enough to show a reproducible MATLAB TIA workflow, figures, tables, and disciplined validation boundaries.
-- Research prototype evidence: formed, because the workflow includes behavioural modelling, design-region sweeps, OP27 smoke-test comparison, OPA818 and ADA4817 vendor macromodel imports, first-pass noise trade-off analysis, and datasheet candidate screening.
+- Research prototype evidence: formed, because the workflow includes behavioural modelling, design-region sweeps, OP27 smoke-test comparison, OPA818 and ADA4817 vendor macromodel imports, first-pass noise trade-off analysis, datasheet candidate screening, and Round 10 manuscript-planning artifacts.
 - Submission status: not final, because the package still needs final manuscript writing, related-work positioning, figure and caption polish, cross-model review, and supervisor or domain review.
 
 Final status: **research prototype / Q3 pre-paper prototype, not yet fully Q3 submission-ready**.
