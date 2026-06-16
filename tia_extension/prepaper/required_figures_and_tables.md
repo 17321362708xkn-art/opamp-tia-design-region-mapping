@@ -16,6 +16,8 @@
 - OP27 safe-case magnitude comparison: `tia_extension/figures/spice_compare_OP27_Cf22p_Safe_magnitude.png` with PDF/SVG companions.
 - OP27 safe-case phase comparison: `tia_extension/figures/spice_compare_OP27_Cf22p_Safe_phase.png` with PDF/SVG companions.
 - OP27 feedback-capacitance sweep magnitude: `tia_extension/figures/spice_compare_OP27_Cf_sweep_magnitude.png` with PDF/SVG companions.
+- OPA818 feedback-capacitance sweep magnitude: `tia_extension/figures/spice_opa818_cf_sweep_magnitude.png` with SVG companion.
+- OPA818 feedback-capacitance sweep phase: `tia_extension/figures/spice_opa818_cf_sweep_phase.png` with SVG companion.
 - Noise contribution figure: `tia_extension/figures/tia_noise_contribution_baseline.png` with PDF/SVG companions.
 - Noise bandwidth trade-off figure: `tia_extension/figures/tia_noise_bandwidth_tradeoff.png` with PDF/SVG companions.
 
@@ -34,6 +36,9 @@
   - `tia_extension/results/spice_comparison_response_OP27_Cf3p455_Risky.csv`
   - `tia_extension/results/spice_comparison_response_OP27_Cf10p_SafeCandidate.csv`
   - `tia_extension/results/spice_comparison_response_OP27_Cf22p_Safe.csv`
+- OPA818 Round 8B summary CSV: `tia_extension/results/spice_comparison_summary_opa818_round8.csv`.
+- Combined vendor macromodel summary CSV: `tia_extension/results/spice_comparison_summary_vendor_models.csv`.
+- OPA818 processed AC data CSVs in `tia_extension/spice_interface/imported_ac_data/round8_opa818/`.
 - Noise baseline summary: `tia_extension/results/noise_baseline_summary.csv`.
 - Noise trade-off summary: `tia_extension/results/noise_tradeoff_summary.csv`.
 - Figure manifest: `tia_extension/figures/figure_manifest_tia.csv`.
@@ -45,10 +50,10 @@
 
 ## Missing Figures And Tables Before Submission
 
-- Additional vendor op-amp SPICE comparison table covering more than OP27.
+- At least one additional vendor op-amp SPICE comparison table entry beyond OP27 and OPA818.
 - Cross-model Safe/Marginal/Risky comparison table for selected cases.
 - Final manuscript-ready verification of datasheet values before quantitative op-amp ranking.
 - Final target-journal figure layouts, panel labels, and caption formatting.
 - Optional SPICE noise comparison figure if a later round adds real SPICE noise data.
 
-The Round 7 datasheet table and candidate selection summary partially address the candidate-selection blocker for later macromodel work. They do not replace real vendor SPICE macromodel comparison.
+The Round 7 datasheet table and candidate selection summary partially address the candidate-selection blocker for later macromodel work. Round 8B adds OPA818 real vendor macromodel evidence, but it does not replace the need for at least one more vendor SPICE macromodel comparison before a final submission-readiness claim.

@@ -26,12 +26,15 @@ if ~exist(spiceDataDir, 'dir')
     return;
 end
 
-allFiles = dir(fullfile(spiceDataDir, '*.csv'));
+allFiles = dir(fullfile(spiceDataDir, '**', '*.csv'));
 fileNames = string({allFiles.name})';
 caseIds = erase(fileNames, ".csv");
-isRound8VendorCase = startsWith(caseIds, targetPrefixes(1)) | ...
-    startsWith(caseIds, targetPrefixes(2));
+metadataCaseIds = erase(caseIds, "_processed");
+isRound8VendorCase = startsWith(metadataCaseIds, targetPrefixes(1)) | ...
+    startsWith(metadataCaseIds, targetPrefixes(2));
 round8Files = allFiles(isRound8VendorCase);
+round8CaseIds = caseIds(isRound8VendorCase);
+round8MetadataCaseIds = metadataCaseIds(isRound8VendorCase);
 
 if isempty(round8Files)
     fprintf(['No Round 8 real vendor SPICE export data found yet. ' ...
@@ -54,13 +57,15 @@ runId = char(datetime('now', 'TimeZone', 'UTC', ...
     'Format', 'yyyyMMdd_HHmmss''Z'''));
 summaryAll = table();
 successfulComparisons = 0;
+processedOnlyCases = 0;
 
 for iFile = 1:numel(round8Files)
     fileName = string(round8Files(iFile).name);
-    caseId = erase(fileName, ".csv");
-    filePath = fullfile(spiceDataDir, char(fileName));
+    caseId = round8CaseIds(iFile);
+    metadataCaseId = round8MetadataCaseIds(iFile);
+    filePath = fullfile(round8Files(iFile).folder, char(fileName));
 
-    metadataRow = metadata(metadata.case_id == caseId, :);
+    metadataRow = metadata(metadata.case_id == metadataCaseId, :);
     if height(metadataRow) ~= 1
         warning('run_10_compare_vendor_spice_models:MetadataMatch', ...
             'Skipping %s because metadata template has %d matching rows.', ...
@@ -81,12 +86,13 @@ for iFile = 1:numel(round8Files)
     if ~hasComparisonParameters
         warning('run_10_compare_vendor_spice_models:MissingComparisonParameters', ...
             'Skipping %s: %s', caseId, skipReason);
+        processedOnlyCases = processedOnlyCases + 1;
         continue;
     end
 
     comparison = compare_tia_matlab_vs_spice(spice, matlabCase);
     comparison.summary_table.spice_source_file = ...
-        "tia_extension/spice_interface/imported_ac_data/" + fileName;
+        makeImportedDataRelative(filePath, spiceDataDir);
     comparison.summary_table.expected_region_from_visual_inspection = ...
         metadataRow.expected_region_from_visual_inspection;
     comparison.summary_table.spice_tool = metadataRow.spice_tool;
@@ -140,6 +146,16 @@ for iFile = 1:numel(round8Files)
 end
 
 if successfulComparisons == 0
+    if processedOnlyCases > 0
+        fprintf(['Round 8 vendor processed CSV files were detected, but ' ...
+            'no behavioural overlays were generated because A0 / ft_Hz ' ...
+            'metadata were unavailable for those processed vendor-only exports.\n']);
+        fprintf(['This is expected for the Round 8B OPA818 vendor ' ...
+            'LTspice import; run_11_import_opa818_spice_round8b.m ' ...
+            'creates the OPA818 vendor summary and Cf sweep figures.\n']);
+        fprintf('Q3 SPICE requirement remains pending additional vendor macromodel comparison.\n');
+        return;
+    end
     fprintf(['Round 8 vendor SPICE CSV files were found, but none had ' ...
         'enough real import and comparison metadata to run.\n']);
     fprintf(['Processed CSV files must include importable response data ' ...
@@ -155,6 +171,13 @@ fprintf('Round 8 vendor SPICE comparison complete for %d real exported cases.\n'
     successfulComparisons);
 fprintf('Wrote %s\n', summaryPath);
 fprintf('Q3 SPICE requirement remains pending until the added real vendor comparison set is reviewed.\n');
+
+function relPath = makeImportedDataRelative(filePath, spiceDataDir)
+spicePrefix = [char(spiceDataDir) filesep];
+rel = strrep(char(filePath), spicePrefix, '');
+rel = strrep(rel, filesep, '/');
+relPath = "tia_extension/spice_interface/imported_ac_data/" + string(rel);
+end
 
 function [matlabCase, ok, reason] = makeRound8MatlabCase(spice, metadataRow)
 ok = false;
