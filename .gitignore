@@ -29,9 +29,12 @@ Thumbs.db
 *.log
 *.tmp
 *.raw
+*.net
 
 # Local LTspice/vendor artefacts
 
 tia_extension/spice_interface/local_vendor_models/
+tia_extension/spice_interface/vendor_models_local/
+tia_extension/spice_interface/vendor_model_cache/
 tia_extension/spice_interface/ltspice_smoke_test/exports_raw/
 tia_extension/spice_interface/ltspice_smoke_test/**/*.net
