@@ -10,6 +10,8 @@ Date: 2026-06-16
 - `tia_extension/datasheets/vendor_opamp_datasheet_sources.csv`
 - `tia_extension/datasheets/vendor_opamp_candidate_table.csv`
 - `tia_extension/datasheets/vendor_opamp_candidate_table.md`
+- `tia_extension/datasheets/vendor_opamp_candidate_table_si.csv`
+- `tia_extension/datasheets/vendor_opamp_candidate_selection_summary.md`
 - `tia_extension/datasheets/vendor_opamp_datasheet_parameter_record.md`
 - `tia_extension/datasheets/vendor_opamp_table_manifest.csv`
 - `tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m`
@@ -25,11 +27,15 @@ Date: 2026-06-16
 ## Scope Control
 
 - Added a datasheet-derived vendor op-amp candidate table for later TIA SPICE macromodel planning.
+- Added an SI-normalized machine-readable table generated from the same curated datasheet source.
+- Added a candidate selection summary for choosing the first additional vendor SPICE macromodels.
+- Removed the local untracked `tmp/` PDF cache from the working tree and did not commit any PDF cache files.
 - Did not modify active LPF functions.
 - Did not modify existing TIA behavioural equations.
 - Did not import or invent SPICE data.
 - Did not add SPICE noise analysis.
 - Did not add hardware measurement or hardware-validation claims.
+- Q3 SPICE requirement is still pending additional real vendor macromodel comparisons.
 
 ## Candidate Coverage
 

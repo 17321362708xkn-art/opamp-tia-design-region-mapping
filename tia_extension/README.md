@@ -59,6 +59,7 @@ The Round 5 noise scripts write:
 The Round 7 datasheet table script writes:
 
 - `tia_extension/datasheets/vendor_opamp_candidate_table.csv`
+- `tia_extension/datasheets/vendor_opamp_candidate_table_si.csv`
 - `tia_extension/datasheets/vendor_opamp_candidate_table.md`
 - `tia_extension/datasheets/vendor_opamp_table_manifest.csv`
 

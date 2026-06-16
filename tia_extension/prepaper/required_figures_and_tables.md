@@ -39,6 +39,8 @@
 - Figure manifest: `tia_extension/figures/figure_manifest_tia.csv`.
 - Vendor op-amp datasheet candidate source table: `tia_extension/datasheets/vendor_opamp_datasheet_sources.csv`.
 - Vendor op-amp datasheet candidate table: `tia_extension/datasheets/vendor_opamp_candidate_table.csv` with Markdown companion `tia_extension/datasheets/vendor_opamp_candidate_table.md`.
+- Vendor op-amp SI-normalized candidate table: `tia_extension/datasheets/vendor_opamp_candidate_table_si.csv`.
+- Vendor op-amp candidate selection summary: `tia_extension/datasheets/vendor_opamp_candidate_selection_summary.md`.
 - Vendor op-amp datasheet table manifest: `tia_extension/datasheets/vendor_opamp_table_manifest.csv`.
 
 ## Missing Figures And Tables Before Submission
@@ -48,3 +50,5 @@
 - Final manuscript-ready verification of datasheet values before quantitative op-amp ranking.
 - Final target-journal figure layouts, panel labels, and caption formatting.
 - Optional SPICE noise comparison figure if a later round adds real SPICE noise data.
+
+The Round 7 datasheet table and candidate selection summary partially address the candidate-selection blocker for later macromodel work. They do not replace real vendor SPICE macromodel comparison.
