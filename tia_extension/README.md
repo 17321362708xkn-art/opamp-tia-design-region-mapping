@@ -31,6 +31,7 @@ The model is intended to establish reproducible behavioural evidence before late
 - `results/` stores CSV source data and metric outputs.
 - `figures/` stores generated baseline figures and the figure manifest.
 - `datasheets/` stores the Round 7 vendor op-amp candidate table, source CSV, and parameter record.
+- `spice_interface/` stores SPICE import helpers, OP27 smoke-test records, and Round 8A manual vendor SPICE preparation notes.
 
 ## Running The Baseline
 
@@ -69,12 +70,19 @@ Run it from the repository root with:
 run('tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m')
 ```
 
+The Round 8A vendor SPICE preparation script exits cleanly until real OPA818 or ADA4817-1 exported CSV data are added:
+
+```matlab
+run('tia_extension/scripts/run_10_compare_vendor_spice_models.m')
+```
+
 ## Current Research Status
 
 - Round 5 first-pass behavioural noise analysis is completed.
 - OP27 real LTspice smoke-test frequency-response comparison is completed for the current single-model evidence set.
 - First-pass noise contribution and noise-bandwidth trade-off figures are completed.
 - Round 7 datasheet candidate screening table is available for eight vendor op-amps.
+- Round 8A OPA818 and ADA4817-1 vendor SPICE manual-export workflow preparation is available.
 - Q3 SPICE requirement is still pending additional real vendor macromodel comparisons.
 - Current status: Q3 pre-paper prototype, not final submission package.
 
@@ -82,6 +90,7 @@ run('tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m')
 
 - MATLAB behavioural model only.
 - OP27 is the only imported real SPICE macromodel comparison so far.
+- OPA818 and ADA4817-1 SPICE comparison data are not imported yet.
 - No hardware measurement.
 - First-pass TIA noise estimates are behavioural calculations only, not measured or experimentally validated noise.
 - Datasheet candidate screening is available, but it is not a final op-amp selection rule.
