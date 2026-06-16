@@ -49,6 +49,8 @@ Content to write later:
 
 Purpose: Position the workflow relative to photodiode TIA design methods, compensation practice, op-amp selection, and simulation workflows.
 
+Round 11 note: `tia_extension/prepaper/related_work_taxonomy.md`, `tia_extension/prepaper/literature_search_queries.md`, `tia_extension/prepaper/paper_screening_criteria.md`, `tia_extension/prepaper/paper_reading_note_template.md`, `tia_extension/prepaper/citation_tracking_table_template.csv`, `tia_extension/prepaper/related_work_to_claims_map.md`, and `tia_extension/prepaper/related_work_section_outline.md` define the collection workflow for this section. The final related-work text should only be written after real sources are collected, screened, read, and verified.
+
 Key claim: The contribution is an organized, reproducible screening workflow, not a new TIA topology.
 
 Evidence to use: Vendor datasheet candidate table, existing modelling assumptions, and comparison between behavioural and vendor macromodel roles.
