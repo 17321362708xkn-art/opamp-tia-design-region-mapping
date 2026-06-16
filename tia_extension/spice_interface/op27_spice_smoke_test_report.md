@@ -46,4 +46,4 @@ The OP27 smoke test demonstrates that the MATLAB behavioural workflow can ingest
 - No hardware data was used.
 - OP27 is not necessarily an optimized photodiode TIA op-amp.
 - Additional high-speed and low-noise op-amp macromodels are needed later.
-- The Q3 SPICE requirement is still pending additional vendor macromodels, ideally at least 2-3 total models.
+- Later rounds add OPA818 and ADA4817 real vendor macromodel imports, bringing the package to three real vendor macromodel comparison sets. Full Q3 submission readiness still requires manuscript polish and review.

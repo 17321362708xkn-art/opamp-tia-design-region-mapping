@@ -45,4 +45,4 @@ Round 8B run identifier: `20260616_193646Z`
 - No hardware validation.
 - No measured noise.
 - No vendor model redistribution.
-- Q3 final readiness still needs at least one more vendor macromodel comparison, preferably ADA4817-1 or LTC6268-10, plus final manuscript review.
+- Round 9 subsequently adds ADA4817 as the third real vendor macromodel comparison set; full Q3 final readiness still needs final manuscript review, figure/caption polish, related-work positioning, and supervisor or domain review.

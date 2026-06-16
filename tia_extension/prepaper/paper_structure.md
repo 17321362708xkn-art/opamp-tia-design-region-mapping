@@ -3,7 +3,7 @@
 ## 1. Introduction
 
 - Motivate photodiode TIA design as a bandwidth, stability, capacitance, and noise trade-off problem.
-- Position the work as a simulation-assisted MATLAB behavioural workflow with limited SPICE smoke-test evidence.
+- Position the work as a simulation-assisted MATLAB behavioural workflow with limited three-vendor SPICE macromodel evidence.
 - State that the current package is a research prototype and not a final submission package.
 - Supported by: `tia_extension/figures/tia_baseline_magnitude.png`, `tia_extension/figures/tia_bandwidth_vs_Cf.png`, `tia_extension/figures/tia_noise_bandwidth_tradeoff.png`.
 - Still needed: concise literature-backed motivation and a target application scenario.
@@ -34,11 +34,12 @@
 
 ## 5. SPICE Macromodel Smoke-Test Comparison
 
-- State that OP27 and OPA818 are the real vendor op-amp macromodel comparison sets currently imported.
+- State that OP27, OPA818, and ADA4817 are the real vendor op-amp macromodel comparison sets currently imported.
 - Explain the three OP27 feedback-capacitance cases and their relationship to the behavioural classifications.
-- Compare magnitude and phase agreement and mismatch without implying broad SPICE coverage.
+- Compare OP27 magnitude and phase agreement and mismatch, then summarize OPA818 and ADA4817 Cf-sweep trends without implying broad SPICE coverage.
 - Supported by: `tia_extension/figures/spice_compare_OP27_Cf3p455_Risky_magnitude.png`, `tia_extension/figures/spice_compare_OP27_Cf3p455_Risky_phase.png`, `tia_extension/figures/spice_compare_OP27_Cf10p_SafeCandidate_magnitude.png`, `tia_extension/figures/spice_compare_OP27_Cf10p_SafeCandidate_phase.png`, `tia_extension/figures/spice_compare_OP27_Cf22p_Safe_magnitude.png`, `tia_extension/figures/spice_compare_OP27_Cf22p_Safe_phase.png`, `tia_extension/figures/spice_compare_OP27_Cf_sweep_magnitude.png`, `tia_extension/results/spice_comparison_summary.csv`.
-- Still needed: at least one additional real vendor SPICE macromodel comparison, preferably ADA4817-1 or LTC6268-10.
+- Also supported by: `tia_extension/figures/spice_opa818_cf_sweep_magnitude.png`, `tia_extension/figures/spice_opa818_cf_sweep_phase.png`, `tia_extension/figures/spice_ada4817_cf_sweep_magnitude.png`, `tia_extension/figures/spice_ada4817_cf_sweep_phase.png`, `tia_extension/figures/spice_vendor_model_bandwidth_peaking_summary.png`, and `tia_extension/results/spice_comparison_summary_vendor_models.csv`.
+- Still needed: manuscript-level interpretation of cross-model Safe, Marginal, and Risky evidence.
 
 ## 6. First-Pass Noise and Bandwidth Trade-off Analysis
 
@@ -50,16 +51,16 @@
 
 ## 7. Results and Discussion
 
-- Combine behavioural design maps, OP27 smoke-test trends, OPA818 vendor macromodel Cf-sweep trends, and first-pass noise results into a single discussion.
+- Combine behavioural design maps, OP27 smoke-test trends, OPA818 and ADA4817 vendor macromodel Cf-sweep trends, and first-pass noise results into a single discussion.
 - Highlight the practical trade-off among bandwidth, peaking, feedback capacitance, and output noise.
-- Discuss OP27 agreement and mismatch as a limited smoke test, and discuss OPA818 Cf-sweep trends as vendor macromodel evidence rather than hardware validation.
-- Supported by: all figures listed in `tia_extension/figures/figure_manifest_tia.csv`, especially design-region, OP27 comparison, OPA818 Cf sweep, and noise figures.
+- Discuss OP27 agreement and mismatch as a limited smoke test, and discuss OPA818 and ADA4817 Cf-sweep trends as vendor macromodel evidence rather than hardware validation.
+- Supported by: all figures listed in `tia_extension/figures/figure_manifest_tia.csv`, especially design-region, OP27 comparison, OPA818 Cf sweep, ADA4817 Cf sweep, three-vendor summary, and noise figures.
 - Still needed: manuscript-level result ordering, figure selection, and cross-model evidence.
 
 ## 8. Limitations
 
 - State no hardware measurement was performed.
-- State OP27 and OPA818 are the real SPICE macromodel comparison sets so far.
+- State OP27, OPA818, and ADA4817 are the real SPICE macromodel comparison sets so far.
 - State the single-pole MATLAB op-amp model is simplified.
 - Supported by: `tia_extension/prepaper/limitations_and_no_overclaim.md`, `tia_extension/docs/noise_and_validation_position.md`, `tia_extension/spice_interface/spice_validation_status.md`.
 - Still needed: supervisor or domain-expert review of assumptions and thresholds.
@@ -68,6 +69,6 @@
 
 - Summarize the workflow as a reproducible pre-paper research prototype.
 - Emphasize that the current evidence supports a Q3 pre-paper package, not a final submission package.
-- State the next evidence step: at least one additional real vendor SPICE macromodel comparison.
+- State the next evidence step: manuscript-level cross-model interpretation, final captions, related-work positioning, and external review.
 - Supported by: `tia_extension/prepaper/q3_readiness_report.md`, `tia_extension/prepaper/next_submission_tasks.md`.
-- Still needed: final submission claims after the missing SPICE evidence is added.
+- Still needed: final submission claims after manuscript polish and review.

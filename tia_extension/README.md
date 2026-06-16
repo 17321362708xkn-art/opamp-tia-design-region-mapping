@@ -2,7 +2,7 @@
 
 This folder contains the first controlled photodiode transimpedance amplifier (TIA) behavioural modelling extension for the active LPF finite-GBW project.
 
-The current TIA extension is a MATLAB behavioural workflow with controlled first-pass sweeps, real LTspice macromodel comparisons for OP27 and OPA818, and a first-pass behavioural noise estimate. It is not hardware measurement, not a complete photodiode TIA design study, not experimental noise validation, and not full Q3 SPICE validation.
+The current TIA extension is a MATLAB behavioural workflow with controlled first-pass sweeps, real LTspice macromodel comparisons for OP27, OPA818, and ADA4817, and a first-pass behavioural noise estimate. It is not hardware measurement, not a complete photodiode TIA design study, not experimental noise validation, and not a final Q3 submission package.
 
 ## Scope
 
@@ -31,7 +31,7 @@ The model is intended to establish reproducible behavioural evidence before late
 - `results/` stores CSV source data and metric outputs.
 - `figures/` stores generated baseline figures and the figure manifest.
 - `datasheets/` stores the Round 7 vendor op-amp candidate table, source CSV, and parameter record.
-- `spice_interface/` stores SPICE import helpers, OP27 smoke-test records, Round 8A manual vendor SPICE preparation notes, and Round 8B OPA818 imported vendor LTspice data records.
+- `spice_interface/` stores SPICE import helpers, OP27 smoke-test records, Round 8A manual vendor SPICE preparation notes, Round 8B OPA818 imported vendor LTspice data records, and Round 9 ADA4817 imported vendor LTspice data records.
 
 ## Running The Baseline
 
@@ -70,7 +70,7 @@ Run it from the repository root with:
 run('tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m')
 ```
 
-The Round 8A vendor SPICE preparation script exits cleanly until real OPA818 or ADA4817-1 exported CSV data are added:
+The guarded vendor SPICE comparison entry point exits cleanly when no importable vendor CSVs are available. The Round 8B and Round 9 processed exports intentionally omit behavioural `A0` / `ft_Hz` overlay metadata, so their dedicated import scripts create the vendor summaries and Cf sweep figures:
 
 ```matlab
 run('tia_extension/scripts/run_10_compare_vendor_spice_models.m')
@@ -82,25 +82,32 @@ The Round 8B OPA818 import script recursively detects the real local LTspice tex
 run('tia_extension/scripts/run_11_import_opa818_spice_round8b.m')
 ```
 
+The Round 9 ADA4817 import script recursively detects the real local LTspice text exports, converts them into processed CSV source data, and generates the ADA4817 Cf sweep figures plus a three-vendor bandwidth/peaking summary:
+
+```matlab
+run('tia_extension/scripts/run_12_import_ada4817_spice_round9.m')
+```
+
 ## Current Research Status
 
 - Round 5 first-pass behavioural noise analysis is completed.
 - OP27 real LTspice smoke-test frequency-response comparison is completed.
 - OPA818 real vendor LTspice macromodel data have been imported for 4 feedback-capacitance cases.
+- ADA4817 real vendor LTspice macromodel data have been imported for 4 feedback-capacitance cases.
 - First-pass noise contribution and noise-bandwidth trade-off figures are completed.
 - Round 7 datasheet candidate screening table is available for eight vendor op-amps.
 - Round 8A OPA818 and ADA4817-1 vendor SPICE manual-export workflow preparation is available.
 - Round 8B OPA818 real vendor SPICE import is available.
-- Q3 SPICE requirement is still pending at least one more real vendor macromodel comparison, preferably ADA4817-1 or LTC6268-10.
+- Round 9 ADA4817 real vendor SPICE import is available.
+- Three real vendor macromodel comparison sets are now available: OP27, OPA818, and ADA4817.
 - Current status: Q3 pre-paper prototype, not final submission package.
 
 ## Current Limitations
 
 - MATLAB behavioural model only.
-- OP27 and OPA818 are the imported real SPICE macromodel comparison sets so far.
-- ADA4817-1 or LTC6268-10 remains the next recommended vendor macromodel comparison.
+- OP27, OPA818, and ADA4817 are the imported real SPICE macromodel comparison sets so far.
 - No hardware measurement.
 - First-pass TIA noise estimates are behavioural calculations only, not measured or experimentally validated noise.
 - Datasheet candidate screening is available, but it is not a final op-amp selection rule.
 - The classification helper is an initial placeholder for later design-region mapping, not a validated design rule.
-- Q3 SPICE readiness still requires at least one additional vendor macromodel comparison and final review.
+- Full Q3 submission readiness still requires manuscript polish, final figure and caption review, related-work positioning, and supervisor or domain review.
