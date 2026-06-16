@@ -21,6 +21,7 @@ The current behavioural workflow includes:
 - first-pass configured output-noise estimates for feedback resistor thermal noise, op-amp input voltage noise, op-amp input current noise, and optional photodiode shot noise.
 - datasheet-derived vendor op-amp candidate screening for later SPICE macromodel planning.
 - Round 10 pre-paper manuscript planning, including a manuscript skeleton, results storyline, figure/table plan, claims-vs-evidence matrix, contribution drafts, and abstract options.
+- Round 11 related-work collection planning, including taxonomy, search query plan, screening criteria, reading-note template, citation tracking template, and related-work outline.
 
 The model is intended to establish reproducible behavioural evidence before later rounds add broader vendor SPICE macromodel comparisons and prototype evidence.
 
@@ -95,6 +96,12 @@ The Round 10 pre-paper claim check scans selected narrative files for accidental
 run('tia_extension/scripts/run_13_check_prepaper_claims_round10.m')
 ```
 
+The Round 11 literature placeholder check guards against accidental fabricated-looking citation metadata in the planning package:
+
+```matlab
+run('tia_extension/scripts/run_14_check_literature_placeholders_round11.m')
+```
+
 ## Current Research Status
 
 - Round 5 first-pass behavioural noise analysis is completed.
@@ -109,6 +116,8 @@ run('tia_extension/scripts/run_13_check_prepaper_claims_round10.m')
 - Three real vendor macromodel comparison sets are now available: OP27, OPA818, and ADA4817.
 - Round 10 pre-paper manuscript skeleton, results storyline, figure/table plan, and claims-vs-evidence matrix are available.
 - Round 10 adds no new simulation data and does not change hardware or noise-validation status.
+- Round 11 related-work taxonomy, search query plan, paper screening criteria, reading-note template, citation tracking table template, and related-work outline are available.
+- Round 11 adds no fabricated references, no fabricated DOI metadata, and no new simulation data.
 - Current status: Q3 pre-paper prototype, not final submission package.
 
 ## Current Limitations
