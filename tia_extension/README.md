@@ -19,6 +19,7 @@ The current behavioural workflow includes:
 - gain peaking extraction;
 - phase response.
 - first-pass configured output-noise estimates for feedback resistor thermal noise, op-amp input voltage noise, op-amp input current noise, and optional photodiode shot noise.
+- datasheet-derived vendor op-amp candidate screening for later SPICE macromodel planning.
 
 The model is intended to establish reproducible behavioural evidence before later rounds add broader vendor SPICE macromodel comparisons and prototype evidence.
 
@@ -29,6 +30,7 @@ The model is intended to establish reproducible behavioural evidence before late
 - `scripts/` contains reproducible MATLAB workflow scripts.
 - `results/` stores CSV source data and metric outputs.
 - `figures/` stores generated baseline figures and the figure manifest.
+- `datasheets/` stores the Round 7 vendor op-amp candidate table, source CSV, and parameter record.
 
 ## Running The Baseline
 
@@ -54,11 +56,25 @@ The Round 5 noise scripts write:
 - `tia_extension/results/noise_tradeoff_summary.csv`
 - first-pass noise contribution and noise-bandwidth trade-off figures in PDF, SVG, and 600 dpi PNG where supported by MATLAB.
 
+The Round 7 datasheet table script writes:
+
+- `tia_extension/datasheets/vendor_opamp_candidate_table.csv`
+- `tia_extension/datasheets/vendor_opamp_candidate_table_si.csv`
+- `tia_extension/datasheets/vendor_opamp_candidate_table.md`
+- `tia_extension/datasheets/vendor_opamp_table_manifest.csv`
+
+Run it from the repository root with:
+
+```matlab
+run('tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m')
+```
+
 ## Current Research Status
 
 - Round 5 first-pass behavioural noise analysis is completed.
 - OP27 real LTspice smoke-test frequency-response comparison is completed for the current single-model evidence set.
 - First-pass noise contribution and noise-bandwidth trade-off figures are completed.
+- Round 7 datasheet candidate screening table is available for eight vendor op-amps.
 - Q3 SPICE requirement is still pending additional real vendor macromodel comparisons.
 - Current status: Q3 pre-paper prototype, not final submission package.
 
@@ -68,6 +84,6 @@ The Round 5 noise scripts write:
 - OP27 is the only imported real SPICE macromodel comparison so far.
 - No hardware measurement.
 - First-pass TIA noise estimates are behavioural calculations only, not measured or experimentally validated noise.
-- No datasheet-based op-amp case study yet.
+- Datasheet candidate screening is available, but it is not a final op-amp selection rule.
 - The classification helper is an initial placeholder for later design-region mapping, not a validated design rule.
 - Q3 SPICE readiness still requires additional vendor macromodel comparisons.

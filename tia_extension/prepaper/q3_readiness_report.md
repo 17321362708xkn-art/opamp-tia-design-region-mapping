@@ -4,6 +4,8 @@
 
 The photodiode TIA extension is a simulation-assisted research prototype built around a MATLAB behavioural model, design-region sweeps, a single OP27 LTspice macromodel smoke-test comparison, and first-pass behavioural noise estimates.
 
+Round 7 also adds a datasheet-derived vendor op-amp candidate table for later macromodel planning. This is screening evidence only.
+
 Current status: **research prototype / Q3 pre-paper prototype, not yet fully Q3 submission-ready**.
 
 Required status wording for this round: **Q3 pre-paper prototype formed; additional vendor SPICE macromodel comparisons are still required before submission.**
@@ -19,12 +21,13 @@ No hardware measurement was performed. The first-pass noise estimates are calcul
 - Real LTspice OP27 AC smoke-test comparison for three feedback-capacitance cases from `tia_extension/scripts/run_06_compare_with_spice_example.m`.
 - First-pass behavioural noise contribution and noise-bandwidth trade-off analysis from `tia_extension/scripts/run_07_noise_baseline.m` and `tia_extension/scripts/run_08_noise_bandwidth_tradeoff.m`.
 - Reproducible figure manifest at `tia_extension/figures/figure_manifest_tia.csv`.
+- Datasheet-derived vendor op-amp candidate table from `tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m`.
 
 ## Evidence Still Missing
 
 - Additional real SPICE macromodel comparisons, ideally **2-3 vendor op-amp models total**.
-- Datasheet parameter table for 5-8 candidate op-amps.
 - Cross-model comparison of Safe, Marginal, and Risky project-defined cases.
+- Final datasheet value verification before quantitative op-amp ranking.
 - Target-journal figure formatting and caption finalization.
 - Related-work synthesis and positioning against prior photodiode TIA design workflows.
 - Independent review of the behavioural assumptions by a supervisor or domain expert.
@@ -33,7 +36,7 @@ No hardware measurement was performed. The first-pass noise estimates are calcul
 ## Portfolio / Research Prototype / Submission Status
 
 - Portfolio evidence: strong enough to show a reproducible MATLAB TIA workflow, figures, tables, and disciplined validation boundaries.
-- Research prototype evidence: formed, because the workflow includes behavioural modelling, design-region sweeps, OP27 smoke-test comparison, and first-pass noise trade-off analysis.
+- Research prototype evidence: formed, because the workflow includes behavioural modelling, design-region sweeps, OP27 smoke-test comparison, first-pass noise trade-off analysis, and datasheet candidate screening.
 - Submission status: not final, because the SPICE comparison evidence currently uses only one real vendor op-amp macromodel.
 
 Final status: **research prototype / Q3 pre-paper prototype, not yet fully Q3 submission-ready**.
@@ -41,6 +44,6 @@ Final status: **research prototype / Q3 pre-paper prototype, not yet fully Q3 su
 ## Submission Blockers
 
 - Import and compare additional real vendor SPICE macromodels.
-- Build a defensible op-amp candidate table from datasheets.
+- Use the datasheet candidate table to select and confirm additional vendor macromodel cases.
 - Confirm that the project-defined classification criteria remain useful across multiple op-amp models.
 - Convert the current pre-paper package into a complete manuscript with related work, final captions, and target-journal formatting.

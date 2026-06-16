@@ -3,7 +3,9 @@
 ## Concrete Checklist
 
 - [ ] Add 2-3 vendor op-amp macromodels so the evidence includes more than OP27.
-- [ ] Add a datasheet parameter table for 5-8 candidate op-amps.
+- [x] Add a datasheet parameter table for 5-8 candidate op-amps.
+- [ ] Reconfirm final datasheet values before using the table for quantitative manuscript ranking.
+- [ ] Use `tia_extension/datasheets/vendor_opamp_candidate_selection_summary.md` to choose the first Round 8 vendor macromodels.
 - [ ] Compare Safe, Marginal, and Risky project-defined cases across the added models.
 - [ ] Refine all figure captions for the selected target journal.
 - [ ] Write the related-work section with citations.
