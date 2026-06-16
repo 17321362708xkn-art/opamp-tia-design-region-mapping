@@ -37,11 +37,14 @@
 - Noise baseline summary: `tia_extension/results/noise_baseline_summary.csv`.
 - Noise trade-off summary: `tia_extension/results/noise_tradeoff_summary.csv`.
 - Figure manifest: `tia_extension/figures/figure_manifest_tia.csv`.
+- Vendor op-amp datasheet candidate source table: `tia_extension/datasheets/vendor_opamp_datasheet_sources.csv`.
+- Vendor op-amp datasheet candidate table: `tia_extension/datasheets/vendor_opamp_candidate_table.csv` with Markdown companion `tia_extension/datasheets/vendor_opamp_candidate_table.md`.
+- Vendor op-amp datasheet table manifest: `tia_extension/datasheets/vendor_opamp_table_manifest.csv`.
 
 ## Missing Figures And Tables Before Submission
 
 - Additional vendor op-amp SPICE comparison table covering more than OP27.
-- Datasheet parameter table for 5-8 candidate op-amps, including voltage noise, current noise, unity-gain bandwidth, input capacitance if available, supply range, and package notes.
 - Cross-model Safe/Marginal/Risky comparison table for selected cases.
+- Final manuscript-ready verification of datasheet values before quantitative op-amp ranking.
 - Final target-journal figure layouts, panel labels, and caption formatting.
 - Optional SPICE noise comparison figure if a later round adds real SPICE noise data.
