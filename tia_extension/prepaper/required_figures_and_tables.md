@@ -1,5 +1,7 @@
 # Required Figures And Tables
 
+Round 10 adds a condensed manuscript-oriented plan at `tia_extension/prepaper/figure_table_plan.md`. Use that file to choose main-paper versus appendix-candidate items; keep this file as the broader inventory of existing figure and table assets.
+
 ## Existing Figures For A Q3 Manuscript Draft
 
 - Baseline TIA magnitude: `tia_extension/figures/tia_baseline_magnitude.png` with PDF/SVG companions.

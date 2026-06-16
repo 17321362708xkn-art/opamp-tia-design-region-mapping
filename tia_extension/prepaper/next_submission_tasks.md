@@ -9,14 +9,18 @@
 - [x] Prepare the Round 8A OPA818 and ADA4817-1 vendor SPICE manual-export workflow.
 - [x] Collect and import real OPA818 LTspice exports for four feedback-capacitance cases.
 - [x] Collect and import real ADA4817-1 LTspice exports for the next vendor SPICE comparison.
+- [x] Create Round 10 manuscript skeleton, results storyline, figure/table plan, and claims-vs-evidence matrix.
 - [ ] Compare Safe, Marginal, and Risky project-defined cases across OP27, OPA818, and ADA4817.
-- [ ] Refine all figure captions for the selected target journal.
-- [ ] Write the related-work section with citations.
-- [ ] Choose target Q3 journals and map formatting requirements.
-- [ ] Prepare a full manuscript draft from the pre-paper structure.
+- [ ] Collect related work and build a citation table for photodiode TIA design, compensation, op-amp selection, and SPICE/hardware validation practice.
+- [ ] Draft the introduction and motivation sections from `tia_extension/prepaper/manuscript_skeleton.md`.
+- [ ] Draft the behavioural model and design-region mapping method sections.
+- [ ] Polish figure captions using `tia_extension/prepaper/figure_table_plan.md`.
+- [ ] Choose target Q3 journals or conferences and map formatting requirements.
+- [ ] Prepare a full manuscript draft from the Round 10 pre-paper structure.
 - [ ] Ask a supervisor or domain expert to review model assumptions.
+- [ ] Optionally add one more vendor macromodel only if time permits and the manuscript scope benefits from it.
 - [ ] Optionally add SPICE noise analysis in a later round if the submission scope needs it.
 
 ## Current Priority
 
-The previous one-more-vendor SPICE blocker is substantially addressed by the Round 9 ADA4817 import. The package is still not a final journal submission package until the three-vendor evidence is reviewed, the manuscript is written, figure captions are polished, related work is positioned, and a supervisor or domain expert reviews the modelling assumptions.
+The previous one-more-vendor SPICE blocker is substantially addressed by the Round 9 ADA4817 import, and Round 10 adds the manuscript-planning package. The priority now shifts away from more simulation and toward related-work collection, manuscript drafting, figure caption polish, target-venue selection, and supervisor or domain review.

@@ -20,6 +20,7 @@ The current behavioural workflow includes:
 - phase response.
 - first-pass configured output-noise estimates for feedback resistor thermal noise, op-amp input voltage noise, op-amp input current noise, and optional photodiode shot noise.
 - datasheet-derived vendor op-amp candidate screening for later SPICE macromodel planning.
+- Round 10 pre-paper manuscript planning, including a manuscript skeleton, results storyline, figure/table plan, claims-vs-evidence matrix, contribution drafts, and abstract options.
 
 The model is intended to establish reproducible behavioural evidence before later rounds add broader vendor SPICE macromodel comparisons and prototype evidence.
 
@@ -88,6 +89,12 @@ The Round 9 ADA4817 import script recursively detects the real local LTspice tex
 run('tia_extension/scripts/run_12_import_ada4817_spice_round9.m')
 ```
 
+The Round 10 pre-paper claim check scans selected narrative files for accidental overclaim phrases:
+
+```matlab
+run('tia_extension/scripts/run_13_check_prepaper_claims_round10.m')
+```
+
 ## Current Research Status
 
 - Round 5 first-pass behavioural noise analysis is completed.
@@ -100,6 +107,8 @@ run('tia_extension/scripts/run_12_import_ada4817_spice_round9.m')
 - Round 8B OPA818 real vendor SPICE import is available.
 - Round 9 ADA4817 real vendor SPICE import is available.
 - Three real vendor macromodel comparison sets are now available: OP27, OPA818, and ADA4817.
+- Round 10 pre-paper manuscript skeleton, results storyline, figure/table plan, and claims-vs-evidence matrix are available.
+- Round 10 adds no new simulation data and does not change hardware or noise-validation status.
 - Current status: Q3 pre-paper prototype, not final submission package.
 
 ## Current Limitations
@@ -107,7 +116,7 @@ run('tia_extension/scripts/run_12_import_ada4817_spice_round9.m')
 - MATLAB behavioural model only.
 - OP27, OPA818, and ADA4817 are the imported real SPICE macromodel comparison sets so far.
 - No hardware measurement.
-- First-pass TIA noise estimates are behavioural calculations only, not measured or experimentally validated noise.
+- First-pass TIA noise estimates are behavioural calculations only, not measured noise or experimental noise evidence.
 - Datasheet candidate screening is available, but it is not a final op-amp selection rule.
 - The classification helper is an initial placeholder for later design-region mapping, not a validated design rule.
 - Full Q3 submission readiness still requires manuscript polish, final figure and caption review, related-work positioning, and supervisor or domain review.
