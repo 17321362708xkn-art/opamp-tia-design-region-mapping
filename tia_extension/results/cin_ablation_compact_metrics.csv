@@ -1,0 +1,6 @@
+device_group,mean_abs_bandwidth_error_noCin_percent,mean_abs_bandwidth_error_withCin_percent,max_abs_bandwidth_error_noCin_percent,max_abs_bandwidth_error_withCin_percent,label_agreement_count_noCin,label_agreement_count_withCin,case_count,notes
+all_cases,18.8338408253897,19.3254381897713,61.916728493258,68.840367990595,9,9,11,"All selected OP27, OPA818, and ADA4817 vendor-export cases. Cin effect should be interpreted with Cpd=10 pF dominance and A0/open-loop assumptions."
+high_speed_OPA818_ADA4817,17.2885059966318,17.9644523726564,61.916728493258,68.840367990595,7,7,8,"Primary high-speed comparison cases; excludes OP27 negative control. Cin effect should be interpreted with Cpd=10 pF dominance and A0/open-loop assumptions."
+OPA818,20.9118116884766,23.3112985399008,61.916728493258,68.840367990595,4,4,4,"OPA818 rows only. Cin effect should be interpreted with Cpd=10 pF dominance and A0/open-loop assumptions."
+ADA4817,13.665200304787,12.617606205412,30.84806729521,28.9477272394742,3,3,4,"ADA4817 rows only. Cin effect should be interpreted with Cpd=10 pF dominance and A0/open-loop assumptions."
+OP27,22.9547337020776,22.9547337020776,35.1739844838596,35.1739844838596,2,2,3,"OP27 rows only. Cin effect should be interpreted with Cpd=10 pF dominance and A0/open-loop assumptions."
