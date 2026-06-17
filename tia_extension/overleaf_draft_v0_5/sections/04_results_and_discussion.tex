@@ -1,0 +1,28 @@
+\section{Results and Discussion}
+
+The results follow the five-step screening sequence. First, the baseline behavioural response establishes the finite-gain, finite-bandwidth model and anchors the later sweeps. It is a reproducible response case rather than a complete design validation (Figure~\ref{fig:baseline-response}).
+
+Second, the feedback-capacitance sweep shows the central compensation trade-off. In the selected behavioural sweep, increasing $C_f$ reduces extracted bandwidth and generally reduces peaking. The bandwidth and peaking figures are interpreted together because each captures only one side of the design trade-off (Figures~\ref{fig:cf-bandwidth} and~\ref{fig:cf-peaking}). Compensation choices are therefore screened jointly for bandwidth and peaking rather than selected from bandwidth alone.
+
+Third, the design-region map extends the feedback-capacitance sweep across a broader parameter space. It shows how selected $C_{pd}$ and $f_t$ assumptions affect project-defined Safe, Marginal, or Risky outcomes (Figure~\ref{fig:design-region-map}; Table~\ref{tab:screening-criteria}). The representative response figure provides example response shapes for selected categories (Figure~\ref{fig:representative-responses}).
+
+Fourth, the behavioural-vs-vendor agreement analysis adds model-specific simulation context. Across the 11 selected OP27, OPA818, and ADA4817 cases, 9 project-defined labels agree between the Cin-aware MATLAB behavioural model and the vendor macromodel summaries (Figure~\ref{fig:model-agreement-error-summary}; Table~\ref{tab:agreement-summary}). For OPA818, label agreement is obtained in all four rows and bandwidth error decreases from the smallest-$C_f$ case to the larger-$C_f$ cases. For ADA4817, the larger-$C_f$ cases agree in the project-defined label comparison, while the smallest-$C_f$ row remains a disagreement case because the vendor macromodel reports more peaking than the simplified behavioural model. For OP27, the smallest-$C_f$ row demonstrates a low-GBW and simplified-model limitation: the vendor summary labels the case Risky, while the MATLAB behavioural model labels it Safe under the project-defined peaking criterion. These results support screening-level agreement discussion, not full validation.
+
+Fifth, the first-pass noise figures add an additional screening dimension. They show that configured noise assumptions can be propagated through the behavioural workflow to produce relative noise-contribution and noise-bandwidth views (Figures~\ref{fig:noise-baseline} and~\ref{fig:noise-tradeoff}). This evidence supports including noise in the screening process while leaving SPICE noise analysis or measured-noise validation for future work.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\linewidth]{figures/tia_noise_contribution_baseline.png}
+  \caption{First-pass behavioural estimate of integrated output-noise contributions for the baseline TIA case under the configured noise-density assumptions. The estimate is intended for relative screening context and is not measured noise or detector-complete noise validation.}
+  \label{fig:noise-baseline}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\linewidth]{figures/tia_noise_bandwidth_tradeoff.png}
+  \caption{First-pass behavioural noise-bandwidth trade-off across the selected feedback-capacitance sweep. The figure connects compensation choices to relative bandwidth, peaking, and configured integrated output-noise estimates. It is not measured-noise validation.}
+  \label{fig:noise-tradeoff}
+\end{figure}
+\FloatBarrier
+
+Overall, the results support a coherent engineering design workflow: behavioural response, feedback-capacitance trade-off, design-region mapping, behavioural-vs-vendor agreement checking, and first-pass noise context. The study provides a reproducible and traceable way to organize these early-stage photodiode TIA screening steps while preserving the boundary between screening-level simulation evidence and later validation work.

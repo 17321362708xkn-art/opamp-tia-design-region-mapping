@@ -1,0 +1,23 @@
+\section{Limitations}
+
+The MATLAB behavioural model is simplified. It uses a finite-gain, finite-bandwidth abstraction and explicit scalar total input-node capacitance. It does not claim to capture detailed vendor pole-zero behaviour, output swing limits, nonlinearities, package parasitics, layout parasitics, or device-level noise behaviour.
+
+The Round 26 agreement analysis uses documented vendor-specific $C_{in}$ values where available, but $C_{\mathrm{stray}}$ is set to zero and is not fitted. Vendor-specific open-loop gain and detailed open-loop dynamics remain approximate or manual-check assumptions. The draft therefore should not claim quantified improvement from $C_{in}$ alone; no paired no-$C_{in}$ ablation table is included in this manuscript version.
+
+The Safe/Marginal/Risky regions are project-defined screening categories. They are not universal engineering standards or certified stability labels. They organize the current sweep outputs and help select cases for later review.
+
+The behavioural-vs-vendor agreement analysis is simulation-only. OP27, OPA818, and ADA4817 macromodel cases are real vendor-model export comparisons, but they are not hardware measurements. OP27 is included as a low-GBW negative-control or illustrative limitation case, not as primary high-speed TIA evidence. The vendor macromodel summaries do not constitute complete SPICE coverage, process/temperature coverage, layout extraction, or experimental validation.
+
+The noise analysis is first-pass behavioural estimation only. The current study does not include measured detector noise, measured output noise, or SPICE noise analysis. The noise figures support relative discussion under stated assumptions, not final device claims.
+
+The literature review remains in progress. Several useful DOI-only sources are available only at abstract or metadata level and are not used for detailed claims. Detailed receiver front-end and low-noise receiver comparisons remain future work until full text is available and read. Table~\ref{tab:source-confidence} documents the current source-usage confidence boundary as one grouped appendix confidence table.
+
+The current study remains a manuscript-stage modelling and workflow contribution. Submission readiness requires close reading notes, final captions, a verified final bibliography, target-format editing, and supervisor or domain review.
+
+\section{Conclusion}
+
+This work presents a MATLAB- and vendor-macromodel-assisted workflow for early-stage photodiode TIA design screening under finite op-amp bandwidth and input-node capacitance constraints. The workflow combines a simplified MATLAB behavioural model, feedback-capacitance sweeps, project-defined design-region maps, quantified behavioural-vs-vendor agreement checks for OP27, OPA818, and ADA4817, and first-pass behavioural noise estimates. The evidence is traceable through repository scripts, CSV files, figures, and manuscript-preparation notes.
+
+The defensible contribution is a reproducible early-stage screening workflow for photodiode TIA design exploration. The work organizes how feedback capacitance, photodiode capacitance, finite op-amp bandwidth, peaking, selected vendor macromodel exports, and first-pass noise assumptions interact under selected conditions. The literature context shows that bandwidth enhancement, regulated-cascode structures, inductorless CMOS TIAs, and noise-aware optical receiver front ends are established topics, so the study is positioned as a workflow contribution rather than a new circuit topology.
+
+Future work includes deeper full-text reading, full reference formatting, target-journal figure and caption polish, additional vendor macromodel cases if needed, optional SPICE noise analysis, and independent review of modelling assumptions. Hardware measurement and measured-noise validation remain outside the current evidence package.

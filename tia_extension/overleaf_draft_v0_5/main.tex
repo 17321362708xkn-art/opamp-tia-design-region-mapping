@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+
+% Portable Overleaf layout: figure assets are bundled in the local figures/
+% folder and are also referenced explicitly as figures/<file>.png.
+\graphicspath{{figures/}}
+\renewcommand{\arraystretch}{1.08}
+
+\title{A MATLAB- and Vendor-Macromodel-Assisted Workflow for Early-Stage Photodiode TIA Design Screening}
+\author{Author Name(s) Placeholder\\Affiliation Placeholder}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Early photodiode transimpedance amplifier (TIA) design requires coordinated screening of compensation, bandwidth, peaking, input-node capacitance, and noise assumptions before detailed circuit implementation. This work presents a reproducible early-stage photodiode TIA screening workflow that combines behavioural MATLAB sweeps, project-defined design-region mapping, quantified behavioural-vs-vendor-macromodel agreement checks, and first-pass behavioural noise estimates under clearly stated modelling assumptions. The behavioural model represents total input-node capacitance as $C_{\mathrm{total}} = C_{pd} + C_{in} + C_{\mathrm{stray}}$, with vendor-specific $C_{in}$ used only where documented and zero-valued defaults retained for backward compatibility. Across the selected OP27, OPA818, and ADA4817 vendor-export cases, 9 of 11 project-defined labels agree between the MATLAB behavioural model and vendor macromodel summaries. The OPA818 and ADA4817 high-speed cases show broad agreement for moderate and larger $C_f$ values, while the smallest-$C_f$ cases expose model sensitivity and the limits of the simplified single-pole behavioural approximation. The contribution is an engineering design workflow for photodiode TIA pre-design exploration, not a new TIA topology or universal design rule. The evidence is modelling and simulation evidence only; no hardware validation, measured-noise validation, complete SPICE coverage, or universal stability guarantee is claimed.
+\end{abstract}
+
+\input{tables/tables}
+\input{sections/01_introduction}
+\FloatBarrier
+\input{sections/02_related_work}
+\FloatBarrier
+\input{sections/03_methodology}
+\FloatBarrier
+\input{sections/04_results_and_discussion}
+\FloatBarrier
+\input{sections/05_limitations_conclusion}
+\FloatBarrier
+
+\appendix
+\section{Behavioural-Vs-Vendor Overlay Figures}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_OPA818.png}
+  \caption{Representative OPA818 behavioural-vs-vendor overlay for the $C_f = 1.0$ pF high-speed comparison case. The overlay compares the Cin-aware MATLAB behavioural response with the vendor macromodel export under repository assumptions and is not hardware validation.}
+  \label{fig:appendix-opa818-overlay}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_ADA4817.png}
+  \caption{Representative ADA4817 behavioural-vs-vendor overlay for the $C_f = 1.0$ pF high-speed comparison case. The overlay supports screening-level agreement discussion and does not establish complete SPICE coverage or measured validation.}
+  \label{fig:appendix-ada4817-overlay}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_OP27_negative_control.png}
+  \caption{Representative OP27 behavioural-vs-vendor overlay for the low-GBW negative-control comparison. OP27 is retained as an illustrative limitation case rather than primary high-speed TIA evidence.}
+  \label{fig:appendix-op27-overlay}
+\end{figure}
+\FloatBarrier
+
+\section{Source-Scope Table}
+\SourceConfidenceTable
+\FloatBarrier
+
+\bibliographystyle{plainnat}
+\bibliography{references_draft}
+
+\end{document}
