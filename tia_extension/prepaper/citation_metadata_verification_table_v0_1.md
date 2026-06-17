@@ -1,0 +1,62 @@
+# Citation Metadata Verification Table v0.1
+
+This table verifies placeholder citation metadata used in `manuscript_draft_v0_4_audit_fixed.md`. It is not a final bibliography and does not replace placeholder citations in the manuscript. Metadata was checked against the local literature index and DOI registration metadata; source-access scope remains governed by `first_reading_notes_summary.md` and `abstract_only_sources_policy.md`.
+
+## Summary
+
+| Item | Count |
+|---|---:|
+| Placeholder citation IDs in v0.4 | 18 |
+| IDs matched in local literature index | 18 |
+| IDs with DOI registration metadata resolved | 18 |
+| Full-text available rows | 11 |
+| Abstract-only rows | 2 |
+| Metadata-only rows | 5 |
+| Rows marked final-bibliography-ready | 11 |
+| Rows needing manual check before final bibliography | 7 |
+
+## Verification Table
+
+| citation_id | title | authors | year | venue_or_publisher | DOI_or_official_URL | access_level | source_used_for_metadata | allowed_usage_scope | final_bibliography_ready | notes |
+|---|---|---:|---:|---|---|---|---|---|---|---|
+| `ABDOLLAHI_2025_MDFRGC_TIA` | Low-Noise Modified-RGC Transimpedance Amplifier With Bandwidth Enhancement Using an Intrinsic Negative-RC Network | Behnam Abdollahi; Baset Mesgari; Saeed Saeedi; Zahra Sohrabi; Horst Zimmermann | 2025 | IEEE Access | https://doi.org/10.1109/ACCESS.2025.3543679 | full_text_available | DOI landing page; local index | Detailed related-work support after close reading; recent modified-RGC/noise-bandwidth context. | yes | DOI metadata resolved; local index reports legal open-access full text downloaded. Still not a final bibliography entry. |
+| `ANALUI_2004_BW_ENHANCEMENT` | Bandwidth Enhancement for Transimpedance Amplifiers | Behnam Analui; Ali Hajimiri | 2004 | IEEE Journal of Solid-State Circuits | https://doi.org/10.1109/JSSC.2004.831783 | full_text_available | DOI landing page; local index | Detailed related-work support after close reading; bandwidth enhancement and photodiode-capacitance motivation. | yes | DOI metadata resolved; local index reports legal institutional author-posted full text downloaded. |
+| `CHEN_2005_10GBPS_CMOS_RX_AFE` | A 1.8-V 10-Gb/s fully integrated CMOS optical receiver analog front-end | Wei-Zen Chen; Ying-Lien Cheng; Da-Shin Lin | 2005 | IEEE Journal of Solid-State Circuits | https://doi.org/10.1109/JSSC.2005.845970 | metadata_only | DOI landing page; local index | Title-level/future-review placeholder only. Do not use for architecture, numeric performance, or methods claims without full text. | needs_manual_check | DOI metadata resolved, but local index reports publisher-landing-page-only access and no visible abstract through official-page automation. |
+| `HERMANS_2006_850NM_RX` | A High-Speed 850-nm Optical Receiver Front-End in 0.18-um CMOS | C. Hermans; M. S. J. Steyaert | 2006 | IEEE Journal of Solid-State Circuits | https://doi.org/10.1109/JSSC.2006.873855 | metadata_only | DOI landing page; local index | Title-level/future-review placeholder only; Cherry-Hooper/high-speed receiver context must wait for full text. | needs_manual_check | DOI metadata resolved, but local index reports publisher-landing-page-only access and no visible abstract through official-page automation. |
+| `LEE_2021_4GHZ_SDT_VG_TIA` | A 4 GHz Single-to-Differential Cross-Coupled Variable-Gain Transimpedance Amplifier for Optical Communication | Samuel B. S. Lee; Kiat Seng Yeo | 2021 | Electronics | https://doi.org/10.3390/electronics10233042 | full_text_available | PDF first page; DOI landing page; local index | Detailed related-work support after close reading; optical-communication TIA and inductorless/RGC-derived context. | yes | DOI metadata resolved; local index reports user-provided MDPI full text verified from first page. |
+| `LI_2014_LOW_NOISE_CMOS_RX` | A Low-Noise Design Technique for High-Speed CMOS Optical Receivers | Dan Li; Gabriele Minoia; Matteo Repossi; Daniele Baldi; Enrico Temporiti; Andrea Mazzanti; Francesco Svelto | 2014 | IEEE Journal of Solid-State Circuits | https://doi.org/10.1109/JSSC.2014.2322868 | metadata_only | DOI landing page; local index | Title-level/future-review placeholder only. Do not use for topology, measured noise, receiver implementation, or performance claims without full text. | needs_manual_check | DOI metadata resolved, but local index reports publisher-landing-page-only access and no visible abstract through official-page automation. |
+| `LI_2021_LOW_NOISE_OPTICAL_RX_TIA` | A low noise transimpedance amplifier for optical receiver | Chenming Li; Sheng Xie; Gaolei Zhou; Luhong Mao; Bowen Qiu | 2021 | Review of Scientific Instruments | https://doi.org/10.1063/5.0031658 | abstract_only | DOI landing page; local index | Broad background only: low-noise optical receiver TIA context visible at abstract level. No numeric or methods-level claims. | needs_manual_check | DOI metadata resolved; local index reports official AIP abstract visible but no full text. Full text needed before detailed claims. |
+| `LU_2007_BROADBAND_TIA` | Broad-Band Design Techniques for Transimpedance Amplifiers | Zhenghao Lu; Kiat Seng Yeo; Jianguo Ma; Manh Anh Do; Wei Meng Lim; Xueying Chen | 2007 | IEEE Transactions on Circuits and Systems I: Regular Papers | https://doi.org/10.1109/TCSI.2006.887610 | full_text_available | DOI landing page; local index | Detailed related-work support after close reading; broad-band TIA, photodiode capacitance, matching, and noise-bandwidth context. | yes | DOI metadata resolved; local index reports legal institutional repository full text downloaded. |
+| `MESGARI_2024_MULTI_DOT_PIN_RX` | A 4 Gb/s Multi-Dot PIN-Photodiode-Based CMOS Optical Receiver Using a Single to Differential TIA-Equalizer | Baset Mesgari; Seyed Saman Kohneh Poushi; Horst Zimmermann | 2024 | IEEE Access | https://doi.org/10.1109/ACCESS.2024.3471168 | full_text_available | DOI landing page; local index | Useful/optional related-work support after close reading; integrated photodiode/readout context. | yes | DOI metadata resolved; local index reports legal open-access full text downloaded. |
+| `NOH_2020_CF_TIA_DC_LOOP` | A Capacitive Feedback Transimpedance Amplifier with a DC Feedback Loop Using a Transistor for High DC Dynamic Range | Jung-hoon Noh | 2020 | Sensors | https://doi.org/10.3390/s20174716 | full_text_available | PDF first page; DOI landing page; local index | Detailed related-work support after close reading; capacitive-feedback TIA, DC feedback, stability/frequency-response context. | yes | DOI metadata resolved; local index reports user-provided MDPI full text verified from first page. |
+| `PAN_2022_26GBPS_RX` | A 26-Gb/s CMOS optical receiver with a reference-less CDR in 65-nm CMOS | Quan Pan; Xiongshi Luo; Zhenghao Li; Zhengzhe Jia; Fuzhan Chen; Xuewei Ding; C. Patrick Yue | 2022 | Journal of Semiconductors | https://doi.org/10.1088/1674-4926/43/7/072401 | full_text_available | DOI landing page; local index | Related-work context after close reading; complete optical receiver context, not project validation. | yes | DOI metadata resolved; local index reports official open full text downloaded. |
+| `PAN_LUO_2022_20GBPS_TIA` | A 58-dBOhm 20-Gb/s inverter-based cascode transimpedance amplifier for optical communications | Quan Pan; Xiongshi Luo | 2022 | Journal of Semiconductors | https://doi.org/10.1088/1674-4926/43/1/012401 | full_text_available | DOI landing page; local index | Detailed related-work support after close reading; high-speed CMOS optical TIA and compensation motivation. | yes | DOI metadata resolved; local index reports official open full text downloaded. Title normalized to ASCII. |
+| `PARK_2015_40GBPS_INVERTER_RX` | A 40-Gb/s 310-fJ/b Inverter-Based CMOS Optical Receiver Front-End | Kangyeob Park; Won-Seok Oh | 2015 | IEEE Photonics Technology Letters | https://doi.org/10.1109/LPT.2015.2447283 | metadata_only | DOI landing page; local index | Title-level/future-review placeholder only. Do not use for bandwidth, energy, noise, topology details, or measured results without full text. | needs_manual_check | DOI metadata resolved, but local index reports publisher-landing-page-only access and no visible abstract through official-page automation. |
+| `PARK_YOO_2004_RGC_TIA` | 1.25-Gb/s regulated cascode CMOS transimpedance amplifier for gigabit ethernet applications | Sung Min Park; Hoi Jun Yoo | 2004 | IEEE Journal of Solid-State Circuits | https://doi.org/10.1109/JSSC.2003.820884 | full_text_available | DOI landing page; local index | Detailed related-work support after close reading; canonical RGC CMOS TIA and photodiode-capacitance motivation. | yes | DOI metadata resolved; local index reports legal institutional/lab full text downloaded. |
+| `TAKAHASHI_2022_LOCAL_FEEDBACK_RGC` | Low-Power Regulated Cascode CMOS Transimpedance Amplifier with Local Feedback Circuit | Yasuhiro Takahashi; Daisuke Ito; Makoto Nakamura; Akira Tsuchiya; Toshiyuki Inoue; Keiji Kishine | 2022 | Electronics | https://doi.org/10.3390/electronics11060854 | full_text_available | PDF first page; DOI landing page; local index | Detailed related-work support after close reading; RGC/local-feedback optical receiver context. | yes | DOI metadata resolved; local index reports user-provided MDPI full text verified from first page. |
+| `VAZQUEZ_2021_OPTICAL_DETECTION_TIA` | Design method of optical detection systems based on transimpedance amplifiers | Patricia M. E. Vazquez; Francisco E. Veiras; Ligia Ciocci Brazzano; Patricio A. Sorichetti | 2021 | Review of Scientific Instruments | https://doi.org/10.1063/5.0054869 | abstract_only | DOI landing page; local index | Broad background only: TIA optical detection design couples noise, frequency response, and stability. No numeric or methods-level claims. | needs_manual_check | DOI metadata resolved; local index reports official AIP abstract visible but no full text. Full text needed before detailed methods/equations. |
+| `XU_2011_INDUCTORLESS_TIA` | A 3.125-Gb/s inductorless transimpedance amplifier for optical communication in 0.35 um CMOS | Xu Hui; Feng Jun; Liu Quan; Li Wei | 2011 | Journal of Semiconductors | https://doi.org/10.1088/1674-4926/32/10/105003 | full_text_available | DOI landing page; local index | Related-work support after close reading; inductorless optical-communication CMOS TIA context. | yes | DOI metadata resolved; local index reports official open full text downloaded. |
+| `ZHOU_2021_CHERRY_HOOPER_AFE` | A 25 Gbps inductorless optical receiver analog front-end based the modified Cherry-Hooper amplifier for optical interconnect | Gaolei Zhou; Xurui Mao; Wei Heng; Sheng Xie; Haocheng Cai | 2021 | Microelectronics Journal | https://doi.org/10.1016/j.mejo.2021.105047 | metadata_only | DOI landing page; local index | Title-level/future-review placeholder only. Do not use for topology details, shunt-feedback details, measured bandwidth, power, or BER without full text. | needs_manual_check | DOI metadata resolved, but local index reports publisher-landing-page-only access and no visible abstract through official-page automation. |
+
+## Incomplete Or Manual-Check Rows
+
+Rows needing manual check before final bibliography:
+
+- `CHEN_2005_10GBPS_CMOS_RX_AFE`
+- `HERMANS_2006_850NM_RX`
+- `LI_2014_LOW_NOISE_CMOS_RX`
+- `LI_2021_LOW_NOISE_OPTICAL_RX_TIA`
+- `PARK_2015_40GBPS_INVERTER_RX`
+- `VAZQUEZ_2021_OPTICAL_DETECTION_TIA`
+- `ZHOU_2021_CHERRY_HOOPER_AFE`
+
+These rows have DOI metadata, but they should not be promoted to detailed bibliography-supported claims until full text or an official publisher page with adequate metadata and abstract context is checked.
+
+## Appendix-Only Or Removal Candidates For Final Manuscript
+
+- `HERMANS_2006_850NM_RX`, `ZHOU_2021_CHERRY_HOOPER_AFE`, `CHEN_2005_10GBPS_CMOS_RX_AFE`, `PARK_2015_40GBPS_INVERTER_RX`, and `LI_2014_LOW_NOISE_CMOS_RX` should remain future-review placeholders or appendix-only metadata rows unless full text is obtained.
+- `VAZQUEZ_2021_OPTICAL_DETECTION_TIA` and `LI_2021_LOW_NOISE_OPTICAL_RX_TIA` may remain broad-background citations if the final manuscript needs them, but they should not support detailed methods, equations, numerical comparisons, or conclusions without full text.
+
+## Scope Boundary
+
+No numerical literature-performance comparison was created in this round. No placeholder citation was converted into a final formatted bibliography entry. No manuscript citation markers were changed.
