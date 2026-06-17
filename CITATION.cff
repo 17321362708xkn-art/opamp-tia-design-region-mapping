@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this repository or the photodiode TIA report/preprint workflow, please cite the archived release. Replace placeholder fields before public release."
+title: "A MATLAB- and Vendor-Macromodel-Assisted Workflow for Early-Stage Photodiode TIA Design Screening"
+type: software
+authors:
+  - name: "Author Name(s) Placeholder"
+repository-code: "https://github.com/17321362708xkn-art/opamp-tia-design-region-mapping"
+url: "https://github.com/17321362708xkn-art/opamp-tia-design-region-mapping"
+version: "draft-report-preprint-v0.9"
+abstract: "This repository contains a reproducible MATLAB behavioural workflow for early-stage photodiode transimpedance-amplifier design screening, including parameter sweeps, project-defined screening labels, selected vendor-macromodel export comparisons, and first-pass behavioural noise context. The evidence is simulation-based and does not claim hardware validation, measured-noise validation, complete SPICE coverage, or a universal TIA design rule."
+keywords:
+  - transimpedance amplifier
+  - photodiode TIA
+  - behavioural modelling
+  - MATLAB
+  - vendor macromodel
+  - reproducible report
+preferred-citation:
+  type: report
+  title: "A MATLAB- and Vendor-Macromodel-Assisted Workflow for Early-Stage Photodiode TIA Design Screening"
+  authors:
+    - name: "Author Name(s) Placeholder"
+  year: 2026
+  url: "https://github.com/17321362708xkn-art/opamp-tia-design-region-mapping"
+  notes: "Draft citation record. Add DOI after an archived public release is minted."

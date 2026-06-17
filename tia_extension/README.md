@@ -1,131 +1,137 @@
-# Photodiode TIA Extension v0.1
+# Photodiode TIA Report/Preprint Evidence Package
 
-This folder contains the first controlled photodiode transimpedance amplifier (TIA) behavioural modelling extension for the active LPF finite-GBW project.
+This folder contains the photodiode transimpedance amplifier (TIA) behavioural screening extension for the op-amp design-region mapping project.
 
-The current TIA extension is a MATLAB behavioural workflow with controlled first-pass sweeps, real LTspice macromodel comparisons for OP27, OPA818, and ADA4817, and a first-pass behavioural noise estimate. It is not hardware measurement, not a complete photodiode TIA design study, not experimental noise validation, and not a final Q3 submission package.
+The current report/preprint package is built around a reproducible MATLAB workflow:
 
-## Scope
+1. define design assumptions for `Rf`, `Cf`, `Cpd`, `Cin`, `Cstray`, `A0`, `ft`, and supply context;
+2. evaluate a simplified closed-loop TIA behavioural model;
+3. run MATLAB sweeps and extract bandwidth, peaking, and response metrics;
+4. assign project-defined Safe/Marginal/Risky screening labels;
+5. compare selected cases with existing OP27, OPA818, and ADA4817 vendor-macromodel export summaries; and
+6. add first-pass behavioural noise context.
 
-The current behavioural workflow includes:
-
-- photodiode current input;
-- photodiode capacitance `Cpd`;
-- feedback resistor `Rf`;
-- feedback capacitor `Cf`;
-- finite op-amp DC open-loop gain `A0`;
-- finite op-amp unity-gain frequency `ft_Hz`;
-- transimpedance gain `Zt = Vout / Ipd`;
-- bandwidth extraction;
-- gain peaking extraction;
-- phase response.
-- first-pass configured output-noise estimates for feedback resistor thermal noise, op-amp input voltage noise, op-amp input current noise, and optional photodiode shot noise.
-- datasheet-derived vendor op-amp candidate screening for later SPICE macromodel planning.
-- Round 10 pre-paper manuscript planning, including a manuscript skeleton, results storyline, figure/table plan, claims-vs-evidence matrix, contribution drafts, and abstract options.
-- Round 11 related-work collection planning, including taxonomy, search query plan, screening criteria, reading-note template, citation tracking template, and related-work outline.
-
-The model is intended to establish reproducible behavioural evidence before later rounds add broader vendor SPICE macromodel comparisons and prototype evidence.
+This is a simulation-only pre-design triage workflow. It is not hardware validation, measured-noise validation, complete SPICE coverage, a universal stability guarantee, or a new TIA topology claim.
 
 ## Folder Structure
 
-- `docs/` contains modelling assumptions and future SPICE comparison preparation notes.
-- `functions/` contains reusable TIA behavioural modelling and metric extraction functions.
-- `scripts/` contains reproducible MATLAB workflow scripts.
-- `results/` stores CSV source data and metric outputs.
-- `figures/` stores generated baseline figures and the figure manifest.
-- `datasheets/` stores the Round 7 vendor op-amp candidate table, source CSV, and parameter record.
-- `spice_interface/` stores SPICE import helpers, OP27 smoke-test records, Round 8A manual vendor SPICE preparation notes, Round 8B OPA818 imported vendor LTspice data records, and Round 9 ADA4817 imported vendor LTspice data records.
+| Folder | Purpose |
+| --- | --- |
+| `functions/` | Reusable TIA behavioural model, metric extraction, classification, and noise helpers. |
+| `scripts/` | MATLAB scripts that generate or check the TIA evidence package. |
+| `results/` | CSV response, sweep, metric, agreement, and noise summaries. |
+| `figures/` | Generated TIA figures used by the manuscript draft. |
+| `docs/` | Assumption notes, transfer-function notes, SPICE planning notes, and noise-positioning notes. |
+| `datasheets/` | Local vendor candidate table, SI-normalized parameter table, and datasheet source notes. |
+| `spice_interface/` | Import helpers, manual-export records, wrappers, and vendor macromodel comparison documentation. |
+| `prepaper/` | Reading notes, evidence maps, manuscript planning, and citation-verification notes. |
+| `overleaf_draft_v0_9/` | Portable report/preprint LaTeX draft with bundled figures. |
 
-## Running The Baseline
+## Reproducibility Quick Start
 
-From the repository root in MATLAB:
+Run MATLAB from the repository root:
 
 ```matlab
 run('tia_extension/scripts/run_01_tia_baseline.m')
-run('tia_extension/scripts/run_all_tia_first_pass.m')
+run('tia_extension/scripts/run_03_sweep_Cf_for_peaking_bandwidth.m')
+run('tia_extension/scripts/run_04_sweep_Cpd_and_ft.m')
+run('tia_extension/scripts/run_05_design_region_map_tia.m')
 run('tia_extension/scripts/run_07_noise_baseline.m')
 run('tia_extension/scripts/run_08_noise_bandwidth_tradeoff.m')
+run('tia_extension/scripts/run_15_behavioural_vs_vendor_agreement_cin.m')
+run('tia_extension/scripts/run_16_cin_ablation_agreement_analysis.m')
 ```
 
-The baseline script writes:
+The vendor-agreement scripts consume existing CSV export summaries. They do not run new SPICE simulations.
 
-- `tia_extension/results/tia_baseline_response.csv`
-- `tia_extension/results/baseline_metrics.csv`
-- `tia_extension/figures/figure_manifest_tia.csv`
-- baseline magnitude and phase figures in PDF, SVG, and 600 dpi PNG where supported by MATLAB.
+## Figure/Table To Script Crosswalk
 
-The Round 5 noise scripts write:
+| Report artifact | Script or source | CSV/source data | Output asset |
+| --- | --- | --- | --- |
+| Workflow overview | `overleaf_draft_v0_9/figures/methodology_workflow_figure.tex` | LaTeX-native diagram | Bundled in Overleaf draft |
+| Model assumptions table | `overleaf_draft_v0_9/tables/tables.tex`; `docs/tia_model_assumptions.md` | `results/baseline_metrics.csv`; `results/tia_sweep_Cf_peaking_bandwidth.csv`; `results/tia_sweep_summary.csv`; `results/tia_design_region_map.csv` | Table macro in `overleaf_draft_v0_9/tables/tables.tex` |
+| Baseline magnitude/phase response | `scripts/run_01_tia_baseline.m` | `results/tia_baseline_response.csv`; `results/baseline_metrics.csv` | `figures/tia_baseline_magnitude.png`; `figures/tia_baseline_phase.png` |
+| Feedback-capacitance bandwidth sweep | `scripts/run_03_sweep_Cf_for_peaking_bandwidth.m` | `results/tia_sweep_Cf_peaking_bandwidth.csv` | `figures/tia_bandwidth_vs_Cf.png` |
+| Feedback-capacitance peaking sweep | `scripts/run_03_sweep_Cf_for_peaking_bandwidth.m` | `results/tia_sweep_Cf_peaking_bandwidth.csv` | `figures/tia_peaking_vs_Cf.png` |
+| Project-defined screening criteria table | `functions/classify_tia_design_region.m`; `overleaf_draft_v0_9/tables/tables.tex` | Classification rules encoded in MATLAB helper and manuscript table macro | Table macro in `overleaf_draft_v0_9/tables/tables.tex` |
+| Design-region map | `scripts/run_04_sweep_Cpd_and_ft.m`; `scripts/run_05_design_region_map_tia.m` | `results/tia_sweep_summary.csv`; `results/tia_design_region_map.csv` | `figures/tia_design_region_map_Cpd_ft.png` |
+| Representative Safe/Marginal/Risky responses | `scripts/run_05_design_region_map_tia.m` | `results/tia_representative_responses.csv` | `figures/tia_representative_region_responses.png` |
+| Behavioural-vs-vendor agreement table | `scripts/run_15_behavioural_vs_vendor_agreement_cin.m`; `overleaf_draft_v0_9/tables/tables.tex` | `results/behavioural_vs_vendor_agreement_summary.csv`; `results/spice_comparison_summary_vendor_models.csv` | Table macro in `overleaf_draft_v0_9/tables/tables.tex` |
+| Agreement error summary figure | `scripts/run_15_behavioural_vs_vendor_agreement_cin.m` | `results/behavioural_vs_vendor_agreement_summary.csv` | `figures/behavioural_vs_vendor_agreement_error_summary.png` |
+| Cin ablation compact metrics | `scripts/run_16_cin_ablation_agreement_analysis.m` | `results/cin_ablation_agreement_summary.csv`; `results/cin_ablation_compact_metrics.csv` | Numeric discussion in manuscript text |
+| Small-Cf boundary overlays | `scripts/run_16_cin_ablation_agreement_analysis.m` | Existing vendor export summaries and behavioural recomputation | `figures/behavioural_vs_vendor_overlay_OPA818_Cf0p5_worstcase.png`; `figures/behavioural_vs_vendor_overlay_ADA4817_Cf0p5_worstcase.png`; `figures/behavioural_vs_vendor_overlay_OP27_Cf3p455_negative_control.png` |
+| First-pass noise contribution | `scripts/run_07_noise_baseline.m` | `results/noise_baseline_summary.csv` | `figures/tia_noise_contribution_baseline.png` |
+| Noise-bandwidth trade-off | `scripts/run_08_noise_bandwidth_tradeoff.m` | `results/noise_tradeoff_summary.csv` | `figures/tia_noise_bandwidth_tradeoff.png` |
 
-- `tia_extension/results/noise_baseline_summary.csv`
-- `tia_extension/results/noise_tradeoff_summary.csv`
-- first-pass noise contribution and noise-bandwidth trade-off figures in PDF, SVG, and 600 dpi PNG where supported by MATLAB.
+## Vendor Case Assumptions
 
-The Round 7 datasheet table script writes:
+The compared vendor rows are existing macromodel export summaries under stated repository assumptions.
 
-- `tia_extension/datasheets/vendor_opamp_candidate_table.csv`
-- `tia_extension/datasheets/vendor_opamp_candidate_table_si.csv`
-- `tia_extension/datasheets/vendor_opamp_candidate_table.md`
-- `tia_extension/datasheets/vendor_opamp_table_manifest.csv`
+| Device group | Main role | Supply context | Shared TIA assumptions | Input capacitance assumption |
+| --- | --- | --- | --- | --- |
+| OP27 | Low-GBW negative-control / limitation case | `+15/-15 V` | `Rf = 10 kOhm`, `Cpd = 10 pF`, selected `Cf` rows | `Cin = 0 F` fallback; scalar OP27 value remains `needs_manual_check` |
+| OPA818 | Main high-speed vendor comparison case | `+5/-5 V` | `Rf = 10 kOhm`, `Cpd = 10 pF`, selected `Cf` rows | `Cin = 2.4 pF` from local SI-normalized datasheet table |
+| ADA4817 | Main high-speed vendor comparison case | `+5/-5 V` | `Rf = 10 kOhm`, `Cpd = 10 pF`, selected `Cf` rows | `Cin = 1.4 pF` from local SI-normalized datasheet table |
 
-Run it from the repository root with:
+Additional assumptions:
 
-```matlab
-run('tia_extension/scripts/run_09_vendor_opamp_datasheet_table.m')
-```
+- `Cstray = 0 F` in the agreement analysis; it is not fitted.
+- `A0 = 1e5` remains an inherited behavioural-model assumption because case-matched vendor open-loop gain values are not part of the current vendor comparison table.
+- `ft_proxy_Hz` is read from the local SI-normalized vendor op-amp table where available.
 
-The guarded vendor SPICE comparison entry point exits cleanly when no importable vendor CSVs are available. The Round 8B and Round 9 processed exports intentionally omit behavioural `A0` / `ft_Hz` overlay metadata, so their dedicated import scripts create the vendor summaries and Cf sweep figures:
+Primary source records:
 
-```matlab
-run('tia_extension/scripts/run_10_compare_vendor_spice_models.m')
-```
+- `docs/vendor_input_capacitance_assumptions_round26.md`
+- `datasheets/vendor_opamp_candidate_table_si.csv`
+- `results/spice_comparison_summary_vendor_models.csv`
+- `results/behavioural_vs_vendor_agreement_summary.csv`
+- `results/cin_ablation_compact_metrics.csv`
 
-The Round 8B OPA818 import script recursively detects the real local LTspice text exports, converts them into processed CSV source data, and generates the OPA818 Cf sweep figures:
+## Vendor Macromodel And Copyright Notes
 
-```matlab
-run('tia_extension/scripts/run_11_import_opa818_spice_round8b.m')
-```
+Vendor macromodel source files, simulator libraries, and simulator project packages may be governed by vendor licence terms. Before public release or DOI archival:
 
-The Round 9 ADA4817 import script recursively detects the real local LTspice text exports, converts them into processed CSV source data, and generates the ADA4817 Cf sweep figures plus a three-vendor bandwidth/peaking summary:
+- audit `spice_interface/vendor_models_local/` and simulator-package files;
+- remove or replace files that cannot be redistributed;
+- document official vendor download locations and access dates where available;
+- keep wrapper/testbench notes and extracted CSV summaries only where redistribution is allowed; and
+- make clear that vendor macromodel summaries are simulation evidence, not hardware measurement.
 
-```matlab
-run('tia_extension/scripts/run_12_import_ada4817_spice_round9.m')
-```
+The current repository contains historical working files from local vendor-model import work. They should be reviewed before a public archival release.
 
-The Round 10 pre-paper claim check scans selected narrative files for accidental overclaim phrases:
+## Environment Notes
 
-```matlab
-run('tia_extension/scripts/run_13_check_prepaper_claims_round10.m')
-```
+Known workflow requirements:
 
-The Round 11 literature placeholder check guards against accidental fabricated-looking citation metadata in the planning package:
+- MATLAB with standard table I/O and plotting support.
+- LTspice or vendor simulator tools only if regenerating manual vendor macromodel exports.
+- No hardware measurement setup.
+- No random seed requirement for the deterministic AC/metric scripts.
 
-```matlab
-run('tia_extension/scripts/run_14_check_literature_placeholders_round11.m')
-```
+Environment fields still needing manual check before a public release:
 
-## Current Research Status
+- MATLAB release and installed toolboxes.
+- LTspice or vendor simulator version.
+- Operating system and any path assumptions.
+- Whether the behavioural scripts run unchanged in GNU Octave.
 
-- Round 5 first-pass behavioural noise analysis is completed.
-- OP27 real LTspice smoke-test frequency-response comparison is completed.
-- OPA818 real vendor LTspice macromodel data have been imported for 4 feedback-capacitance cases.
-- ADA4817 real vendor LTspice macromodel data have been imported for 4 feedback-capacitance cases.
-- First-pass noise contribution and noise-bandwidth trade-off figures are completed.
-- Round 7 datasheet candidate screening table is available for eight vendor op-amps.
-- Round 8A OPA818 and ADA4817-1 vendor SPICE manual-export workflow preparation is available.
-- Round 8B OPA818 real vendor SPICE import is available.
-- Round 9 ADA4817 real vendor SPICE import is available.
-- Three real vendor macromodel comparison sets are now available: OP27, OPA818, and ADA4817.
-- Round 10 pre-paper manuscript skeleton, results storyline, figure/table plan, and claims-vs-evidence matrix are available.
-- Round 10 adds no new simulation data and does not change hardware or noise-validation status.
-- Round 11 related-work taxonomy, search query plan, paper screening criteria, reading-note template, citation tracking table template, and related-work outline are available.
-- Round 11 adds no fabricated references, no fabricated DOI metadata, and no new simulation data.
-- Current status: Q3 pre-paper prototype, not final submission package.
+## Report/Preprint Boundaries
 
-## Current Limitations
+Use these wording boundaries in public-facing text:
 
-- MATLAB behavioural model only.
-- OP27, OPA818, and ADA4817 are the imported real SPICE macromodel comparison sets so far.
-- No hardware measurement.
-- First-pass TIA noise estimates are behavioural calculations only, not measured noise or experimental noise evidence.
-- Datasheet candidate screening is available, but it is not a final op-amp selection rule.
-- The classification helper is an initial placeholder for later design-region mapping, not a validated design rule.
-- Full Q3 submission readiness still requires manuscript polish, final figure and caption review, related-work positioning, and supervisor or domain review.
+- Use "vendor macromodel comparison" or "vendor export comparison", not "hardware validation".
+- Use "first-pass behavioural noise estimate", not "measured-noise validation".
+- Use "project-defined screening labels", not universal Safe/Marginal/Risky design rules.
+- Treat small-Cf labels near the bandwidth-limited corner as provisional until detailed vendor macromodel or SPICE evidence is reviewed.
+- Keep abstract-only and metadata-only sources out of detailed methods or numerical claims.
+
+## Public Release Checklist
+
+Before minting a DOI or circulating a public preprint:
+
+1. Audit vendor model redistribution rights.
+2. Record MATLAB, simulator, and OS versions.
+3. Replace repository/DOI placeholders after release archival.
+4. Finalize `CITATION.cff` author and DOI fields.
+5. Format references only after manual-check sources are resolved.
+6. Run the figure/table scripts and compare regenerated CSV/figure timestamps.

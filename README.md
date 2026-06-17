@@ -1,301 +1,118 @@
-# Finite-GBW Design-Region Mapping for an Op-Amp Active Low-Pass Filter
+# Op-Amp and Photodiode TIA Design-Region Mapping
 
-A MATLAB-based behavioural modelling portfolio project, with a planned extension toward photodiode TIA modelling.
+This repository contains two related MATLAB behavioural modelling workflows:
 
-## Project Overview
+- an original finite-gain-bandwidth op-amp active low-pass filter study; and
+- a photodiode transimpedance amplifier (TIA) report/preprint evidence package under `tia_extension/`.
 
-This repository is a MATLAB-only behavioural modelling project.
+The current report/preprint focus is the TIA extension. It presents a reproducible early-stage design-screening workflow for photodiode TIAs using MATLAB behavioural sweeps, project-defined Safe/Marginal/Risky screening labels, selected vendor-macromodel export comparisons, and first-pass behavioural noise context.
 
-It studies finite gain-bandwidth product effects in a first-order inverting op-amp active low-pass filter.
+## Scope
 
-The project uses frequency-domain modelling.
+The TIA workflow is a simulation and modelling package for pre-design triage. It is intended to help readers reproduce the figures and tables, inspect the modelling assumptions, and see where the simplified behavioural model agrees or disagrees with selected vendor macromodel summaries.
 
-It also uses metric extraction, parameter sweeps, and design-region classification.
+It is not:
 
-The goal is to build a safe / marginal / risky design-region map under the assumptions of the behavioural model.
+- a hardware validation study;
+- measured-noise validation;
+- a universal TIA design rule;
+- a new TIA topology claim;
+- complete SPICE, process, temperature, layout, or device-noise coverage; or
+- a final target-journal submission package.
 
-Current stage: first-order inverting op-amp active low-pass filter.
-
-Planned extension: photodiode TIA behavioural modelling.
-
-It is not yet a complete photodiode TIA project.
-
-For a more detailed explanation of the modelling assumptions, metric extraction method, and design-region workflow, see [docs/technical_note.md](docs/technical_note.md).
-
-## What This Project Demonstrates
-
-- MATLAB-based behavioural modelling of op-amp finite-GBW effects
-- frequency-response extraction and validation
-- gain error, cutoff-frequency error and phase-deviation analysis
-- parameter sweep over closed-loop gain and GBW margin index
-- safe / marginal / risky design-region classification
-- generation of model-based design-aid plots
-- a documented workflow that can later be extended toward photodiode TIA modelling
-
-## Workflow Summary
-
-This is an active low-pass filter modelling workflow with a planned extension path toward photodiode TIA modelling.
-
-```mermaid
-flowchart TD
-    A[Ideal active low-pass model] --> B[Finite A0 and finite GBW behavioural model]
-    B --> C[Frequency-response extraction]
-    C --> D[Noise and Monte Carlo robustness checks]
-    D --> E[Parameter sweep over K and M_index]
-    E --> F[Safe / marginal / risky classification]
-    F --> G[Required ft design-aid plots]
-```
-
-## Engineering Motivation
-
-In practical op-amp circuit design, finite DC open-loop gain can affect closed-loop accuracy.
-
-Finite unity-gain frequency can also affect bandwidth and phase response.
-
-These non-idealities can produce closed-loop gain error.
-
-They can also produce cutoff frequency shift.
-
-They can introduce additional phase lag.
-
-This project builds a behavioural model that relates a gain-bandwidth margin index to those errors.
-
-The aim is to make finite op-amp gain-bandwidth effects visible across different feedback gains and cutoff-frequency targets.
-
-The extracted metrics are then used to classify design regions.
-
-## Model Summary
-
-The core response model is implemented in `functions/active_lpf_response.m`.
-
-Key parameters:
-
-- `Rin` = input resistance
-- `Rf` = feedback resistance
-- `Cf` = feedback capacitance
-- `K = Rf / Rin`
-- `fc = 1 / (2*pi*Rf*Cf)`
-- `A0` = DC open-loop gain
-- `ft_Hz` = unity-gain frequency / GBW-equivalent frequency
-- `M_index = ft_Hz / ((1 + K) * fc)`
-
-`M_index` is used here as a GBW margin index.
-
-It is not a formal stability margin.
-
-It is not a phase margin.
-
-It is not a loop-stability guarantee.
-
-The project uses an inversion-removed response for metric extraction.
-
-The response is written as:
-
-```text
-G = -H
-```
-
-This makes magnitude and phase comparisons easier to interpret for the inverting filter response.
+The main report takeaway is an applicability boundary: the behavioural model is most useful for fast screening away from the small-feedback-capacitance bandwidth-limited corner, while small-Cf cases should be treated as provisional and reviewed with detailed vendor macromodel or SPICE evidence.
 
 ## Repository Structure
 
-The current repository structure is:
+```text
+.
+|-- functions/                  # Original active-LPF MATLAB functions
+|-- scripts/                    # Original active-LPF MATLAB scripts
+|-- figures/                    # Original active-LPF generated figures
+|-- docs/                       # Original active-LPF documentation
+|-- tia_extension/              # Photodiode TIA report/preprint package
+|   |-- functions/              # TIA behavioural model and extraction helpers
+|   |-- scripts/                # Reproducible TIA MATLAB scripts
+|   |-- results/                # CSV response, metrics, agreement, and noise outputs
+|   |-- figures/                # Generated TIA figures
+|   |-- docs/                   # Model, assumption, SPICE, and noise notes
+|   |-- datasheets/             # Local vendor parameter tables and source notes
+|   |-- spice_interface/        # Import helpers, wrappers, and existing export records
+|   |-- prepaper/               # Manuscript planning and evidence notes
+|   `-- overleaf_draft_v0_9/    # Portable report/preprint LaTeX draft
+`-- CITATION.cff                # Draft citation metadata template
+```
 
-- `functions/` : reusable MATLAB functions
-- `scripts/` : step-by-step experiment scripts
-- `figures/` : exported figures
-- `scripts/figures/` : early-stage script-generated figures
-- `scripts/results/` : CSV, MAT and Markdown result summaries
-- `docs/` : supporting technical documentation
+## TIA Quick Start
 
-This README describes the current structure as-is.
+Run MATLAB from the repository root. The main TIA scripts are deterministic AC/metric workflows and do not require random seeds.
 
-## Main Functions
+```matlab
+run('tia_extension/scripts/run_01_tia_baseline.m')
+run('tia_extension/scripts/run_03_sweep_Cf_for_peaking_bandwidth.m')
+run('tia_extension/scripts/run_04_sweep_Cpd_and_ft.m')
+run('tia_extension/scripts/run_05_design_region_map_tia.m')
+run('tia_extension/scripts/run_07_noise_baseline.m')
+run('tia_extension/scripts/run_08_noise_bandwidth_tradeoff.m')
+run('tia_extension/scripts/run_15_behavioural_vs_vendor_agreement_cin.m')
+run('tia_extension/scripts/run_16_cin_ablation_agreement_analysis.m')
+```
 
-- `active_lpf_response.m` : computes the ideal and finite-op-amp behavioural frequency responses for the active low-pass filter model.
-- `extract_frequency_metrics.m` : extracts gain, cutoff-frequency, and phase-related metrics from frequency-response data.
-- `compare_frequency_responses.m` : compares frequency responses and returns error metrics.
-- `add_measurement_noise.m` : adds synthetic measurement noise for robustness checks.
-- `classify_design_region.m` : classifies designs into safe, marginal, and risky regions using extracted metric thresholds.
-- `find_margin_thresholds.m` : derives margin thresholds from classified sweep results.
+The vendor-agreement scripts consume existing repository CSV exports. They do not run new SPICE simulations.
+
+## Figure and Table Reproducibility Map
+
+This table is the public report/preprint crosswalk between manuscript artifacts and repository evidence. The complete TIA documentation lives in `tia_extension/README.md`.
+
+| Manuscript artifact | Regeneration or source file | Data source | Figure/table asset |
+| --- | --- | --- | --- |
+| Workflow overview figure | `tia_extension/overleaf_draft_v0_9/figures/methodology_workflow_figure.tex` | LaTeX-native diagram, not simulation data | Bundled in Overleaf draft |
+| Baseline TIA response | `tia_extension/scripts/run_01_tia_baseline.m` | `tia_extension/results/tia_baseline_response.csv`; `tia_extension/results/baseline_metrics.csv` | `tia_extension/figures/tia_baseline_magnitude.png`; `tia_extension/figures/tia_baseline_phase.png` |
+| Feedback-capacitance bandwidth and peaking sweeps | `tia_extension/scripts/run_03_sweep_Cf_for_peaking_bandwidth.m` | `tia_extension/results/tia_sweep_Cf_peaking_bandwidth.csv` | `tia_extension/figures/tia_bandwidth_vs_Cf.png`; `tia_extension/figures/tia_peaking_vs_Cf.png` |
+| Design-region map and representative responses | `tia_extension/scripts/run_04_sweep_Cpd_and_ft.m`; `tia_extension/scripts/run_05_design_region_map_tia.m` | `tia_extension/results/tia_sweep_summary.csv`; `tia_extension/results/tia_design_region_map.csv`; `tia_extension/results/tia_representative_responses.csv` | `tia_extension/figures/tia_design_region_map_Cpd_ft.png`; `tia_extension/figures/tia_representative_region_responses.png` |
+| Behavioural-vs-vendor agreement table and error summary | `tia_extension/scripts/run_15_behavioural_vs_vendor_agreement_cin.m` | `tia_extension/results/behavioural_vs_vendor_agreement_summary.csv`; `tia_extension/results/spice_comparison_summary_vendor_models.csv` | `tia_extension/figures/behavioural_vs_vendor_agreement_error_summary.png` |
+| Input-capacitance ablation and boundary overlays | `tia_extension/scripts/run_16_cin_ablation_agreement_analysis.m` | `tia_extension/results/cin_ablation_agreement_summary.csv`; `tia_extension/results/cin_ablation_compact_metrics.csv` | `tia_extension/figures/behavioural_vs_vendor_overlay_OPA818_Cf0p5_worstcase.png`; `tia_extension/figures/behavioural_vs_vendor_overlay_ADA4817_Cf0p5_worstcase.png`; `tia_extension/figures/behavioural_vs_vendor_overlay_OP27_Cf3p455_negative_control.png` |
+| First-pass noise contribution | `tia_extension/scripts/run_07_noise_baseline.m` | `tia_extension/results/noise_baseline_summary.csv` | `tia_extension/figures/tia_noise_contribution_baseline.png` |
+| Noise-bandwidth trade-off | `tia_extension/scripts/run_08_noise_bandwidth_tradeoff.m` | `tia_extension/results/noise_tradeoff_summary.csv` | `tia_extension/figures/tia_noise_bandwidth_tradeoff.png` |
+
+## Vendor-Macromodel Assumptions
+
+The selected vendor rows are model-comparison evidence under stated assumptions, not hardware measurements.
+
+- OP27 rows use `Rf = 10 kOhm`, `Cpd = 10 pF`, selected `Cf` values, and `+15/-15 V` supply assumptions from the existing OP27 smoke-test export summaries.
+- OPA818 and ADA4817 rows use `Rf = 10 kOhm`, `Cpd = 10 pF`, selected `Cf` values, and `+5/-5 V` supply assumptions from the existing manual export summaries.
+- Documented input capacitance values are used where available: OPA818 uses `Cin = 2.4 pF`, ADA4817 uses `Cin = 1.4 pF`, and OP27 retains a `Cin = 0 F` fallback because the scalar OP27 value remains a manual-check item.
+- `Cstray = 0 F` is used in the agreement analysis and is not fitted.
+- The inherited behavioural open-loop gain assumption is `A0 = 1e5`; vendor-specific open-loop gain remains a manual-check item.
+
+See `tia_extension/docs/vendor_input_capacitance_assumptions_round26.md` and `tia_extension/results/spice_comparison_summary_vendor_models.csv` for the current source records.
+
+## Vendor Model Copyright and Public Release Note
+
+Vendor macromodel files and simulator project files may be governed by TI, Analog Devices, or other vendor terms. Before any public archival release, audit `tia_extension/spice_interface/vendor_models_local/` and any simulator-package files. The preferred public-release pattern is to document vendor download locations and provide wrappers, testbench notes, extracted CSV summaries, and generated figures only where redistribution is permitted.
 
 ## Requirements
 
-- MATLAB
-- Standard MATLAB plotting support
-- Standard MATLAB table I/O support
-- No Python is required for the current MATLAB workflow
-- No SPICE simulator is required for the current workflow
-- No external measurement hardware is required for the current workflow
+Known requirements for the TIA workflow:
 
-The scripts are intended to be run from the repository root or from the `scripts/` directory.
+- MATLAB with standard plotting and table I/O support.
+- LTspice or vendor simulator tools only for manual regeneration of vendor macromodel exports.
+- No external hardware is required.
+- No random seed is required for the deterministic AC/metric scripts.
 
-The recommended workflow is listed below.
+Exact MATLAB release, toolbox requirements, LTspice version, and OS should be recorded before public DOI archival.
 
-## Suggested Quick-Start
+## Citation
 
-For a quick project-level regeneration of the main sweep, classification, and final design plots, run:
+`CITATION.cff` is included as a draft citation metadata template. Replace placeholder author, affiliation, version, and DOI fields before a public release.
 
-```matlab
-cd scripts
-run_12_day22_parameter_sweep_metrics
-run_13_day23_classify_design_regions
-run_14_day24_find_margin_thresholds
-run_15_day25_error_vs_M_plots
-run_16_day26_safe_marginal_risky_design_map
-run_17_day27_required_ft_plot
-```
+Recommended public archival workflow:
 
-This quick-start assumes the staged dependency chain is followed.
+1. Audit vendor model redistribution terms.
+2. Create a GitHub release tag.
+3. Archive the release with Zenodo or a similar service.
+4. Replace repository/DOI placeholders in the manuscript and `CITATION.cff`.
 
-`run_13` uses outputs from `run_12`.
+## Original Active-LPF Workflow
 
-`run_14` uses outputs from `run_13`.
-
-`run_17` uses outputs from `run_14`.
-
-## Running the Project
-
-Run scripts from the `scripts/` directory in the staged order below.
-
-Recommended usage is to start MATLAB from the repository root.
-
-Then run:
-
-```matlab
-cd scripts
-```
-
-No manual `addpath` is required for the main workflow.
-
-The scripts resolve project paths internally.
-
-### Stage 1: Basic model verification
-
-- `run_01_ideal_model_verification.m`
-- `run_02_nonideal_model_check.m`
-
-### Stage 2: Finite-GBW and finite-A0 behaviour checks
-
-- `run_03_day9_M_sweep_nonideal_response.m`
-- `run_04_day10_high_ft_limit_check.m`
-- `run_05_day11_ideal_limit_consistency_check.m`
-- `run_06_day12_A0_DC_gain_sensitivity_table.m`
-
-### Stage 3: Metric extraction and noise robustness
-
-- `run_07_day15_clean_ideal_extraction_verification.m`
-- `run_08_day16_clean_nonideal_extraction_test.m`
-- `run_09_day17_virtual_measurement_noise_check.m`
-- `run_10_day18_noisy_extraction_smoothing_test.m`
-- `run_11_day19_monte_carlo_noise_test.m`
-
-### Stage 4: Parameter sweep and design-region classification
-
-- `run_12_day22_parameter_sweep_metrics.m`
-- `run_13_day23_classify_design_regions.m`
-- `run_14_day24_find_margin_thresholds.m`
-
-### Stage 5: Final design plots
-
-- `run_15_day25_error_vs_M_plots.m`
-- `run_16_day26_safe_marginal_risky_design_map.m`
-- `run_17_day27_required_ft_plot.m`
-
-Dependencies:
-
-- `run_13` depends on outputs from `run_12`
-- `run_14` depends on outputs from `run_13`
-- `run_15` depends on outputs from `run_12` and `run_14`
-- `run_16` depends on outputs from `run_13` and `run_14`
-- `run_17` depends on outputs from `run_14`
-
-Stage 4 and Stage 5 scripts can also be read as this concise workflow:
-
-| Script                                          | Purpose                                  | Main dependency                               |
-| ----------------------------------------------- | ---------------------------------------- | --------------------------------------------- |
-| `run_12_day22_parameter_sweep_metrics.m`        | Parameter sweep over K and M_index       | Core response and metric extraction functions |
-| `run_13_day23_classify_design_regions.m`        | Classify safe / marginal / risky regions | Outputs from run_12                           |
-| `run_14_day24_find_margin_thresholds.m`         | Extract margin thresholds by K           | Outputs from run_13                           |
-| `run_15_day25_error_vs_M_plots.m`               | Plot error metrics versus M_index        | Outputs from run_12 and run_14                |
-| `run_16_day26_safe_marginal_risky_design_map.m` | Generate design-region map               | Outputs from run_13 and run_14                |
-| `run_17_day27_required_ft_plot.m`               | Generate required ft versus K plots      | Outputs from run_14                           |
-
-Example MATLAB workflow:
-
-```matlab
-cd scripts
-run_12_day22_parameter_sweep_metrics
-run_13_day23_classify_design_regions
-run_14_day24_find_margin_thresholds
-run_15_day25_error_vs_M_plots
-run_16_day26_safe_marginal_risky_design_map
-run_17_day27_required_ft_plot
-```
-
-## Key Outputs
-
-Main outputs include:
-
-- gain error vs M
-- cutoff frequency error vs M
-- phase deviation vs M
-- Monte Carlo noisy extraction results
-- safe / marginal / risky design map
-- required ft vs K plot
-
-These outputs are exported as figures and result summaries.
-
-The main output locations are:
-
-- `figures/`
-- `scripts/figures/`
-- `scripts/results/`
-
-## Representative Results
-
-### Safe / Marginal / Risky Design Map
-
-![Safe marginal risky design map](figures/day26_safe_marginal_risky_design_map.png)
-
-This figure summarises the design-region classification obtained from the parameter sweep.
-
-Each region is classified using gain error, cutoff-frequency error, and phase-deviation thresholds.
-
-The map is intended as a behavioural design aid under the assumptions of this model.
-
-### Required ft versus Closed-Loop Gain
-
-![Required ft versus closed-loop gain](figures/day27_required_ft_vs_K.png)
-
-This figure converts the extracted GBW margin thresholds into required unity-gain frequency values for different closed-loop gain settings.
-
-It should be interpreted as a model-based design guide.
-
-It should not be interpreted as a universal op-amp selection rule.
-
-### Error Trend versus GBW Margin Index
-
-![Phase deviation versus GBW margin index](figures/day25_abs_phase_deviation_vs_M.png)
-
-This figure shows how the extracted phase-deviation metric decreases as the GBW margin index increases.
-
-It supports the use of M_index as a practical behavioural margin indicator in this project.
-
-## Current Limitations
-
-- This is a MATLAB behavioural model, not a SPICE simulation.
-- No hardware measurement is included.
-- No formal loop-stability analysis is included.
-- `M_index` is a GBW margin index, not a phase margin or stability margin.
-- The required ft plot is a design aid under this model, not a universal op-amp selection rule.
-
-## Future Work
-
-Possible next steps:
-
-- improve repository structure;
-- add more detailed documentation;
-- add datasheet-based op-amp case studies;
-- extend the model toward photodiode TIA design;
-- compare behavioural results with SPICE simulation in the future.
+The original active low-pass filter project remains available under the top-level `functions/`, `scripts/`, `figures/`, and `docs/` folders. Its core scripts are unchanged by the TIA report/preprint documentation work.

@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\usetikzlibrary{arrows.meta,positioning}
+
+% Portable Overleaf layout: figure assets are bundled in the local figures/
+% folder and are also referenced explicitly as figures/<file>.png.
+\graphicspath{{figures/}}
+\renewcommand{\arraystretch}{1.08}
+
+\title{A MATLAB- and Vendor-Macromodel-Assisted Workflow for Early-Stage Photodiode TIA Design Screening}
+\author{Author Name(s) Placeholder\\Affiliation Placeholder}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Designing a photodiode transimpedance amplifier (TIA) involves a tightly coupled set of early choices---feedback resistance and capacitance, photodiode and input-node capacitance, and op-amp bandwidth---that jointly fix transimpedance, bandwidth, and peaking long before any detailed circuit work. This report presents a reproducible behavioural workflow for screening these choices at the pre-design stage. A single-pole op-amp approximation yields a closed-form second-order closed-loop transimpedance with the total input-node capacitance $(C_{pd}+C_{in}+C_{\mathrm{stray}})$ treated explicitly; MATLAB sweeps extract bandwidth and peaking, a peaking-based scheme sorts candidate operating points, and the behavioural predictions are compared with OP27, OPA818, and ADA4817 vendor-macromodel exports.
+
+The central result is an applicability boundary rather than a design rule. The behavioural model tracks the vendor macromodels well at moderate-to-large feedback capacitance, but its accuracy falls off at small feedback capacitance, where the closed-loop bandwidth approaches the op-amp transition frequency and omitted higher-order dynamics dominate, most visibly as macromodel peaking that the single-pole model does not reproduce. Screening labels agree in most compared cases, yet the largest bandwidth and peaking discrepancies sit in this small-capacitance corner. The practical conclusion is that the workflow is useful for fast triage and for prioritising cases for detailed simulation, and that labels near the bandwidth-limited corner should be treated as provisional and reviewed with vendor macromodel or SPICE evidence. All figures, sweeps, and tables are reproducible from the accompanying code and data (repository DOI placeholder). The evidence is simulation-based only; no hardware or measured-noise validation, complete SPICE coverage, or universal stability claim is made.
+\end{abstract}
+
+\input{tables/tables}
+\input{sections/01_introduction}
+\FloatBarrier
+\input{sections/02_related_work}
+\FloatBarrier
+\input{sections/03_methodology}
+\FloatBarrier
+\input{sections/04_sweep_results_design_region}
+\FloatBarrier
+\input{sections/05_agreement_boundary}
+\FloatBarrier
+\input{sections/06_noise_context}
+\FloatBarrier
+\input{sections/07_limitations_reproducibility_conclusion}
+\FloatBarrier
+
+\appendix
+\section{Small-Cf Boundary Overlay Figures}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_OPA818_Cf0p5_worstcase.png}
+  \caption{OPA818 small-$C_f$ boundary overlay comparing the no-Cin behavioural response, documented-Cin behavioural response, and vendor macromodel export.}
+  \label{fig:appendix-opa818-small-cf-overlay}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_ADA4817_Cf0p5_worstcase.png}
+  \caption{ADA4817 small-$C_f$ boundary overlay showing the vendor-macromodel peaking that is not reproduced by the simplified behavioural model.}
+  \label{fig:appendix-ada4817-small-cf-overlay}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_OP27_Cf3p455_negative_control.png}
+  \caption{OP27 low-GBW negative-control overlay. The row is retained as an illustrative limitation case rather than primary high-speed TIA evidence.}
+  \label{fig:appendix-op27-small-cf-overlay}
+\end{figure}
+\FloatBarrier
+
+\bibliographystyle{plainnat}
+\bibliography{references_draft}
+
+\end{document}

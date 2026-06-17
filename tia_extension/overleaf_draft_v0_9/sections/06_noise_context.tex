@@ -1,0 +1,21 @@
+\section{First-Pass Noise Context}
+
+The first-pass noise figures add a short scaffold rather than a final noise study. They show that configured noise assumptions can be propagated through the behavioural workflow to produce relative noise-contribution and noise-bandwidth views (Figures~\ref{fig:noise-baseline} and~\ref{fig:noise-tradeoff}). The current noise scripts enable photodiode shot noise with an assumed photocurrent of 1 nA. The present noise helper has not yet been updated to propagate $C_{\mathrm{total}}$ through the voltage-noise transfer path, so these figures remain first-pass $C_{pd}$-only noise-context outputs. This evidence supports including noise in the screening process while leaving SPICE noise analysis or measured-noise validation for future work.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\linewidth]{figures/tia_noise_contribution_baseline.png}
+  \caption{First-pass behavioural estimate of integrated output-noise contributions for the baseline TIA case under the configured noise-density assumptions.}
+  \label{fig:noise-baseline}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\linewidth]{figures/tia_noise_bandwidth_tradeoff.png}
+  \caption{First-pass behavioural noise-bandwidth trade-off across the selected feedback-capacitance sweep, connecting compensation choices to relative bandwidth, peaking, and configured integrated output-noise estimates.}
+  \label{fig:noise-tradeoff}
+\end{figure}
+\FloatBarrier
+
+The literature supports the relevance of discussing noise and bandwidth together. Noh 2020 supports capacitive-feedback and noise/stability context \citep{NOH_2020_CF_TIA_DC_LOOP}. Lu 2007 and Abdollahi 2025 support broad-band and noise-aware TIA framing \citep{LU_2007_BROADBAND_TIA,ABDOLLAHI_2025_MDFRGC_TIA}.
+% TODO citation pending manual check: LI_2021_LOW_NOISE_OPTICAL_RX_TIA is excluded from references_draft.bib.

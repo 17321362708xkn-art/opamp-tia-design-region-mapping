@@ -1,0 +1,73 @@
+\newcommand{\ModelAssumptionsTable}{%
+\begin{table}[H]
+\centering
+\small
+\caption{Behavioural model assumptions and swept parameter ranges used in the MATLAB TIA screening workflow. The table summarizes repository-defined assumptions for $R_f$, $C_f$, $C_{pd}$, $C_{in}$, $C_{\mathrm{stray}}$, $A_0$, and $f_t$; it does not define a universal photodiode TIA design rule.}
+\label{tab:model-assumptions}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.23\linewidth}}
+\toprule
+Parameter or item & Meaning / baseline & Swept range or note \\
+\midrule
+$R_f$ & Feedback resistance; baseline 100 kOhm & Full sweep summary: 10 kOhm to 1 MOhm \\
+$C_f$ & Feedback capacitance; baseline 1 pF & Focused sweep and design-region selected range: 0.1 pF to 10 pF \\
+$C_{pd}$ & Photodiode capacitance; baseline 2 pF & Focused $C_f$ sweep uses 5 pF; broader coverage 1 pF to 20 pF \\
+$C_{in}$ & Op-amp input capacitance included in total input-node capacitance & Zero by default for backward compatibility; vendor-specific values are used only where documented \\
+$C_{\mathrm{stray}}$ & Additional manually specified stray input-node capacitance & Set to zero in the behavioural-vs-vendor agreement analysis; not fitted \\
+$C_{\mathrm{total}}$ & Total input-node capacitance, $C_{pd}+C_{in}+C_{\mathrm{stray}}$ & Used by the closed-loop behavioural transfer function and agreement analysis \\
+$A_0$ & Low-frequency open-loop gain & Baseline and sweeps use 100000 \\
+$f_t$ & Op-amp transition frequency assumption & Focused sweep values: 1 MHz, 10 MHz, 100 MHz; broader sweeps cover 1 MHz to 100 MHz \\
+Bandwidth metric & Extracted $-3$ dB bandwidth relative to low-frequency transimpedance & Baseline 1.642 MHz; focused sweep 0.159 MHz to 8.425 MHz \\
+Peaking metric & Extracted response peaking used for project-defined screening & Baseline approximately 0 dB; focused sweep approximately 0 dB to 10.906 dB \\
+Evidence layers & Baseline, focused $C_f$ sweep, full behavioural sweep, and design-region map & Workflow claims are interpreted with respect to their corresponding evidence layers \\
+\bottomrule
+\end{tabularx}
+\end{table}
+}
+
+\newcommand{\ScreeningCriteriaTable}{%
+\begin{table}[H]
+\centering
+\small
+\caption{Project-defined Safe, Marginal, and Risky screening criteria used to organize extracted behavioural metrics. The labels are internal design-screening categories, not universal stability classifications or hardware guarantees.}
+\label{tab:screening-criteria}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.14\linewidth} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+\toprule
+Label & Code & Metric threshold or rule & Caution \\
+\midrule
+Safe & 1 & Valid bandwidth and peaking $<1$ dB & Screening label only; not a hardware guarantee or universal phase-margin rule \\
+Marginal & 2 & Valid bandwidth and $1 \leq$ peaking $\leq 3$ dB & Requires closer review of response shape, phase, vendor macromodel behaviour, and later circuit evidence \\
+Risky & 3 & Peaking $>3$ dB, invalid bandwidth extraction, or non-finite peaking & Project-defined prompt for redesign or deeper analysis, not a failure certificate \\
+\bottomrule
+\end{tabularx}
+\end{table}
+}
+
+\newcommand{\AgreementSummaryTable}{%
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\caption{Behavioural-vs-vendor-macromodel agreement summary using the Cin-aware MATLAB model and existing vendor export summaries. OP27 is included as a low-GBW negative-control / illustrative case, while OPA818 and ADA4817 are the main high-speed comparison cases. Label agreement refers to the project-defined screening labels under stated test assumptions.}
+\label{tab:agreement-summary}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llrrrrrrrl}
+\toprule
+Case & Model & $C_f$ (pF) & MATLAB BW & Vendor BW & BW err. & MATLAB peak & Vendor peak & Peak err. & Label agree \\
+ & & & (MHz) & (MHz) & (\%) & (dB) & (dB) & (dB) & \\
+\midrule
+OP27-3.455p & OP27 & 3.455 & 3.819 & 3.126 & 22.2 & 0.965 & 11.863 & -10.899 & No \\
+OP27-10p & OP27 & 10.0 & 1.745 & 2.692 & -35.2 & approx. 0 & 0.480 & -0.480 & Yes \\
+OP27-22p & OP27 & 22.0 & 0.744 & 0.841 & -11.5 & approx. 0 & approx. 0 & approx. 0 & Yes \\
+OPA818-0.5p & OPA818 & 0.5 & 41.925 & 24.831 & 68.8 & approx. 0 & approx. 0 & approx. 0 & Yes \\
+OPA818-1.0p & OPA818 & 1.0 & 17.149 & 14.791 & 15.9 & approx. 0 & approx. 0 & approx. 0 & Yes \\
+OPA818-1.5p & OPA818 & 1.5 & 10.963 & 10.351 & 5.9 & approx. 0 & approx. 0 & approx. 0 & Yes \\
+OPA818-2.2p & OPA818 & 2.2 & 7.344 & 7.161 & 2.6 & approx. 0 & approx. 0 & approx. 0 & Yes \\
+ADA4817-0.5p & ADA4817 & 0.5 & 42.699 & 33.113 & 28.9 & 0.314 & 2.991 & -2.677 & No \\
+ADA4817-1.0p & ADA4817 & 1.0 & 18.955 & 22.131 & -14.4 & approx. 0 & 0.002 & -0.002 & Yes \\
+ADA4817-2.2p & ADA4817 & 2.2 & 7.499 & 7.943 & -5.6 & approx. 0 & 0.001 & -0.001 & Yes \\
+ADA4817-4.7p & ADA4817 & 4.7 & 3.413 & 3.467 & -1.6 & approx. 0 & approx. 0 & approx. 0 & Yes \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+}
