@@ -1,0 +1,65 @@
+\begin{tikzpicture}[
+  block/.style={
+    draw,
+    rounded corners=1pt,
+    align=center,
+    text width=10.8cm,
+    minimum height=0.88cm,
+    inner sep=4pt,
+    font=\small
+  },
+  outputblock/.style={
+    draw,
+    rounded corners=1pt,
+    align=center,
+    text width=9.4cm,
+    minimum height=0.64cm,
+    inner sep=4pt,
+    font=\small
+  },
+  arrow/.style={-{Latex[length=2.2mm]}, line width=0.45pt},
+  node distance=0.34cm
+]
+
+\node[block] (assumptions) {
+  \textbf{1. Define design assumptions}\\[-1pt]
+  {\scriptsize $R_f$, $C_f$, $C_{pd}$, $A_0$, $f_t$, $C_{in}$, $C_{\mathrm{stray}}$, supply}
+};
+
+\node[block, below=of assumptions] (model) {
+  \textbf{2. Behavioural closed-loop TIA model}\\[-1pt]
+  {\scriptsize Transfer function and closed-loop response}
+};
+
+\node[block, below=of model] (sweeps) {
+  \textbf{3. MATLAB sweeps and metric extraction}\\[-1pt]
+  {\scriptsize Bandwidth, peaking, gain/phase trends}
+};
+
+\node[block, below=of sweeps] (screening) {
+  \textbf{4. Project-defined design-region screening}\\[-1pt]
+  {\scriptsize Safe / Marginal / Risky classification}
+};
+
+\node[block, below=of screening] (vendor) {
+  \textbf{5. Vendor macromodel comparison}\\[-1pt]
+  {\scriptsize OP27, OPA818, ADA4817}
+};
+
+\node[block, below=of vendor] (noise) {
+  \textbf{6. First-pass noise screening and design interpretation}\\[-1pt]
+  {\scriptsize Noise contribution and trade-off context}
+};
+
+\node[outputblock, below=0.42cm of noise] (output) {
+  \textbf{Early-stage TIA design-screening workflow}
+};
+
+\draw[arrow] (assumptions) -- (model);
+\draw[arrow] (model) -- (sweeps);
+\draw[arrow] (sweeps) -- (screening);
+\draw[arrow] (screening) -- (vendor);
+\draw[arrow] (vendor) -- (noise);
+\draw[arrow] (noise) -- (output);
+
+\end{tikzpicture}

@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\usetikzlibrary{arrows.meta,positioning}
+
+% Portable Overleaf layout: figure assets are bundled in the local figures/
+% folder and are also referenced explicitly as figures/<file>.png.
+\graphicspath{{figures/}}
+\renewcommand{\arraystretch}{1.08}
+
+\title{A MATLAB- and Vendor-Macromodel-Assisted Workflow for Early-Stage Photodiode TIA Design Screening}
+\author{Author Name(s) Placeholder\\Affiliation Placeholder}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Early photodiode transimpedance amplifier (TIA) design requires coordinated screening of compensation, bandwidth, peaking, input-node capacitance, and noise assumptions before detailed circuit implementation. This work presents a reproducible early-stage photodiode TIA screening workflow that combines behavioural MATLAB sweeps, project-defined design-region mapping, behavioural-vs-vendor-macromodel agreement checks, and first-pass behavioural noise estimates under stated modelling assumptions. The behavioural model represents total input-node capacitance as $C_{\mathrm{total}} = C_{pd} + C_{in} + C_{\mathrm{stray}}$, with vendor-specific $C_{in}$ used only where documented and zero-valued defaults retained for backward compatibility. The main agreement result is a boundary pattern: selected OPA818 and ADA4817 cases are most consistent with vendor macromodel summaries at moderate and larger $C_f$, while small-$C_f$ bandwidth-limited cases expose the limits of the single-pole behavioural approximation. Across the selected OP27, OPA818, and ADA4817 vendor-export cases, 9 of 11 project-defined labels agree, but the smallest-$C_f$ cases carry the largest bandwidth or peaking discrepancies. A Cin ablation shows mixed and modest bandwidth-error changes in the current $C_{pd}=10$ pF vendor cases rather than a uniform agreement improvement. The contribution is an engineering design workflow for photodiode TIA pre-design exploration, not a new TIA topology or universal design rule. The evidence is modelling and simulation evidence only; no hardware validation, measured-noise validation, complete SPICE coverage, or universal stability guarantee is claimed.
+\end{abstract}
+
+\input{tables/tables}
+\input{sections/01_introduction}
+\FloatBarrier
+\input{sections/02_related_work}
+\FloatBarrier
+\input{sections/03_methodology}
+\FloatBarrier
+\input{sections/04_results_and_discussion}
+\FloatBarrier
+\input{sections/05_limitations_conclusion}
+\FloatBarrier
+
+\appendix
+\section{Small-Cf Boundary Overlay Figures}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_OPA818_Cf0p5_worstcase.png}
+  \caption{OPA818 small-$C_f$ boundary overlay comparing the no-Cin behavioural response, documented-Cin behavioural response, and vendor macromodel export.}
+  \label{fig:appendix-opa818-small-cf-overlay}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_ADA4817_Cf0p5_worstcase.png}
+  \caption{ADA4817 small-$C_f$ boundary overlay showing the vendor-macromodel peaking that is not reproduced by the simplified behavioural model.}
+  \label{fig:appendix-ada4817-small-cf-overlay}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/behavioural_vs_vendor_overlay_OP27_Cf3p455_negative_control.png}
+  \caption{OP27 low-GBW negative-control overlay. The row is retained as an illustrative limitation case rather than primary high-speed TIA evidence.}
+  \label{fig:appendix-op27-small-cf-overlay}
+\end{figure}
+\FloatBarrier
+
+\bibliographystyle{plainnat}
+\bibliography{references_draft}
+
+\end{document}
