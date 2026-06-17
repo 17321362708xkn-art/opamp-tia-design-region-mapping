@@ -1,0 +1,19 @@
+\section{Related Work}
+
+High-speed TIA literature contains many topology-level contributions. Bandwidth-enhancement work has used passive matching, broadband networks, capacitive degeneration, regulated-cascode stages, and other circuit techniques to address capacitance and frequency-response limits \citep{ANALUI_2004_BW_ENHANCEMENT,LU_2007_BROADBAND_TIA}. Regulated-cascode TIA work is relevant because it addresses input impedance and photodiode-capacitance isolation in CMOS optical receiver settings \citep{PARK_YOO_2004_RGC_TIA}. More recent optical receiver papers continue to use regulated-cascode-derived, inductorless, inverter/cascode, and modified-RGC approaches for CMOS optical communication front ends \citep{XU_2011_INDUCTORLESS_TIA,LEE_2021_4GHZ_SDT_VG_TIA,TAKAHASHI_2022_LOCAL_FEEDBACK_RGC,PAN_LUO_2022_20GBPS_TIA,ABDOLLAHI_2025_MDFRGC_TIA}.
+
+Feedback capacitance and stability-oriented frequency response form a second related-work thread. Noh 2020 is directly useful because it treats capacitive-feedback TIA design, DC feedback, parasitic capacitance effects, frequency response, and stability-oriented parameters \citep{NOH_2020_CF_TIA_DC_LOOP}.
+% TODO citation pending manual check: VAZQUEZ_2021_OPTICAL_DETECTION_TIA is abstract-only and is excluded from references_draft.bib.
+An abstract-only optical-detection design-method source is currently held for broad-background review only; it should not support detailed equations, methods, or numerical claims until full text is obtained.
+
+CMOS optical receiver papers provide application context. Full-text receiver examples include TIA, variable-gain, equalization, clock/data recovery, or integrated photodiode-readout blocks \citep{PAN_2022_26GBPS_RX,MESGARI_2024_MULTI_DOT_PIN_RX}. These works motivate the importance of the TIA front end, but the present project remains an op-amp-based behavioural screening workflow rather than a complete optical receiver design.
+
+Noise-aware TIA design is also important. Full-text sources such as Noh 2020, Lu 2007, Lee 2021, Takahashi 2022, and Abdollahi 2025 support the general observation that noise, bandwidth, and topology decisions are coupled in TIA design \citep{NOH_2020_CF_TIA_DC_LOOP,LU_2007_BROADBAND_TIA,LEE_2021_4GHZ_SDT_VG_TIA,TAKAHASHI_2022_LOCAL_FEEDBACK_RGC,ABDOLLAHI_2025_MDFRGC_TIA}.
+% TODO citation pending manual check: LI_2021_LOW_NOISE_OPTICAL_RX_TIA is abstract-only and is excluded from references_draft.bib.
+An abstract-only low-noise optical receiver TIA source is retained in the project notes as broad-background context only.
+
+% TODO citations pending manual check and excluded from references_draft.bib:
+% HERMANS_2006_850NM_RX, ZHOU_2021_CHERRY_HOOPER_AFE,
+% CHEN_2005_10GBPS_CMOS_RX_AFE, PARK_2015_40GBPS_INVERTER_RX,
+% LI_2014_LOW_NOISE_CMOS_RX.
+Several DOI-only or metadata-only papers remain high-priority for manual full-text acquisition, especially for receiver front ends, 10/40 Gb/s CMOS optical receiver analog front ends, and low-noise high-speed CMOS receiver context. In this draft, these sources are treated only as future-review placeholders and are not included as active BibTeX entries. A source-usage confidence table should be included to distinguish full-text, abstract-only, and metadata-only evidence before final bibliography preparation (Table~\ref{tab:source-confidence}). For this generic LaTeX draft, Table~\ref{tab:source-confidence} is kept as one grouped source-confidence table with subgroups; it may move to an appendix after target journal selection.

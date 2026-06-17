@@ -1,0 +1,13 @@
+\section{Results and Discussion}
+
+The baseline behavioural response establishes the finite-gain, finite-bandwidth model and anchors the later sweeps. It is a reproducible response case rather than a complete design validation (Figure~\ref{fig:baseline-response}).
+
+The feedback-capacitance sweep shows the central compensation trade-off. In the selected behavioural sweep, increasing $C_f$ reduces extracted bandwidth and generally reduces peaking. The bandwidth and peaking figures are interpreted together because each captures only one side of the design trade-off (Figures~\ref{fig:cf-bandwidth} and~\ref{fig:cf-peaking}). Compensation choices are therefore screened jointly for bandwidth and peaking rather than selected from bandwidth alone.
+
+The design-region map extends the feedback-capacitance sweep across a broader parameter space. It shows how selected $C_{pd}$ and $f_t$ assumptions affect project-defined Safe, Marginal, or Risky outcomes (Figure~\ref{fig:design-region-map}; Table~\ref{tab:screening-criteria}). The representative response figure provides example response shapes for selected categories (Figure~\ref{fig:representative-responses}).
+
+The vendor macromodel comparison adds model-specific simulation context. OP27 illustrates strong small-$C_f$ peaking in a low-GBW smoke-test case. In the selected OPA818 vendor macromodel rows, the tested cases remain project-defined Safe under the peaking metric and stated test assumptions. The selected ADA4817 rows include a project-defined Marginal smallest-$C_f$ case and project-defined Safe larger-$C_f$ cases under the same stated test assumptions. The combined vendor summary supports the claim that behavioural screening and vendor macromodel behaviour are related but not interchangeable (Figure~\ref{fig:vendor-summary}; Table~\ref{tab:vendor-summary}).
+
+The first-pass noise figures add an additional screening dimension. They show that configured noise assumptions can be propagated through the behavioural workflow to produce relative noise-contribution and noise-bandwidth views (Figures~\ref{fig:noise-baseline} and~\ref{fig:noise-tradeoff}). This evidence supports including noise in the screening process while leaving SPICE noise analysis or measured-noise validation for future work.
+
+Overall, the results support a coherent pre-design workflow: behavioural response, feedback-capacitance trade-off, design-region mapping, vendor macromodel comparison, and first-pass noise context. The repository provides a reproducible and traceable way to organize these steps.
