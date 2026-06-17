@@ -1,0 +1,123 @@
+\newcommand{\ModelAssumptionsTable}{%
+\begin{table}[H]
+\centering
+\small
+\caption{Behavioural model assumptions and swept parameter ranges used in the MATLAB TIA screening workflow. The table summarizes repository-defined assumptions for $R_f$, $C_f$, $C_{pd}$, $A_0$, and $f_t$; it does not define a universal photodiode TIA design rule.}
+\label{tab:model-assumptions}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.23\linewidth}}
+\toprule
+Parameter or item & Meaning / baseline & Swept range or note \\
+\midrule
+$R_f$ & Feedback resistance; baseline 100 kOhm & Full sweep summary: 10 kOhm to 1 MOhm \\
+$C_f$ & Feedback capacitance; baseline 1 pF & Focused sweep and design-region selected range: 0.1 pF to 10 pF \\
+$C_{pd}$ & Photodiode capacitance; baseline 2 pF & Focused $C_f$ sweep uses 5 pF; broader coverage 1 pF to 20 pF \\
+$A_0$ & Low-frequency open-loop gain & Baseline and sweeps use 100000 \\
+$f_t$ & Op-amp transition frequency assumption & Focused sweep values: 1 MHz, 10 MHz, 100 MHz; broader sweeps cover 1 MHz to 100 MHz \\
+Bandwidth metric & Extracted $-3$ dB bandwidth relative to low-frequency transimpedance & Baseline 1.642 MHz; focused sweep 0.159 MHz to 8.425 MHz \\
+Peaking metric & Extracted response peaking used for project-defined screening & Baseline approximately 0 dB; focused sweep approximately 0 dB to 10.906 dB \\
+Evidence layers & Baseline, focused $C_f$ sweep, full behavioural sweep, and design-region map & Workflow claims are interpreted with respect to their corresponding evidence layers \\
+\bottomrule
+\end{tabularx}
+\end{table}
+}
+
+\newcommand{\ScreeningCriteriaTable}{%
+\begin{table}[H]
+\centering
+\small
+\caption{Project-defined Safe, Marginal, and Risky screening criteria used to organize extracted behavioural metrics. The labels are internal design-screening categories, not universal stability classifications or hardware guarantees.}
+\label{tab:screening-criteria}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.14\linewidth} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+\toprule
+Label & Code & Metric threshold or rule & Caution \\
+\midrule
+Safe & 1 & Valid bandwidth and peaking $<1$ dB & Screening label only; not a hardware guarantee or universal phase-margin rule \\
+Marginal & 2 & Valid bandwidth and $1 \leq$ peaking $\leq 3$ dB & Requires closer review of response shape, phase, vendor macromodel behaviour, and later circuit evidence \\
+Risky & 3 & Peaking $>3$ dB, invalid bandwidth extraction, or non-finite peaking & Project-defined prompt for redesign or deeper analysis, not a failure certificate \\
+\bottomrule
+\end{tabularx}
+\end{table}
+}
+
+\newcommand{\VendorSummaryTable}{%
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Compact summary of OP27, OPA818, and ADA4817 vendor macromodel comparison cases. These rows are simulation-only vendor macromodel comparisons under repository test assumptions, not hardware validation and not identical operating-point equivalence. OP27 used $\pm 15$ V supplies; OPA818 and ADA4817 used $\pm 5$ V supplies. Safe, Marginal, and Risky are project-defined labels under the stated test assumptions.}
+\label{tab:vendor-summary}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llrrrl}
+\toprule
+Case & Model & $C_f$ (pF) & BW (MHz) & Peak (dB) & Label \\
+\midrule
+OP27-3.455p & OP27 & 3.455 & 3.126 & 11.863 & Risky \\
+OP27-10p & OP27 & 10.0 & 2.692 & 0.480 & Safe \\
+OP27-22p & OP27 & 22.0 & 0.841 & approx. 0 & Safe \\
+OPA818-0.5p & OPA818 & 0.5 & 24.831 & approx. 0 & Safe \\
+OPA818-1.0p & OPA818 & 1.0 & 14.791 & approx. 0 & Safe \\
+OPA818-1.5p & OPA818 & 1.5 & 10.351 & approx. 0 & Safe \\
+OPA818-2.2p & OPA818 & 2.2 & 7.161 & approx. 0 & Safe \\
+ADA4817-0.5p & ADA4817 & 0.5 & 33.113 & 2.991 & Marginal \\
+ADA4817-1.0p & ADA4817 & 1.0 & 22.131 & 0.002 & Safe \\
+ADA4817-2.2p & ADA4817 & 2.2 & 7.943 & 0.001 & Safe \\
+ADA4817-4.7p & ADA4817 & 4.7 & 3.467 & approx. 0 & Safe \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+}
+
+\newcommand{\SourceConfidenceTable}{%
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.16}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.39\linewidth} >{\raggedright\arraybackslash}p{0.55\linewidth}}
+\caption{Appendix source-scope documentation separating full-text, abstract-only, and metadata-only literature candidates used in the manuscript draft. This table is not a final bibliography.}
+\label{tab:source-confidence}\\
+\toprule
+Citation ID & Access boundary and allowed usage scope \\
+\midrule
+\endfirsthead
+\caption[]{Appendix source-scope documentation, continued.}\\
+\toprule
+Citation ID & Access boundary and allowed usage scope \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{Continued on next page} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\multicolumn{2}{@{}l}{\textbf{Full-text available sources}}\\
+\midrule
+NOH\_2020\_CF\_TIA\_DC\_LOOP & Full text available. Detailed related-work support after close reading. \\
+LEE\_2021\_4GHZ\_SDT\_VG\_TIA & Full text available. Optical-communication TIA and inductorless/RGC-derived context. \\
+TAKAHASHI\_2022\_LOCAL\_FEEDBACK\_RGC & Full text available. RGC/local-feedback optical receiver context. \\
+ANALUI\_2004\_BW\_ENHANCEMENT & Full text available. Bandwidth enhancement and photodiode-capacitance motivation. \\
+LU\_2007\_BROADBAND\_TIA & Full text available. Broad-band TIA and noise-bandwidth context. \\
+PARK\_YOO\_2004\_RGC\_TIA & Full text available. Canonical RGC CMOS TIA context. \\
+XU\_2011\_INDUCTORLESS\_TIA & Full text available. Inductorless optical-communication CMOS TIA context. \\
+PAN\_LUO\_2022\_20GBPS\_TIA & Full text available. High-speed CMOS optical TIA and compensation motivation. \\
+PAN\_2022\_26GBPS\_RX & Full text available. Complete optical receiver context, not project validation. \\
+ABDOLLAHI\_2025\_MDFRGC\_TIA & Full text available. Recent modified-RGC/noise-bandwidth context. \\
+MESGARI\_2024\_MULTI\_DOT\_PIN\_RX & Full text available. Optional integrated photodiode/readout context. \\
+\midrule
+\multicolumn{2}{@{}l}{\textbf{Abstract-only sources}}\\
+\midrule
+VAZQUEZ\_2021\_OPTICAL\_DETECTION\_TIA & Abstract only. Broad background only; excluded from active BibTeX pending manual check. \\
+LI\_2021\_LOW\_NOISE\_OPTICAL\_RX\_TIA & Abstract only. Broad background only; excluded from active BibTeX pending manual check. \\
+\midrule
+\multicolumn{2}{@{}l}{\textbf{Metadata-only sources}}\\
+\midrule
+HERMANS\_2006\_850NM\_RX & Metadata only. Future-review placeholder; excluded from active BibTeX. \\
+ZHOU\_2021\_CHERRY\_HOOPER\_AFE & Metadata only. Future-review placeholder; excluded from active BibTeX. \\
+CHEN\_2005\_10GBPS\_CMOS\_RX\_AFE & Metadata only. Future-review placeholder; excluded from active BibTeX. \\
+PARK\_2015\_40GBPS\_INVERTER\_RX & Metadata only. Future-review placeholder; excluded from active BibTeX. \\
+LI\_2014\_LOW\_NOISE\_CMOS\_RX & Metadata only. Future-review placeholder; excluded from active BibTeX. \\
+\end{longtable}
+\endgroup
+}
